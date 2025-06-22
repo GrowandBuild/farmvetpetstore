@@ -6,19 +6,21 @@
 }
 
 :root {
-    --primary-color: #0F172A; /* Dark Navy Blue */
-    --primary-dark: #0a111f;
+    --primary-color: #2d3748; /* Dark Slate */
+    --primary-dark: #1a202c; /* Darker Slate */
     --secondary-color: #94a3b8; /* Lighter gray for text */
-    --accent-color: #DCC28D;  /* Light Gold */
-    --accent-dark: #CBA95E;   /* Dark Gold */
+    --accent-color: #38a169; /* Muted Green */
+    --accent-dark: #2f855a; /* Darker Green */
     --success-color: #10b981;
     --danger-color: #ef4444;
     --text-primary: #0F172A; /* Match dark blue */
     --text-secondary: #475569; /* Softer gray */
-    --text-light: #94a3b8;
+    --text-light: #f7fafc;
+    --text-dark: #2d3748;
     --bg-primary: #ffffff;
     --bg-secondary: #f8fafc;
-    --bg-dark: #0F172A; /* Match new primary */
+    --bg-dark: #1a202c; /* Matches Darker Slate */
+    --bg-light: #ffffff;
     --border-color: #e2e8f0;
     --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
     --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
@@ -27,6 +29,10 @@
     --border-radius: 8px;
     --border-radius-lg: 16px; /* Larger radius */
     --transition: all 0.3s ease-in-out;
+
+    --container-width: 1200px;
+    --font-family-body: 'Poppins', sans-serif;
+    --font-family-heading: 'Poppins', sans-serif;
 }
 
 body {
@@ -85,10 +91,15 @@ section {
     align-items: center;
 }
 
+.nav-logo span {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
 .logo-img {
-    height: 70px; /* Increased logo size */
-    width: auto;
-    transition: height 0.3s ease;
+    display: none;
 }
 
 .header.scrolled .logo-img {
@@ -148,13 +159,22 @@ section {
 
 /* Hero Section */
 .hero {
-    padding: 180px 0;
-    background: var(--bg-dark);
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    color: var(--text-light);
+    padding: 120px 0 80px;
     position: relative;
+    overflow: hidden;
 }
 
 .hero::before {
-    content: none;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, rgba(56, 161, 105, 0.1) 0%, rgba(45, 55, 72, 0.05) 100%);
+    pointer-events: none;
 }
 
 .hero-grid {
@@ -192,10 +212,11 @@ section {
 }
 
 .hero-buttons {
+    margin-top: 2rem;
     display: flex;
     gap: 1rem;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: flex-start; /* Alinha os botões à esquerda */
 }
 
 .btn {
@@ -314,35 +335,34 @@ section {
 }
 
 .service-card {
-    background: white;
-    padding: 2.5rem; /* More padding */
+    background: var(--bg-primary);
     border-radius: var(--border-radius-lg);
-    box-shadow: var(--shadow-md);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding: 2rem;
+    box-shadow: var(--shadow-lg);
+    transition: var(--transition);
     border: 1px solid var(--border-color);
+    position: relative;
+    overflow: hidden;
     text-align: center;
 }
 
 .service-card:hover {
-    transform: translateY(-10px);
-    box-shadow: var(--shadow-lg);
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
 }
 
 .service-icon {
-    width: 70px;
-    height: 70px;
+    width: 60px;
+    height: 60px;
     background: linear-gradient(135deg, var(--accent-color), var(--accent-dark));
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto 1.5rem auto;
-    box-shadow: var(--shadow-lg);
-}
-
-.service-icon i {
-    font-size: 2rem;
-    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    color: white;
+    font-size: 1.5rem;
+    box-shadow: 0 4px 15px rgba(56, 161, 105, 0.3);
 }
 
 .service-card h3 {
@@ -430,8 +450,10 @@ section {
 }
 
 .feature i {
-    color: var(--success-color);
-    font-size: 1.25rem;
+    color: var(--accent-color);
+    font-size: 1.2rem;
+    margin-right: 0.5rem;
+    text-shadow: 0 1px 2px rgba(56, 161, 105, 0.3);
 }
 
 .feature span {
@@ -560,12 +582,15 @@ section {
 .contact-icon {
     width: 50px;
     height: 50px;
-    background: var(--accent-dark);
+    background: linear-gradient(135deg, var(--accent-color), var(--accent-dark));
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-shrink: 0;
+    margin-right: 1rem;
+    color: white;
+    font-size: 1.2rem;
+    box-shadow: 0 4px 15px rgba(56, 161, 105, 0.3);
 }
 
 .contact-icon i {
@@ -643,9 +668,15 @@ section {
     margin-bottom: 1rem;
 }
 
+.footer-logo span {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--text-light);
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
 .logo-img-footer {
-    height: 70px;
-    filter: brightness(1.2);
+    display: none;
 }
 
 .footer-section p {
@@ -939,4 +970,8 @@ html {
     background: var(--accent-dark);
     color: white;
     border: none;
+}
+
+.footer-title {
+    margin-top: 0.5rem;
 } 
