@@ -118,7 +118,7 @@ document.addEventListener('DOMContentLoaded', function() {
             position: fixed;
             top: 20px;
             right: 20px;
-            background: ${type === 'success' ? '#10b981' : '#3b82f6'};
+            background: ${type === 'success' ? '#10b981' : '#ff6b35'};
             color: white;
             padding: 1rem 1.5rem;
             border-radius: 8px;
@@ -451,7 +451,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // WhatsApp integration
     function openWhatsApp(message = '') {
         const phone = '5562991010254';
-        const defaultMessage = 'Olá! Gostaria de solicitar um orçamento para projeto.';
+        const defaultMessage = 'Olá! Gostaria de agendar um serviço para meu pet.';
         const finalMessage = message || defaultMessage;
         const url = `https://wa.me/${phone}?text=${encodeURIComponent(finalMessage)}`;
         window.open(url, '_blank');
@@ -472,21 +472,310 @@ document.addEventListener('DOMContentLoaded', function() {
         serviceSelect.addEventListener('change', function() {
             const messageField = document.getElementById('message');
             const serviceMessages = {
-                'arquitetura': 'Gostaria de solicitar um projeto arquitetônico.',
-                'engenharia': 'Gostaria de solicitar um projeto de engenharia.',
-                'art': 'Gostaria de solicitar emissão de ART.',
-                'laudo': 'Gostaria de solicitar um laudo técnico.',
-                'vistoria': 'Gostaria de solicitar uma vistoria técnica.',
-                'orcamento': 'Gostaria de solicitar um orçamento.',
-                'consultoria': 'Gostaria de solicitar consultoria técnica.',
-                'outro': 'Gostaria de solicitar informações sobre outros serviços.'
+                'banho': 'Gostaria de agendar banho e tosa para meu pet.',
+                'consulta': 'Gostaria de agendar uma consulta veterinária.',
+                'produto': 'Gostaria de informações sobre produtos para meu pet.',
+                'vacina': 'Gostaria de agendar vacinação para meu pet.',
+                'outro': 'Gostaria de informações sobre outros serviços.'
             };
             
             if (this.value && serviceMessages[this.value]) {
                 messageField.placeholder = serviceMessages[this.value];
             } else {
-                messageField.placeholder = 'Descreva seu projeto ou solicitação';
+                messageField.placeholder = 'Descreva sua necessidade';
             }
         });
     }
+    
+    // Pet-friendly animations
+    function addPetAnimations() {
+        // Add paw print cursor for interactive elements
+        const interactiveElements = document.querySelectorAll('.btn, .service-card, .portfolio-item');
+        
+        interactiveElements.forEach(element => {
+            element.addEventListener('mouseenter', function() {
+                this.style.cursor = 'pointer';
+            });
+            
+            element.addEventListener('mouseleave', function() {
+                this.style.cursor = 'default';
+            });
+        });
+    }
+    
+    // Initialize pet animations
+    addPetAnimations();
+    
+    // Instagram integration
+    function openInstagram() {
+        window.open('https://www.instagram.com/farmvetpetstore/', '_blank');
+    }
+    
+    // Add Instagram click handlers
+    document.querySelectorAll('a[href*="instagram.com/farmvetpetstore"]').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            openInstagram();
+        });
+    });
+    
+    // Scroll Reveal Animation
+    function initScrollReveal() {
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('reveal');
+                }
+            });
+        }, observerOptions);
+
+        // Elementos para animar
+        const elementsToReveal = document.querySelectorAll(`
+            .service-card,
+            .portfolio-item,
+            .testimonial-card,
+            .location-card,
+            .contact-item,
+            .about-content,
+            .section-header,
+            .hero-content,
+            .hero-image
+        `);
+
+        elementsToReveal.forEach(el => {
+            el.classList.add('scroll-reveal');
+            observer.observe(el);
+        });
+    }
+    
+    initScrollReveal();
+    
+    // Parallax and Scroll-triggered Animations
+    function initParallaxEffects() {
+        let ticking = false;
+        let lastScrollY = 0;
+        const scrollThreshold = 5; // Só atualiza se scroll > 5px
+        
+        function updateParallax() {
+            const scrolled = window.pageYOffset;
+            
+            // Só executa se o scroll for significativo
+            if (Math.abs(scrolled - lastScrollY) < scrollThreshold) {
+                ticking = false;
+                return;
+            }
+            
+            lastScrollY = scrolled;
+            
+            // Reduzindo intensidade dos efeitos
+            const rate = scrolled * -0.2; // Era -0.5
+            const rate2 = scrolled * -0.1; // Era -0.3
+            const rate3 = scrolled * 0.1; // Era 0.2
+            
+            // Hero background parallax (mais sutil)
+            const heroBackground = document.querySelector('.hero-background');
+            if (heroBackground) {
+                heroBackground.style.transform = `translateY(${rate}px)`;
+            }
+            
+            // Hero content parallax (mais sutil)
+            const heroContent = document.querySelector('.hero-content');
+            if (heroContent) {
+                heroContent.style.transform = `translateY(${rate2}px)`;
+            }
+            
+            // Hero images parallax (mais sutil)
+            const heroImages = document.querySelector('.hero-image');
+            if (heroImages) {
+                heroImages.style.transform = `translateY(${rate3}px)`;
+            }
+            
+            // Floating elements parallax (reduzido)
+            const floatingElements = document.querySelectorAll('.service-card, .testimonial-card');
+            floatingElements.forEach((el, index) => {
+                const speed = 0.02 + (index * 0.01); // Era 0.1 + (index * 0.05)
+                const yPos = scrolled * speed;
+                el.style.transform = `translateY(${yPos}px)`;
+            });
+            
+            // Scale effect on scroll (mais sutil)
+            const scaleElements = document.querySelectorAll('.portfolio-item');
+            scaleElements.forEach(el => {
+                const rect = el.getBoundingClientRect();
+                const windowHeight = window.innerHeight;
+                const elementTop = rect.top;
+                const elementBottom = rect.bottom;
+                
+                if (elementTop < windowHeight && elementBottom > 0) {
+                    const progress = (windowHeight - elementTop) / (windowHeight + rect.height);
+                    const scale = 0.95 + (progress * 0.05); // Era 0.8 + (progress * 0.2)
+                    el.style.transform = `scale(${scale})`;
+                }
+            });
+            
+            // Rotate effect on scroll (mais sutil)
+            const rotateElements = document.querySelectorAll('.service-icon');
+            rotateElements.forEach(el => {
+                const rect = el.getBoundingClientRect();
+                const windowHeight = window.innerHeight;
+                const elementTop = rect.top;
+                
+                if (elementTop < windowHeight && elementTop > -rect.height) {
+                    const progress = (windowHeight - elementTop) / (windowHeight + rect.height);
+                    const rotation = progress * 180; // Era 360
+                    el.style.transform = `rotate(${rotation}deg)`;
+                }
+            });
+            
+            // Text reveal on scroll (mais suave)
+            const textElements = document.querySelectorAll('.section-header h2, .hero-title');
+            textElements.forEach(el => {
+                const rect = el.getBoundingClientRect();
+                const windowHeight = window.innerHeight;
+                const elementTop = rect.top;
+                
+                if (elementTop < windowHeight * 0.9) { // Era 0.8
+                    const progress = (windowHeight * 0.9 - elementTop) / (windowHeight * 0.9);
+                    el.style.opacity = Math.min(1, progress * 1.5); // Era progress * 2
+                    el.style.transform = `translateY(${(1 - progress) * 15}px)`; // Era 30px
+                }
+            });
+            
+            ticking = false;
+        }
+        
+        function requestTick() {
+            if (!ticking) {
+                requestAnimationFrame(updateParallax);
+                ticking = true;
+            }
+        }
+        
+        // Throttle scroll events
+        let scrollTimeout;
+        window.addEventListener('scroll', () => {
+            if (scrollTimeout) return;
+            scrollTimeout = setTimeout(() => {
+                requestTick();
+                scrollTimeout = null;
+            }, 16); // ~60fps
+        });
+        
+        window.addEventListener('resize', requestTick);
+    }
+    
+    initParallaxEffects();
+    
+    // Efeitos especiais para depoimentos
+    function initTestimonialEffects() {
+        const testimonialCards = document.querySelectorAll('.testimonial-card');
+        
+        testimonialCards.forEach((card, index) => {
+            // Efeito de entrada com delay
+            card.style.animationDelay = `${index * 0.2}s`;
+            
+            // Efeito de clique
+            card.addEventListener('click', function() {
+                // Adicionar efeito de pulse
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 150);
+                
+                // Efeito de partículas
+                createParticles(this);
+            });
+            
+            // Efeito de hover com som
+            card.addEventListener('mouseenter', function() {
+                this.style.transition = 'all 0.3s ease';
+                // Adicionar sombra colorida
+                this.style.boxShadow = '0 15px 35px rgba(255, 107, 53, 0.2)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.boxShadow = '';
+            });
+        });
+    }
+    
+    // Função para criar partículas
+    function createParticles(element) {
+        const rect = element.getBoundingClientRect();
+        const colors = ['#ff6b35', '#8b4513', '#a0522d'];
+        
+        for (let i = 0; i < 8; i++) {
+            const particle = document.createElement('div');
+            particle.style.position = 'fixed';
+            particle.style.width = '8px';
+            particle.style.height = '8px';
+            particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+            particle.style.borderRadius = '50%';
+            particle.style.pointerEvents = 'none';
+            particle.style.zIndex = '1000';
+            
+            const startX = rect.left + rect.width / 2;
+            const startY = rect.top + rect.height / 2;
+            
+            particle.style.left = startX + 'px';
+            particle.style.top = startY + 'px';
+            
+            document.body.appendChild(particle);
+            
+            // Animação da partícula
+            const angle = (Math.PI * 2 * i) / 8;
+            const velocity = 100 + Math.random() * 50;
+            const endX = startX + Math.cos(angle) * velocity;
+            const endY = startY + Math.sin(angle) * velocity;
+            
+            particle.animate([
+                {
+                    transform: 'translate(0, 0) scale(1)',
+                    opacity: 1
+                },
+                {
+                    transform: `translate(${endX - startX}px, ${endY - startY}px) scale(0)`,
+                    opacity: 0
+                }
+            ], {
+                duration: 1000,
+                easing: 'cubic-bezier(0.4, 0, 0.2, 1)'
+            }).onfinish = () => {
+                document.body.removeChild(particle);
+            };
+        }
+    }
+    
+    // Efeito de digitação para depoimentos
+    function initTypewriterEffect() {
+        const testimonialTexts = document.querySelectorAll('.testimonial-card p');
+        
+        testimonialTexts.forEach(text => {
+            const originalText = text.textContent;
+            text.textContent = '';
+            text.style.opacity = '0';
+            
+            let i = 0;
+            const typeInterval = setInterval(() => {
+                if (i < originalText.length) {
+                    text.textContent += originalText.charAt(i);
+                    i++;
+                } else {
+                    clearInterval(typeInterval);
+                    text.style.opacity = '1';
+                }
+            }, 30);
+        });
+    }
+    
+    // Inicializar efeitos dos depoimentos
+    initTestimonialEffects();
+    
+    // Efeito de digitação (opcional - pode ser ativado)
+    // initTypewriterEffect();
 }); 
