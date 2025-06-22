@@ -1,140 +1,72 @@
-# Victor Bueno - Arquiteto e Engenheiro Civil
+# Maykon Miranda - Engenheiro Civil e Arquiteto
 
-Site profissional para Victor Bueno, Arquiteto e Engenheiro Civil, especializado em projetos arquitetônicos, estruturais, elétricos e hidrosanitários.
+Site profissional para Maykon Miranda, Engenheiro Civil e Arquiteto, especializado em projetos arquitetônicos, engenharia, ART, laudos técnicos e consultoria.
 
 ## 🏗️ Sobre o Projeto
 
-Este é um site moderno e elegante desenvolvido para apresentar os serviços de arquitetura e engenharia civil do Victor Bueno. O design foi criado pensando em clientes exigentes que valorizam estética e sofisticação.
+Site moderno e responsivo desenvolvido para apresentar os serviços profissionais de Maykon Miranda, com foco em:
 
-### Características Principais
+- **Projetos de Arquitetura**: Residenciais, comerciais e industriais
+- **Projetos de Engenharia**: Estruturais, elétricos e hidrosanitários
+- **Emissão de ART**: Anotações de Responsabilidade Técnica
+- **Laudos Técnicos**: Vistorias, avaliações e perícias
+- **Parcerias e Consultoria**: Suporte técnico especializado
+- **Serviços Complementares**: Legalização, vistorias e orçamentos
 
-- **Design Sofisticado**: Interface elegante com paleta de cores premium (dourado e carvão)
-- **Responsivo**: Totalmente adaptável para dispositivos móveis e desktop
-- **Performance Otimizada**: Carregamento rápido e animações suaves
-- **SEO Otimizado**: Meta tags e estrutura semântica para melhor indexação
-- **Acessibilidade**: Navegação por teclado e leitores de tela
+## 🎨 Design e Tecnologias
 
-## 🎨 Design e Estética
+### Identidade Visual
+- **Cores**: Paleta azul corporativa moderna
+- **Tipografia**: Montserrat (títulos) e Source Sans Pro (corpo)
+- **Layout**: Design responsivo e elegante
+- **Estilo**: Profissional e confiável
 
-### Paleta de Cores
-- **Primária**: Carvão escuro (#1a1a1a)
-- **Secundária**: Cinza neutro (#8b8b8b)
-- **Destaque**: Dourado elegante (#d4af37)
-- **Fundo**: Branco puro (#ffffff)
-
-### Tipografia
-- **Títulos**: Playfair Display (serif)
-- **Corpo**: Inter (sans-serif)
-
-## 📱 Seções do Site
-
-### 1. Hero Section
-- Apresentação impactante com estatísticas
-- Grid de imagens de projetos
-- Badge de credenciamento CREA
-- Call-to-action para orçamento
-
-### 2. Especialidades
-- 6 categorias de serviços principais
-- Ícones personalizados
-- Lista detalhada de cada serviço
-- Efeitos hover sofisticados
-
-### 3. Portfólio
-- Grid responsivo de projetos
-- Overlay com informações
-- Efeitos de hover elegantes
-- 6 projetos de exemplo
-
-### 4. Sobre
-- Apresentação profissional
-- Credenciais destacadas
-- Badge de experiência
-- Imagem com overlay
-
-### 5. Contato
-- Informações de contato completas
-- Formulário com validação
-- Seleção de tipo de projeto
-- Integração com WhatsApp
-
-## 🛠️ Tecnologias Utilizadas
-
+### Tecnologias Utilizadas
 - **HTML5**: Estrutura semântica
-- **CSS3**: Estilos modernos com CSS Grid e Flexbox
-- **JavaScript**: Interatividade e animações
+- **CSS3**: Estilos modernos com variáveis CSS
+- **JavaScript**: Interatividade e funcionalidades
 - **Font Awesome**: Ícones profissionais
-- **Google Fonts**: Tipografia premium
+- **Google Fonts**: Tipografia otimizada
 
-## 🚀 Funcionalidades
+## 📱 Funcionalidades
 
-### Animações e Efeitos
-- Scroll suave entre seções
-- Animações de entrada (fadeInUp)
-- Efeitos hover nos cards
-- Parallax no hero section
-- Contadores animados
+### Principais Recursos
+- ✅ **Design Responsivo**: Otimizado para todos os dispositivos
+- ✅ **Navegação Suave**: Scroll suave entre seções
+- ✅ **Menu Mobile**: Navegação adaptativa para dispositivos móveis
+- ✅ **Formulário de Contato**: Integrado com validação
+- ✅ **Integração WhatsApp**: Contato direto via WhatsApp
+- ✅ **Animações**: Efeitos visuais modernos
+- ✅ **SEO Otimizado**: Meta tags e estrutura semântica
 
-### Interatividade
-- Menu mobile responsivo
-- Validação de formulário em tempo real
-- Notificações de sucesso
-- Tooltips informativos
-- Lazy loading de imagens
+### Seções do Site
+1. **Hero**: Apresentação principal com call-to-action
+2. **Serviços**: 6 categorias de serviços especializados
+3. **Portfólio**: Galeria de projetos realizados
+4. **Sobre**: Informações profissionais e credenciais
+5. **Contato**: Formulário e informações de contato
 
-### Performance
-- Otimização de imagens
-- Debounce em eventos de scroll
-- Intersection Observer para animações
-- CSS otimizado
+## 🚀 Como Usar
+
+### Visualização Local
+1. Clone ou baixe os arquivos
+2. Abra o `index.html` em seu navegador
+3. Navegue pelas seções do site
+
+### Personalização
+- **Cores**: Edite as variáveis CSS em `styles.css`
+- **Conteúdo**: Modifique o texto no `index.html`
+- **Imagens**: Substitua as imagens na pasta raiz
+- **Contato**: Atualize o número do WhatsApp no código
 
 ## 📞 Informações de Contato
 
-- **WhatsApp**: (62) 99527-7136
-- **E-mail**: victorsilvabueno1@gmail.com
-- **Instagram**: @eng.victorsbueno
-- **CREA**: 1019852402D-GO
-- **Atendimento**: Todo o Brasil
+- **WhatsApp**: (62) 9 9101-0254
+- **Telefone**: (62) 9 9101-0254
+- **Atendimento**: Goiás e Região
+- **Horário**: Segunda a Sexta: 8h às 18h
 
-## 🎯 Serviços Oferecidos
-
-1. **Projetos Arquitetônicos**
-   - Planta baixa e cortes
-   - Fachadas e elevações
-   - Detalhamento construtivo
-   - Especificações técnicas
-
-2. **Projetos Estruturais**
-   - Cálculo estrutural
-   - Dimensionamento de pilares
-   - Fundamentos e lajes
-   - Análise de cargas
-
-3. **Projetos Elétricos**
-   - Quadros de distribuição
-   - Iluminação e tomadas
-   - SPDA (Para-raios)
-   - Automação residencial
-
-4. **Projetos Hidrosanitários**
-   - Abastecimento de água
-   - Esgoto sanitário
-   - Drenagem pluvial
-   - Aquecimento solar
-
-5. **Projetos de Bombeiros**
-   - Sprinklers automáticos
-   - Extintores e hidrantes
-   - Sinalização de emergência
-   - Saídas de emergência
-
-6. **Estruturas Metálicas**
-   - Galpões industriais
-   - Mezaninos e passarelas
-   - Estruturas de cobertura
-   - Detalhamento de conexões
-
-## 📁 Estrutura de Arquivos
+## 🛠️ Estrutura de Arquivos
 
 ```
 contador/
@@ -150,42 +82,56 @@ contador/
 └── 06.webp            # Imagem de projeto 6
 ```
 
-## 🎨 Personalização
+## 📋 Serviços Oferecidos
 
-O site foi desenvolvido para ser facilmente personalizável:
+### Projetos de Arquitetura
+- Planta baixa detalhada
+- Fachadas e elevações
+- Detalhamento construtivo
+- Especificações técnicas
 
-- **Cores**: Variáveis CSS no arquivo `styles.css`
-- **Conteúdo**: Textos editáveis no `index.html`
-- **Imagens**: Substitua as imagens .webp pelos projetos reais
-- **Contatos**: Atualize as informações de contato
+### Projetos de Engenharia
+- Cálculo estrutural
+- Instalações elétricas
+- Instalações hidrosanitárias
+- Memória de cálculo
 
-## 📱 Responsividade
+### Emissão de ART
+- ART para projetos
+- ART para execução
+- ART para fiscalização
+- Regularização CREA
 
-O site é totalmente responsivo e funciona perfeitamente em:
-- Desktop (1200px+)
-- Tablet (768px - 1199px)
-- Mobile (320px - 767px)
+### Laudos Técnicos
+- Laudo de vistoria
+- Laudo de avaliação
+- Laudo de regularização
+- Perícia técnica
 
-## 🔧 Instalação e Uso
+### Parcerias e Consultoria
+- Parceria com construtoras
+- Consultoria técnica
+- Planejamento de obras
+- Cronograma físico-financeiro
 
-1. Clone ou baixe os arquivos
-2. Abra o `index.html` em um navegador
-3. Para produção, faça upload para um servidor web
-4. Atualize as informações de contato conforme necessário
+### Serviços Complementares
+- Legalização de projetos
+- Vistoria técnica
+- Placa de obras
+- Orçamentos detalhados
 
-## 📈 SEO e Marketing
+## 🔧 Manutenção
 
-O site inclui:
-- Meta tags otimizadas
-- Estrutura semântica HTML5
-- Schema markup para negócios locais
-- URLs amigáveis para SEO
-- Integração com redes sociais
+### Atualizações Recomendadas
+- **Conteúdo**: Mantenha informações atualizadas
+- **Imagens**: Adicione novos projetos ao portfólio
+- **Contato**: Verifique dados de contato regularmente
+- **SEO**: Atualize meta tags conforme necessário
 
-## 🤝 Suporte
+## 📄 Licença
 
-Para dúvidas ou sugestões sobre o site, entre em contato através dos canais disponibilizados.
+Este projeto foi desenvolvido para uso profissional de Maykon Miranda. Todos os direitos reservados.
 
 ---
 
-**Desenvolvido com ❤️ para Victor Bueno - Arquiteto e Engenheiro Civil** 
+**Desenvolvido com ❤️ para profissionais de engenharia e arquitetura** 

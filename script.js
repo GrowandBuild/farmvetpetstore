@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const header = document.querySelector('.header');
     
     window.addEventListener('scroll', function() {
-        if (window.scrollY > 50) {
+        if (window.scrollY > 100) {
             header.classList.add('scrolled');
         } else {
             header.classList.remove('scrolled');
@@ -61,40 +61,59 @@ document.addEventListener('DOMContentLoaded', function() {
             const submitBtn = this.querySelector('button[type="submit"]');
             const originalText = submitBtn.innerHTML;
             
-            // Adiciona loading state
+            // Show loading state
             submitBtn.disabled = true;
             submitBtn.classList.add('loading');
-            submitBtn.innerHTML = 'Enviando...';
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
             
-            // Simula envio do formulário (substitua por sua lógica real)
+            // Get form data
+            const formData = new FormData(this);
+            const data = {
+                name: formData.get('name'),
+                email: formData.get('email'),
+                phone: formData.get('phone'),
+                service: formData.get('service'),
+                message: formData.get('message')
+            };
+            
+            // Simulate form submission (replace with actual form handling)
             setTimeout(() => {
-                // Remove loading state
+                // Reset form
+                this.reset();
+                
+                // Show success message
+                showNotification('Mensagem enviada com sucesso! Entraremos em contato em breve.', 'success');
+                
+                // Reset button
                 submitBtn.disabled = false;
                 submitBtn.classList.remove('loading');
                 submitBtn.innerHTML = originalText;
-                
-                // Mostra mensagem de sucesso
-                showNotification('Solicitação enviada com sucesso! Entraremos em contato em breve.', 'success');
-                
-                // Limpa o formulário
-                contactForm.reset();
             }, 2000);
         });
     }
     
     // Notification system
     function showNotification(message, type = 'info') {
+        // Remove existing notifications
+        const existingNotification = document.querySelector('.notification');
+        if (existingNotification) {
+            existingNotification.remove();
+        }
+        
+        // Create notification element
         const notification = document.createElement('div');
         notification.className = `notification notification-${type}`;
         notification.innerHTML = `
             <div class="notification-content">
                 <i class="fas ${type === 'success' ? 'fa-check-circle' : 'fa-info-circle'}"></i>
                 <span>${message}</span>
-                <button class="notification-close">&times;</button>
+                <button class="notification-close">
+                    <i class="fas fa-times"></i>
+                </button>
             </div>
         `;
         
-        // Adiciona estilos CSS inline para a notificação
+        // Add styles
         notification.style.cssText = `
             position: fixed;
             top: 20px;
@@ -103,37 +122,51 @@ document.addEventListener('DOMContentLoaded', function() {
             color: white;
             padding: 1rem 1.5rem;
             border-radius: 8px;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
             z-index: 10000;
             transform: translateX(100%);
             transition: transform 0.3s ease;
             max-width: 400px;
         `;
         
+        notification.querySelector('.notification-content').style.cssText = `
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        `;
+        
+        notification.querySelector('.notification-close').style.cssText = `
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            margin-left: auto;
+            padding: 0;
+            font-size: 1rem;
+        `;
+        
+        // Add to page
         document.body.appendChild(notification);
         
-        // Anima a entrada
+        // Animate in
         setTimeout(() => {
             notification.style.transform = 'translateX(0)';
         }, 100);
         
-        // Botão de fechar
-        const closeBtn = notification.querySelector('.notification-close');
-        closeBtn.addEventListener('click', () => {
+        // Close button functionality
+        notification.querySelector('.notification-close').addEventListener('click', () => {
             notification.style.transform = 'translateX(100%)';
             setTimeout(() => {
-                document.body.removeChild(notification);
+                notification.remove();
             }, 300);
         });
         
-        // Auto-remove após 5 segundos
+        // Auto remove after 5 seconds
         setTimeout(() => {
-            if (document.body.contains(notification)) {
+            if (notification.parentNode) {
                 notification.style.transform = 'translateX(100%)';
                 setTimeout(() => {
-                    if (document.body.contains(notification)) {
-                        document.body.removeChild(notification);
-                    }
+                    notification.remove();
                 }, 300);
             }
         }, 5000);
@@ -392,4 +425,68 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+    
+    // Close mobile menu when clicking on a link
+    document.querySelectorAll('.nav-menu a').forEach(link => {
+        link.addEventListener('click', () => {
+            navMenu.classList.remove('active');
+            navToggle.classList.remove('active');
+        });
+    });
+    
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+    
+    // WhatsApp integration
+    function openWhatsApp(message = '') {
+        const phone = '5562991010254';
+        const defaultMessage = 'Olá! Gostaria de solicitar um orçamento para projeto.';
+        const finalMessage = message || defaultMessage;
+        const url = `https://wa.me/${phone}?text=${encodeURIComponent(finalMessage)}`;
+        window.open(url, '_blank');
+    }
+    
+    // Add WhatsApp click handlers
+    document.querySelectorAll('a[href*="wa.me"]').forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const message = this.getAttribute('data-message') || '';
+            openWhatsApp(message);
+        });
+    });
+    
+    // Service type change handler
+    const serviceSelect = document.getElementById('service');
+    if (serviceSelect) {
+        serviceSelect.addEventListener('change', function() {
+            const messageField = document.getElementById('message');
+            const serviceMessages = {
+                'arquitetura': 'Gostaria de solicitar um projeto arquitetônico.',
+                'engenharia': 'Gostaria de solicitar um projeto de engenharia.',
+                'art': 'Gostaria de solicitar emissão de ART.',
+                'laudo': 'Gostaria de solicitar um laudo técnico.',
+                'vistoria': 'Gostaria de solicitar uma vistoria técnica.',
+                'orcamento': 'Gostaria de solicitar um orçamento.',
+                'consultoria': 'Gostaria de solicitar consultoria técnica.',
+                'outro': 'Gostaria de solicitar informações sobre outros serviços.'
+            };
+            
+            if (this.value && serviceMessages[this.value]) {
+                messageField.placeholder = serviceMessages[this.value];
+            } else {
+                messageField.placeholder = 'Descreva seu projeto ou solicitação';
+            }
+        });
+    }
 }); 
