@@ -492,9 +492,8 @@ section {
     width: 100%;
     max-width: 400px;
     aspect-ratio: 1 / 1;
-    background-image: url('clientemobile.png');
-    background-size: contain;
-    background-repeat: no-repeat;
+    background-image: url('foto.png');
+    background-size: cover;
     background-position: center;
     border-radius: var(--border-radius-lg);
     box-shadow: var(--shadow-xl);
