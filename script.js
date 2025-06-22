@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 submitBtn.innerHTML = originalText;
                 
                 // Mostra mensagem de sucesso
-                showNotification('Mensagem enviada com sucesso! Entraremos em contato em breve.', 'success');
+                showNotification('Solicitação enviada com sucesso! Entraremos em contato em breve.', 'success');
                 
                 // Limpa o formulário
                 contactForm.reset();
@@ -155,7 +155,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }, observerOptions);
     
     // Observa elementos para animação
-    const animatedElements = document.querySelectorAll('.service-card, .testimonial-card, .about-content, .contact-content, .stat');
+    const animatedElements = document.querySelectorAll('.service-card, .portfolio-item, .about-content, .contact-content');
     
     animatedElements.forEach(el => {
         el.style.opacity = '0';
@@ -164,47 +164,60 @@ document.addEventListener('DOMContentLoaded', function() {
         observer.observe(el);
     });
     
-    // Contador animado para estatísticas
-    function animateCounter(element, target, duration = 2000) {
-        let start = 0;
-        const increment = target / (duration / 16);
-        
-        function updateCounter() {
-            start += increment;
-            if (start < target) {
-                element.textContent = Math.floor(start);
-                requestAnimationFrame(updateCounter);
-            } else {
-                element.textContent = target;
-            }
-        }
-        
-        updateCounter();
-    }
+    // Portfolio hover effects
+    const portfolioItems = document.querySelectorAll('.portfolio-item');
     
-    // Observa estatísticas para animação
-    const statsObserver = new IntersectionObserver(function(entries) {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const statNumber = entry.target.querySelector('.stat-number');
-                const target = parseInt(statNumber.textContent.replace(/\D/g, ''));
-                const suffix = statNumber.textContent.replace(/\d/g, '');
-                
-                animateCounter(statNumber, target);
-                statNumber.textContent = target + suffix;
-                
-                statsObserver.unobserve(entry.target);
-            }
+    portfolioItems.forEach(item => {
+        item.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-10px) scale(1.02)';
         });
-    }, { threshold: 0.5 });
-    
-    const statElements = document.querySelectorAll('.stat');
-    statElements.forEach(stat => {
-        statsObserver.observe(stat);
+        
+        item.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0) scale(1)';
+        });
     });
     
-    // Validação de formulário em tempo real
-    const formInputs = document.querySelectorAll('.form-group input, .form-group select, .form-group textarea');
+    // Service cards hover effects
+    const serviceCards = document.querySelectorAll('.service-card');
+    
+    serviceCards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-15px)';
+            this.style.boxShadow = '0 30px 60px rgba(0, 0, 0, 0.2)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
+            this.style.boxShadow = 'var(--shadow-lg)';
+        });
+    });
+    
+    // Parallax effect para hero section
+    window.addEventListener('scroll', function() {
+        const scrolled = window.pageYOffset;
+        const heroBackground = document.querySelector('.hero-background');
+        
+        if (heroBackground) {
+            heroBackground.style.transform = `translateY(${scrolled * 0.5}px)`;
+        }
+    });
+    
+    // Smooth reveal animation para seções
+    const sectionObserver = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('revealed');
+            }
+        });
+    }, { threshold: 0.1 });
+    
+    const sections = document.querySelectorAll('section');
+    sections.forEach(section => {
+        sectionObserver.observe(section);
+    });
+    
+    // Form validation
+    const formInputs = document.querySelectorAll('.contact-form input, .contact-form textarea, .contact-form select');
     
     formInputs.forEach(input => {
         input.addEventListener('blur', function() {
@@ -213,53 +226,44 @@ document.addEventListener('DOMContentLoaded', function() {
         
         input.addEventListener('input', function() {
             if (this.classList.contains('error')) {
-                validateField(this);
+                removeFieldError(this);
             }
         });
     });
     
     function validateField(field) {
         const value = field.value.trim();
-        let isValid = true;
-        let errorMessage = '';
         
-        // Remove classes de erro anteriores
-        field.classList.remove('error', 'success');
+        // Remove erros anteriores
+        removeFieldError(field);
         
         // Validações específicas
         if (field.type === 'email' && value) {
             const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (!emailRegex.test(value)) {
-                isValid = false;
-                errorMessage = 'E-mail inválido';
+                showFieldError(field, 'Por favor, insira um e-mail válido');
+                return false;
             }
         }
         
         if (field.type === 'tel' && value) {
-            const phoneRegex = /^\(?[1-9]{2}\)? ?(?:[2-8]|9[1-9])[0-9]{3}\-?[0-9]{4}$/;
-            if (!phoneRegex.test(value)) {
-                isValid = false;
-                errorMessage = 'Telefone inválido';
+            const phoneRegex = /^[\d\s\(\)\-\+]+$/;
+            if (!phoneRegex.test(value) || value.length < 10) {
+                showFieldError(field, 'Por favor, insira um telefone válido');
+                return false;
             }
         }
         
         if (field.hasAttribute('required') && !value) {
-            isValid = false;
-            errorMessage = 'Este campo é obrigatório';
+            showFieldError(field, 'Este campo é obrigatório');
+            return false;
         }
         
-        // Aplica resultado da validação
-        if (!isValid) {
-            field.classList.add('error');
-            showFieldError(field, errorMessage);
-        } else if (value) {
-            field.classList.add('success');
-            removeFieldError(field);
-        }
+        return true;
     }
     
     function showFieldError(field, message) {
-        removeFieldError(field);
+        field.classList.add('error');
         
         const errorDiv = document.createElement('div');
         errorDiv.className = 'field-error';
@@ -267,7 +271,7 @@ document.addEventListener('DOMContentLoaded', function() {
         errorDiv.style.cssText = `
             color: #ef4444;
             font-size: 0.875rem;
-            margin-top: 0.25rem;
+            margin-top: 0.5rem;
             display: block;
         `;
         
@@ -275,15 +279,14 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function removeFieldError(field) {
-        const existingError = field.parentNode.querySelector('.field-error');
-        if (existingError) {
-            existingError.remove();
+        field.classList.remove('error');
+        const errorDiv = field.parentNode.querySelector('.field-error');
+        if (errorDiv) {
+            errorDiv.remove();
         }
     }
     
-    // Lazy loading para imagens (se houver)
-    const images = document.querySelectorAll('img[data-src]');
-    
+    // Lazy loading para imagens
     const imageObserver = new IntersectionObserver(function(entries) {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -295,136 +298,34 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    images.forEach(img => {
+    const lazyImages = document.querySelectorAll('img[data-src]');
+    lazyImages.forEach(img => {
         imageObserver.observe(img);
     });
     
-    // Parallax effect para o hero section
-    window.addEventListener('scroll', function() {
-        const scrolled = window.pageYOffset;
-        const hero = document.querySelector('.hero');
-        
-        if (hero) {
-            const rate = scrolled * -0.5;
-            hero.style.transform = `translateY(${rate}px)`;
-        }
-    });
+    // Smooth scroll para botões de ação
+    const actionButtons = document.querySelectorAll('.btn[href^="#"]');
     
-    // Tooltip para informações adicionais
-    const tooltipElements = document.querySelectorAll('[data-tooltip]');
-    
-    tooltipElements.forEach(element => {
-        element.addEventListener('mouseenter', function() {
-            const tooltip = document.createElement('div');
-            tooltip.className = 'tooltip';
-            tooltip.textContent = this.getAttribute('data-tooltip');
-            tooltip.style.cssText = `
-                position: absolute;
-                background: #1e293b;
-                color: white;
-                padding: 0.5rem 1rem;
-                border-radius: 4px;
-                font-size: 0.875rem;
-                z-index: 1000;
-                pointer-events: none;
-                white-space: nowrap;
-                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            `;
-            
-            document.body.appendChild(tooltip);
-            
-            const rect = this.getBoundingClientRect();
-            tooltip.style.left = rect.left + (rect.width / 2) - (tooltip.offsetWidth / 2) + 'px';
-            tooltip.style.top = rect.top - tooltip.offsetHeight - 10 + 'px';
-            
-            this.tooltip = tooltip;
-        });
-        
-        element.addEventListener('mouseleave', function() {
-            if (this.tooltip) {
-                document.body.removeChild(this.tooltip);
-                this.tooltip = null;
+    actionButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            if (href.startsWith('#')) {
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) {
+                    const headerHeight = document.querySelector('.header').offsetHeight;
+                    const targetPosition = target.offsetTop - headerHeight;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
             }
         });
     });
     
-    // Back to top button
-    const backToTopBtn = document.createElement('button');
-    backToTopBtn.innerHTML = '<i class="fas fa-arrow-up"></i>';
-    backToTopBtn.className = 'back-to-top';
-    backToTopBtn.style.cssText = `
-        position: fixed;
-        bottom: 2rem;
-        left: 2rem;
-        width: 50px;
-        height: 50px;
-        background: var(--primary-color);
-        color: white;
-        border: none;
-        border-radius: 50%;
-        cursor: pointer;
-        opacity: 0;
-        visibility: hidden;
-        transition: all 0.3s ease;
-        z-index: 1000;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    `;
-    
-    document.body.appendChild(backToTopBtn);
-    
-    window.addEventListener('scroll', function() {
-        if (window.pageYOffset > 300) {
-            backToTopBtn.style.opacity = '1';
-            backToTopBtn.style.visibility = 'visible';
-        } else {
-            backToTopBtn.style.opacity = '0';
-            backToTopBtn.style.visibility = 'hidden';
-        }
-    });
-    
-    backToTopBtn.addEventListener('click', function() {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    });
-    
-    // Hover effects para cards
-    const cards = document.querySelectorAll('.service-card, .testimonial-card');
-    
-    cards.forEach(card => {
-        card.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-10px) scale(1.02)';
-        });
-        
-        card.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(0) scale(1)';
-        });
-    });
-    
-    // Preloader (se necessário)
-    window.addEventListener('load', function() {
-        const preloader = document.querySelector('.preloader');
-        if (preloader) {
-            preloader.style.opacity = '0';
-            setTimeout(() => {
-                preloader.style.display = 'none';
-            }, 300);
-        }
-    });
-    
-    // Keyboard navigation
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-            // Fecha menus abertos
-            if (navMenu && navMenu.classList.contains('active')) {
-                navMenu.classList.remove('active');
-                navToggle.classList.remove('active');
-            }
-        }
-    });
-    
-    // Performance optimization - Debounce scroll events
+    // Debounce function para otimização
     function debounce(func, wait) {
         let timeout;
         return function executedFunction(...args) {
@@ -437,12 +338,58 @@ document.addEventListener('DOMContentLoaded', function() {
         };
     }
     
-    // Aplica debounce aos eventos de scroll
+    // Otimização do scroll com debounce
     const debouncedScrollHandler = debounce(function() {
-        // Código de scroll aqui se necessário
+        // Recalcula posições se necessário
     }, 16);
     
     window.addEventListener('scroll', debouncedScrollHandler);
     
-    console.log('Contador Profissional - Site carregado com sucesso!');
+    // Preloader (opcional)
+    window.addEventListener('load', function() {
+        const preloader = document.querySelector('.preloader');
+        if (preloader) {
+            preloader.style.opacity = '0';
+            setTimeout(() => {
+                preloader.style.display = 'none';
+            }, 300);
+        }
+    });
+    
+    // Adiciona classe para animações CSS
+    document.body.classList.add('loaded');
+    
+    // Inicializa tooltips (se necessário)
+    const tooltipElements = document.querySelectorAll('[data-tooltip]');
+    tooltipElements.forEach(element => {
+        element.addEventListener('mouseenter', function() {
+            const tooltip = document.createElement('div');
+            tooltip.className = 'tooltip';
+            tooltip.textContent = this.getAttribute('data-tooltip');
+            tooltip.style.cssText = `
+                position: absolute;
+                background: rgba(0, 0, 0, 0.8);
+                color: white;
+                padding: 0.5rem 1rem;
+                border-radius: 4px;
+                font-size: 0.875rem;
+                z-index: 1000;
+                pointer-events: none;
+                white-space: nowrap;
+            `;
+            
+            document.body.appendChild(tooltip);
+            
+            const rect = this.getBoundingClientRect();
+            tooltip.style.left = rect.left + (rect.width / 2) - (tooltip.offsetWidth / 2) + 'px';
+            tooltip.style.top = rect.top - tooltip.offsetHeight - 10 + 'px';
+        });
+        
+        element.addEventListener('mouseleave', function() {
+            const tooltip = document.querySelector('.tooltip');
+            if (tooltip) {
+                tooltip.remove();
+            }
+        });
+    });
 }); 
