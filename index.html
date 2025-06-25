@@ -2,45 +2,82 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>FarmVet Pet Store - Pet Shop Completo | Produtos e Serviços para Pets</title>
     <meta name="description" content="FarmVet Pet Store - Pet shop completo com produtos de qualidade, serviços veterinários, banho e tosa. Tudo para seu pet em um só lugar.">
+    
+    <!-- SEO Meta Tags -->
+    <meta name="keywords" content="pet shop, veterinário, banho e tosa, ração, produtos para pets, Brasília">
+    <meta name="author" content="FarmVet Pet Store">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://farmvetpetstore.com/">
+    <meta property="og:title" content="FarmVet Pet Store - Pet Shop Completo">
+    <meta property="og:description" content="Produtos de qualidade, serviços veterinários, banho e tosa. Tudo que seu pet precisa em um só lugar.">
+    <meta property="og:image" content="https://farmvetpetstore.com/logo.png">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://farmvetpetstore.com/">
+    <meta property="twitter:title" content="FarmVet Pet Store - Pet Shop Completo">
+    <meta property="twitter:description" content="Produtos de qualidade, serviços veterinários, banho e tosa. Tudo que seu pet precisa em um só lugar.">
+    <meta property="twitter:image" content="https://farmvetpetstore.com/logo.png">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="logo.png">
+    <link rel="apple-touch-icon" href="logo.png">
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="styles.css" as="style">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" as="style">
+    
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Font Awesome - Load only needed icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"></noscript>
 </head>
 <body>
-    <header class="header">
-        <nav class="nav">
+    <!-- Skip to main content link for accessibility -->
+    <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
+    
+    <header class="header" role="banner">
+        <nav class="nav" role="navigation" aria-label="Navegação principal">
             <div class="nav-container">
                 <div class="nav-logo">
-                    <span class="logo-text">FarmVet</span>
-                    <span class="logo-subtitle">Pet Store</span>
+                    <a href="#inicio" aria-label="Ir para o início da página">
+                        <img src="SVG/LOGOPBRANCA.svg" alt="Logo FarmVet Pet Store" class="logo-svg" />
+                    </a>
                 </div>
-                <ul class="nav-menu">
-                    <li><a href="#inicio">Início</a></li>
-                    <li><a href="#produtos">Produtos</a></li>
-                    <li><a href="#servicos">Serviços</a></li>
-                    <li><a href="#depoimentos">Depoimentos</a></li>
-                    <li><a href="#lojas">Nossas Lojas</a></li>
-                    <li><a href="#sobre">Sobre</a></li>
-                    <li><a href="#contato">Contato</a></li>
+                <button class="nav-toggle" aria-label="Abrir menu de navegação" aria-expanded="false" aria-controls="nav-menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul class="nav-menu" id="nav-menu" role="menubar">
+                    <li role="none"><a href="#inicio" role="menuitem" tabindex="0">Início</a></li>
+                    <li role="none"><a href="#produtos" role="menuitem" tabindex="0">Produtos</a></li>
+                    <li role="none"><a href="#servicos" role="menuitem" tabindex="0">Serviços</a></li>
+                    <li role="none"><a href="#depoimentos" role="menuitem" tabindex="0">Depoimentos</a></li>
+                    <li role="none"><a href="#lojas" role="menuitem" tabindex="0">Nossas Lojas</a></li>
+                    <li role="none"><a href="#sobre" role="menuitem" tabindex="0">Sobre</a></li>
+                    <li role="none"><a href="#contato" role="menuitem" tabindex="0">Contato</a></li>
                 </ul>
-                <div class="nav-toggle">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
             </div>
         </nav>
     </header>
 
     <!-- Hero Section -->
-    <section id="inicio" class="hero">
-        <div class="hero-background">
+    <section id="inicio" class="hero" role="banner" aria-labelledby="hero-title">
+        <div class="hero-svg-bottom-left"></div>
+        <div class="hero-background" aria-hidden="true">
             <div class="hero-overlay"></div>
         </div>
-        <div class="hero-paws">
+        <div class="hero-paws" aria-hidden="true">
             <span></span>
             <span></span>
             <span></span>
@@ -58,31 +95,47 @@
             <div class="hero-grid">
                 <div class="hero-content">
                     <div class="hero-badge">
-                        <i class="fas fa-paw"></i>
+                        <i class="fas fa-paw" aria-hidden="true"></i>
                         <span>Pet Shop Completo</span>
                     </div>
-                    <h1 class="hero-title">
+                    <h1 class="hero-title" id="hero-title">
                         Cuidando do seu <span class="highlight">melhor amigo</span> com amor
                     </h1>
                     <p class="hero-subtitle">
                         Produtos de qualidade, serviços veterinários, banho e tosa. 
                         Tudo que seu pet precisa em um só lugar, com muito carinho e dedicação.
                     </p>
+                    <div class="hero-hours">
+                        <i class="fas fa-clock"></i>
+                        <span>10h-22h <span class="hours-label">(Seg-Sáb)</span></span>
+                        <span class="hero-hours-sep">|</span>
+                        <span>13h-19h <span class="hours-label">(Dom/Feriados)</span></span>
+                    </div>
                     <div class="hero-buttons">
-                        <a href="https://wa.me/5562991010254" target="_blank" class="btn btn-primary">
-                            <i class="fab fa-whatsapp"></i>
+                        <a href="https://wa.me/5562991010254" target="_blank" rel="noopener noreferrer" class="btn btn-primary" aria-label="Abrir WhatsApp para agendar serviço">
+                            <i class="fab fa-whatsapp" aria-hidden="true"></i>
                             Agendar Serviço
                         </a>
-                        <a href="#produtos" class="btn btn-secondary">
-                            <i class="fas fa-shopping-bag"></i>
+                        <a href="#produtos" class="btn btn-secondary" aria-label="Ver produtos disponíveis">
+                            <i class="fas fa-shopping-bag" aria-hidden="true"></i>
                             Ver Produtos
                         </a>
                     </div>
                 </div>
                 <div class="hero-image">
-                    <div class="hero-image-grid">
-                        <img src="lojasanorte1.png" alt="Pet feliz" class="hero-img-1">
-                        <img src="lojaterraço3.png" alt="Produtos para pets" class="hero-img-2">
+                    <div class="carousel" id="hero-carousel">
+                        <button class="carousel-arrow left" aria-label="Imagem anterior">&#10094;</button>
+                        <div class="carousel-track">
+                            <img src="imagemdedog1.png" alt="Cachorro 1" class="carousel-img active" loading="lazy">
+                            <img src="imagemde dog 2.png" alt="Cachorro 2" class="carousel-img" loading="lazy">
+                            <img src="imagemde dog 3 copiar.png" alt="Cachorro 3" class="carousel-img" loading="lazy">
+                        </div>
+                        <button class="carousel-arrow right" aria-label="Próxima imagem">&#10095;</button>
+                        <div class="carousel-indicators">
+                            <span class="indicator active"></span>
+                            <span class="indicator"></span>
+                            <span class="indicator"></span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -93,87 +146,86 @@
     <section id="produtos" class="services">
         <div class="container">
             <div class="section-header">
-                <span class="section-badge">Nossos Produtos</span>
+                <span class="section-badge" style="background:#ffe082;color:#a0522d;font-weight:700;font-size:1.05rem;padding:0.4em 1.2em;border-radius:1em;box-shadow:0 2px 8px #ffe08255;letter-spacing:0.5px;">Nossos Produtos</span>
                 <h2>Produtos de Qualidade para seu Pet</h2>
-                <p>Oferecemos uma ampla variedade de produtos para cães, gatos e outros pets</p>
+                <p style="max-width:520px;margin:0 auto 0.5em auto;font-size:1.13rem;">Tudo para o bem-estar do seu pet: rações premium, petiscos, brinquedos, medicamentos, acessórios, higiene e muito mais. Só trabalhamos com marcas reconhecidas e produtos selecionados!</p>
             </div>
             <div class="services-grid">
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-drumstick-bite"></i>
+                <div class="service-card" tabindex="0" aria-label="Rações Premium: Rações de alta qualidade para cães e gatos de todas as idades e portes.">
+                    <div class="service-badge">Premium</div>
+                    <div class="service-icon" aria-hidden="true">
+                        <i class="fas fa-utensils"></i>
                     </div>
                     <h3>Rações Premium</h3>
-                    <p>Rações de alta qualidade para cães e gatos de todas as idades e portes.</p>
+                    <p>Nutrição de alta qualidade para todas as fases da vida do seu pet.</p>
                     <ul>
-                        <li>Ração para filhotes</li>
-                        <li>Ração para adultos</li>
-                        <li>Ração para idosos</li>
-                        <li>Ração especializada</li>
+                        <li>Filhotes, adultos e idosos</li>
+                        <li>Rações especiais</li>
+                        <li>Marcas líderes</li>
                     </ul>
                 </div>
-                <div class="service-card">
-                    <div class="service-icon">
+                <div class="service-card" tabindex="0" aria-label="Petiscos e Brinquedos: Petiscos saborosos e brinquedos divertidos para entreter seu pet.">
+                    <div class="service-badge">Diversão</div>
+                    <div class="service-icon" aria-hidden="true">
                         <i class="fas fa-bone"></i>
                     </div>
-                    <h3>Petiscos e Brinquedos</h3>
-                    <p>Petiscos saborosos e brinquedos divertidos para entreter seu pet.</p>
+                    <h3>Petiscos & Brinquedos</h3>
+                    <p>Petiscos naturais e brinquedos que estimulam e divertem.</p>
                     <ul>
-                        <li>Petiscos naturais</li>
+                        <li>Petiscos saudáveis</li>
                         <li>Brinquedos interativos</li>
-                        <li>Bolas e pelúcias</li>
-                        <li>Mordedores</li>
+                        <li>Bolas, pelúcias e mordedores</li>
                     </ul>
                 </div>
-                <div class="service-card">
-                    <div class="service-icon">
+                <div class="service-card" tabindex="0" aria-label="Medicamentos: Medicamentos e suplementos para a saúde e bem-estar do seu pet.">
+                    <div class="service-badge">Saúde</div>
+                    <div class="service-icon" aria-hidden="true">
                         <i class="fas fa-pills"></i>
                     </div>
                     <h3>Medicamentos</h3>
-                    <p>Medicamentos e suplementos para a saúde e bem-estar do seu pet.</p>
+                    <p>Saúde e prevenção com produtos confiáveis e seguros.</p>
                     <ul>
-                        <li>Vermífugos</li>
-                        <li>Antipulgas</li>
+                        <li>Vermífugos e antipulgas</li>
                         <li>Suplementos vitamínicos</li>
                         <li>Produtos de higiene</li>
                     </ul>
                 </div>
-                <div class="service-card">
-                    <div class="service-icon">
+                <div class="service-card" tabindex="0" aria-label="Acessórios: Coleiras, roupas, camas e outros acessórios para conforto do seu pet.">
+                    <div class="service-badge">Estilo</div>
+                    <div class="service-icon" aria-hidden="true">
                         <i class="fas fa-tshirt"></i>
                     </div>
                     <h3>Acessórios</h3>
-                    <p>Coleiras, roupas, camas e outros acessórios para conforto do seu pet.</p>
+                    <p>Conforto, estilo e praticidade para o dia a dia do seu pet.</p>
                     <ul>
-                        <li>Coleiras e guias</li>
+                        <li>Coleiras, guias e peitorais</li>
                         <li>Roupas e casacos</li>
-                        <li>Camas e cobertores</li>
-                        <li>Comedouros e bebedouros</li>
+                        <li>Camas, cobertores e comedouros</li>
                     </ul>
                 </div>
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-shampoo"></i>
+                <div class="service-card" tabindex="0" aria-label="Higiene e Beleza: Produtos para manter seu pet sempre limpo e cheiroso.">
+                    <div class="service-badge">Beleza</div>
+                    <div class="service-icon" aria-hidden="true">
+                        <i class="fas fa-spray-can"></i>
                     </div>
-                    <h3>Higiene e Beleza</h3>
-                    <p>Produtos para manter seu pet sempre limpo e cheiroso.</p>
+                    <h3>Higiene & Beleza</h3>
+                    <p>Shampoos, perfumes e acessórios para pets sempre limpos e cheirosos.</p>
                     <ul>
                         <li>Shampoos e condicionadores</li>
-                        <li>Escovas e pentes</li>
-                        <li>Perfumes para pets</li>
+                        <li>Escovas, pentes e perfumes</li>
                         <li>Produtos de limpeza</li>
                     </ul>
                 </div>
-                <div class="service-card">
-                    <div class="service-icon">
+                <div class="service-card" tabindex="0" aria-label="Casas e Transporte: Casinhas, caixas de transporte e outros itens para conforto.">
+                    <div class="service-badge">Conforto</div>
+                    <div class="service-icon" aria-hidden="true">
                         <i class="fas fa-home"></i>
                     </div>
-                    <h3>Casas e Transporte</h3>
-                    <p>Casinhas, caixas de transporte e outros itens para conforto.</p>
+                    <h3>Casas & Transporte</h3>
+                    <p>Casinhas, caixas e acessórios para viagens e conforto em casa.</p>
                     <ul>
-                        <li>Casinhas para cães</li>
-                        <li>Caixas de transporte</li>
-                        <li>Tapetes e almofadas</li>
-                        <li>Portões e cercas</li>
+                        <li>Casinhas e caixas de transporte</li>
+                        <li>Tapetes, almofadas e portões</li>
                     </ul>
                 </div>
             </div>
@@ -184,23 +236,54 @@
     <section id="servicos" class="portfolio">
         <div class="container">
             <div class="section-header">
-                <span class="section-badge">Nossos Serviços</span>
+                <span class="section-badge" style="background:#ffe082;color:#a0522d;font-weight:700;font-size:1.05rem;padding:0.4em 1.2em;border-radius:1em;box-shadow:0 2px 8px #ffe08255;letter-spacing:0.5px;">Nossos Serviços</span>
                 <h2>Serviços Especializados</h2>
-                <p>Oferecemos serviços completos para cuidar da saúde e bem-estar do seu pet</p>
+                <p style="max-width:520px;margin:0 auto 0.5em auto;font-size:1.13rem;">Cuidamos da saúde e bem-estar do seu pet com profissionalismo e muito carinho. Nossa equipe especializada está pronta para atender você!</p>
             </div>
             <div class="portfolio-grid">
                 <div class="portfolio-item">
+                    <div class="service-icon-large">
+                        <i class="fas fa-shower"></i>
+                    </div>
                     <img src="lojasanorte1.png" alt="Banho e Tosa">
                     <div class="portfolio-overlay">
                         <h3>Banho e Tosa</h3>
                         <p>Banho completo com produtos de qualidade</p>
+                        <div class="service-features">
+                            <span>✓ Produtos premium</span>
+                            <span>✓ Tosa especializada</span>
+                            <span>✓ Hidratação</span>
+                        </div>
                     </div>
                 </div>
                 <div class="portfolio-item">
+                    <div class="service-icon-large">
+                        <i class="fas fa-stethoscope"></i>
+                    </div>
                     <img src="lojaterraço3.png" alt="Consulta Veterinária">
                     <div class="portfolio-overlay">
                         <h3>Consulta Veterinária</h3>
                         <p>Atendimento veterinário especializado</p>
+                        <div class="service-features">
+                            <span>✓ Consultas</span>
+                            <span>✓ Vacinas</span>
+                            <span>✓ Exames</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-item">
+                    <div class="service-icon-large">
+                        <i class="fas fa-cut"></i>
+                    </div>
+                    <img src="lojasanorte2.png" alt="Tosa Especializada">
+                    <div class="portfolio-overlay">
+                        <h3>Tosa Especializada</h3>
+                        <p>Tosa artística e higiênica</p>
+                        <div class="service-features">
+                            <span>✓ Tosa artística</span>
+                            <span>✓ Tosa higiênica</span>
+                            <span>✓ Acabamento perfeito</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -270,99 +353,151 @@
         </div>
     </section>
 
-    <!-- Testimonials Section -->
+    <!-- Testimonials Section - NOVA VERSÃO -->
     <section id="depoimentos" class="testimonials">
         <div class="container">
             <div class="section-header">
-                <span class="section-badge">Depoimentos</span>
+                <span class="section-badge" style="background:#ffe082;color:#a0522d;font-weight:700;font-size:1.05rem;padding:0.4em 1.2em;border-radius:1em;box-shadow:0 2px 8px #ffe08255;letter-spacing:0.5px;">Depoimentos</span>
                 <h2>O que nossos clientes dizem</h2>
-                <p>O carinho e a satisfação de quem confia em nosso trabalho</p>
+                <p style="max-width:520px;margin:0 auto 0.5em auto;font-size:1.13rem;">A satisfação dos nossos clientes é nossa maior recompensa. Veja o que eles têm a dizer sobre nossos serviços!</p>
             </div>
+            
             <div class="testimonials-grid">
-                <!-- Testimonial 1 -->
-                <div class="testimonial-card featured">
-                    <div class="testimonial-content">
-                        <div class="testimonial-text">
-                            "Estou super satisfeita com os serviços da Farmvet. O meu Chong é sempre atendido com carinho e profissionalismo e as recomendações de banho e tosa sempre foram atendidas pela equipe. Percebo também que os produtos utilizados no banho são de ótima qualidade, pois deixam o pelinho dele branquinho e macio, mesmo sem hidratação. Parabéns à profissional Vanessa que fez essa tosa perfeita!"
+                <!-- Feedback 1 -->
+                <div class="feedback-card">
+                    <div class="feedback-header">
+                        <div class="pet-avatar">
+                            <i class="fas fa-dog"></i>
                         </div>
-                        <div class="testimonial-author">
-                            <img src="depoimento-chong.png" alt="Chong, o pet de Cristiane Fernandes" class="testimonial-img">
-                            <div class="author-info">
-                                <h4>Cristiane Fernandes</h4>
-                                <div class="testimonial-rating">
-                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                                </div>
-                            </div>
+                        <div class="feedback-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
                         </div>
+                    </div>
+                    <div class="feedback-content">
+                        <p>"Estou super satisfeita com os serviços da Farmvet. O meu Chong é sempre atendido com carinho e profissionalismo. A tosa ficou perfeita!"</p>
+                    </div>
+                    <div class="feedback-author">
+                        <h4>Cristiane Fernandes</h4>
+                        <span>Cliente desde 2022</span>
                     </div>
                 </div>
 
-                <!-- Testimonial 2 -->
-                <div class="testimonial-card">
-                    <div class="testimonial-content">
-                        <div class="testimonial-text">
-                            "Loja bonita, atendimento de qualidade, excelente tratamento com os pets e produtos de alta qualidade."
+                <!-- Feedback 2 -->
+                <div class="feedback-card featured">
+                    <div class="feedback-header">
+                        <div class="pet-avatar">
+                            <i class="fas fa-cat"></i>
                         </div>
-                        <div class="testimonial-author">
-                            <div class="author-info">
-                                <h4>Erika Giesbrecht</h4>
-                                <div class="testimonial-rating">
-                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                                </div>
-                            </div>
+                        <div class="feedback-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
                         </div>
+                    </div>
+                    <div class="feedback-content">
+                        <p>"Loja bonita, atendimento de qualidade, excelente tratamento com os pets e produtos de alta qualidade. Recomendo muito!"</p>
+                    </div>
+                    <div class="feedback-author">
+                        <h4>Erika Giesbrecht</h4>
+                        <span>Cliente desde 2021</span>
                     </div>
                 </div>
 
-                <!-- Testimonial 3 -->
-                <div class="testimonial-card featured">
-                    <div class="testimonial-content">
-                        <div class="testimonial-text">
-                            "Ótimo lugar para deixar seu pet. Excelentes produtos. Excelente atendimento. Tem aquele cafezinho enquanto vc espera seu pequeno sair do banho. A tosa também é perfeita. Só elogios. Tem estacionamento da quadra."
+                <!-- Feedback 3 -->
+                <div class="feedback-card">
+                    <div class="feedback-header">
+                        <div class="pet-avatar">
+                            <i class="fas fa-dog"></i>
                         </div>
-                        <div class="testimonial-author">
-                            <div class="author-info">
-                                <h4>Alessandra Reis</h4>
-                                <div class="testimonial-rating">
-                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                                </div>
-                            </div>
+                        <div class="feedback-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
                         </div>
+                    </div>
+                    <div class="feedback-content">
+                        <p>"Ótimo lugar para deixar seu pet. Excelentes produtos e atendimento. Tem cafezinho enquanto espera. Tosa perfeita!"</p>
+                    </div>
+                    <div class="feedback-author">
+                        <h4>Alessandra Reis</h4>
+                        <span>Cliente desde 2023</span>
                     </div>
                 </div>
 
-                <!-- Testimonial 4 -->
-                <div class="testimonial-card">
-                    <div class="testimonial-content">
-                        <div class="testimonial-text">
-                            "Eu amei o pessoal que trabalham lá. Uma equipe top e um profissionalismo incomparável. Estão de parabéns. Pode confiar de deixar o seu dog com eles, os cuidados são 100% confiável, a estrutura e arquitetura são perfeitos. Estacionamento na frente fácil de localização."
+                <!-- Feedback 4 -->
+                <div class="feedback-card">
+                    <div class="feedback-header">
+                        <div class="pet-avatar">
+                            <i class="fas fa-dog"></i>
                         </div>
-                        <div class="testimonial-author">
-                            <div class="author-info">
-                                <h4>Anderson Borges</h4>
-                                <div class="testimonial-rating">
-                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                                </div>
-                            </div>
+                        <div class="feedback-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
                         </div>
+                    </div>
+                    <div class="feedback-content">
+                        <p>"Equipe top e profissionalismo incomparável. Cuidados 100% confiáveis. Estrutura perfeita e fácil localização."</p>
+                    </div>
+                    <div class="feedback-author">
+                        <h4>Anderson Borges</h4>
+                        <span>Cliente desde 2022</span>
                     </div>
                 </div>
 
-                <!-- Testimonial 5 -->
-                <div class="testimonial-card featured">
-                    <div class="testimonial-content">
-                        <div class="testimonial-text">
-                            "O melhor banho de Brasília! E com direito a um atendimento carinhoso e muito especial🥰"
+                <!-- Feedback 5 -->
+                <div class="feedback-card featured">
+                    <div class="feedback-header">
+                        <div class="pet-avatar">
+                            <i class="fas fa-heart"></i>
                         </div>
-                        <div class="testimonial-author">
-                            <img src="depoimento-juliana.png" alt="Pet de Juliana Machado" class="testimonial-img">
-                            <div class="author-info">
-                                <h4>Juliana Machado</h4>
-                                <div class="testimonial-rating">
-                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                                </div>
-                            </div>
+                        <div class="feedback-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
                         </div>
+                    </div>
+                    <div class="feedback-content">
+                        <p>"O melhor banho de Brasília! Atendimento carinhoso e muito especial. Meu pet adora vir aqui! 🥰"</p>
+                    </div>
+                    <div class="feedback-author">
+                        <h4>Juliana Machado</h4>
+                        <span>Cliente desde 2023</span>
+                    </div>
+                </div>
+
+                <!-- Feedback 6 -->
+                <div class="feedback-card">
+                    <div class="feedback-header">
+                        <div class="pet-avatar">
+                            <i class="fas fa-dog"></i>
+                        </div>
+                        <div class="feedback-rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <div class="feedback-content">
+                        <p>"Produtos de excelente qualidade e preços justos. A equipe é muito atenciosa e profissional. Recomendo!"</p>
+                    </div>
+                    <div class="feedback-author">
+                        <h4>Mariana Silva</h4>
+                        <span>Cliente desde 2021</span>
                     </div>
                 </div>
             </div>
@@ -492,8 +627,7 @@
             <div class="footer-content">
                 <div class="footer-section">
                     <div class="footer-logo">
-                        <span class="logo-text">FarmVet</span>
-                        <span class="logo-subtitle">Pet Store</span>
+                        <img src="SVG/LOGOPBRANCA.svg" alt="Logo FarmVet Pet Store" class="logo-svg" style="height:48px; width:auto; display:block;"/>
                     </div>
                     <p class="footer-title">Cuidando do seu melhor amigo com amor e dedicação</p>
                     <div class="social-links">
@@ -555,4 +689,4 @@
 
     <script src="script.js"></script>
 </body>
-</html> 
+</html>

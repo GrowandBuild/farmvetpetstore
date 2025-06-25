@@ -1,18 +1,61 @@
 // Aguarda o carregamento completo do DOM
 document.addEventListener('DOMContentLoaded', function() {
     
-    // Mobile Navigation Toggle
+    // Utility functions
+    function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+            const later = () => {
+                clearTimeout(timeout);
+                func(...args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+    
+    function throttle(func, limit) {
+        let inThrottle;
+        return function() {
+            const args = arguments;
+            const context = this;
+            if (!inThrottle) {
+                func.apply(context, args);
+                inThrottle = true;
+                setTimeout(() => inThrottle = false, limit);
+            }
+        }
+    }
+    
+    // Mobile Navigation Toggle with accessibility
     const navToggle = document.querySelector('.nav-toggle');
     const navMenu = document.querySelector('.nav-menu');
     
     if (navToggle && navMenu) {
+        // Toggle menu on click
         navToggle.addEventListener('click', function() {
+            const isExpanded = this.getAttribute('aria-expanded') === 'true';
+            this.setAttribute('aria-expanded', !isExpanded);
             navMenu.classList.toggle('active');
-            navToggle.classList.toggle('active');
+            this.classList.toggle('active');
+        });
+        
+        // Close menu on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && navMenu.classList.contains('active')) {
+                navToggle.click();
+            }
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!navToggle.contains(e.target) && !navMenu.contains(e.target) && navMenu.classList.contains('active')) {
+                navToggle.click();
+            }
         });
     }
     
-    // Smooth scrolling para links de navegação
+    // Smooth scrolling para links de navegação com performance optimization
     const navLinks = document.querySelectorAll('a[href^="#"]');
     
     navLinks.forEach(link => {
@@ -26,32 +69,54 @@ document.addEventListener('DOMContentLoaded', function() {
                 const headerHeight = document.querySelector('.header').offsetHeight;
                 const targetPosition = targetSection.offsetTop - headerHeight;
                 
-                window.scrollTo({
-                    top: targetPosition,
-                    behavior: 'smooth'
-                });
+                // Use requestAnimationFrame for smooth scrolling
+                const startPosition = window.pageYOffset;
+                const distance = targetPosition - startPosition;
+                const duration = 800;
+                let start = null;
+                
+                function animation(currentTime) {
+                    if (start === null) start = currentTime;
+                    const timeElapsed = currentTime - start;
+                    const run = ease(timeElapsed, startPosition, distance, duration);
+                    window.scrollTo(0, run);
+                    if (timeElapsed < duration) requestAnimationFrame(animation);
+                }
+                
+                function ease(t, b, c, d) {
+                    t /= d / 2;
+                    if (t < 1) return c / 2 * t * t + b;
+                    t--;
+                    return -c / 2 * (t * (t - 2) - 1) + b;
+                }
+                
+                requestAnimationFrame(animation);
                 
                 // Fecha o menu mobile se estiver aberto
                 if (navMenu && navMenu.classList.contains('active')) {
-                    navMenu.classList.remove('active');
-                    navToggle.classList.remove('active');
+                    navToggle.click();
                 }
+                
+                // Update URL without page jump
+                history.pushState(null, null, targetId);
             }
         });
     });
     
-    // Header scroll effect
+    // Header scroll effect with throttling for performance
     const header = document.querySelector('.header');
     
-    window.addEventListener('scroll', function() {
-        if (window.scrollY > 100) {
+    const handleScroll = throttle(function() {
+        if (window.scrollY > 50) {
             header.classList.add('scrolled');
         } else {
             header.classList.remove('scrolled');
         }
-    });
+    }, 16); // ~60fps
     
-    // Form submission handling
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    
+    // Form submission handling with better UX
     const contactForm = document.getElementById('contactForm');
     
     if (contactForm) {
@@ -61,10 +126,15 @@ document.addEventListener('DOMContentLoaded', function() {
             const submitBtn = this.querySelector('button[type="submit"]');
             const originalText = submitBtn.innerHTML;
             
+            // Validate form before submission
+            if (!validateForm(this)) {
+                return;
+            }
+            
             // Show loading state
             submitBtn.disabled = true;
             submitBtn.classList.add('loading');
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin" aria-hidden="true"></i> Enviando...';
             
             // Get form data
             const formData = new FormData(this);
@@ -90,6 +160,52 @@ document.addEventListener('DOMContentLoaded', function() {
                 submitBtn.innerHTML = originalText;
             }, 2000);
         });
+    }
+    
+    // Form validation
+    function validateForm(form) {
+        let isValid = true;
+        const requiredFields = form.querySelectorAll('[required]');
+        
+        requiredFields.forEach(field => {
+            if (!field.value.trim()) {
+                showFieldError(field, 'Este campo é obrigatório');
+                isValid = false;
+            } else {
+                removeFieldError(field);
+            }
+        });
+        
+        // Email validation
+        const emailField = form.querySelector('input[type="email"]');
+        if (emailField && emailField.value) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(emailField.value)) {
+                showFieldError(emailField, 'Email inválido');
+                isValid = false;
+            }
+        }
+        
+        return isValid;
+    }
+    
+    function showFieldError(field, message) {
+        removeFieldError(field);
+        field.classList.add('error');
+        
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'field-error';
+        errorDiv.textContent = message;
+        errorDiv.setAttribute('role', 'alert');
+        field.parentNode.appendChild(errorDiv);
+    }
+    
+    function removeFieldError(field) {
+        field.classList.remove('error');
+        const errorDiv = field.parentNode.querySelector('.field-error');
+        if (errorDiv) {
+            errorDiv.remove();
+        }
     }
     
     // Notification system
@@ -226,14 +342,13 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Parallax effect para hero section
-    window.addEventListener('scroll', function() {
-        const scrolled = window.pageYOffset;
-        const heroBackground = document.querySelector('.hero-background');
-        
-        if (heroBackground) {
-            heroBackground.style.transform = `translateY(${scrolled * 0.5}px)`;
-        }
-    });
+    // window.addEventListener('scroll', function() {
+    //     const scrolled = window.pageYOffset;
+    //     const heroBackground = document.querySelector('.hero-background');
+    //     if (heroBackground) {
+    //         heroBackground.style.transform = `translateY(${scrolled * 0.5}px)`;
+    //     }
+    // });
     
     // Smooth reveal animation para seções
     const sectionObserver = new IntersectionObserver(function(entries) {
@@ -248,76 +363,6 @@ document.addEventListener('DOMContentLoaded', function() {
     sections.forEach(section => {
         sectionObserver.observe(section);
     });
-    
-    // Form validation
-    const formInputs = document.querySelectorAll('.contact-form input, .contact-form textarea, .contact-form select');
-    
-    formInputs.forEach(input => {
-        input.addEventListener('blur', function() {
-            validateField(this);
-        });
-        
-        input.addEventListener('input', function() {
-            if (this.classList.contains('error')) {
-                removeFieldError(this);
-            }
-        });
-    });
-    
-    function validateField(field) {
-        const value = field.value.trim();
-        
-        // Remove erros anteriores
-        removeFieldError(field);
-        
-        // Validações específicas
-        if (field.type === 'email' && value) {
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(value)) {
-                showFieldError(field, 'Por favor, insira um e-mail válido');
-                return false;
-            }
-        }
-        
-        if (field.type === 'tel' && value) {
-            const phoneRegex = /^[\d\s\(\)\-\+]+$/;
-            if (!phoneRegex.test(value) || value.length < 10) {
-                showFieldError(field, 'Por favor, insira um telefone válido');
-                return false;
-            }
-        }
-        
-        if (field.hasAttribute('required') && !value) {
-            showFieldError(field, 'Este campo é obrigatório');
-            return false;
-        }
-        
-        return true;
-    }
-    
-    function showFieldError(field, message) {
-        field.classList.add('error');
-        
-        const errorDiv = document.createElement('div');
-        errorDiv.className = 'field-error';
-        errorDiv.textContent = message;
-        errorDiv.style.cssText = `
-            color: #ef4444;
-            font-size: 0.875rem;
-            margin-top: 0.5rem;
-            display: block;
-        `;
-        
-        field.parentNode.appendChild(errorDiv);
-    }
-    
-    function removeFieldError(field) {
-        field.classList.remove('error');
-        const errorDiv = field.parentNode.querySelector('.field-error');
-        if (errorDiv) {
-            errorDiv.remove();
-        }
-    }
     
     // Lazy loading para imagens
     const imageObserver = new IntersectionObserver(function(entries) {
@@ -555,7 +600,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     initScrollReveal();
     
-    // Parallax and Scroll-triggered Animations
+    // Parallax e efeitos de scroll
     function initParallaxEffects() {
         let ticking = false;
         let lastScrollY = 0;
@@ -578,10 +623,10 @@ document.addEventListener('DOMContentLoaded', function() {
             const rate3 = scrolled * 0.1; // Era 0.2
             
             // Hero background parallax (mais sutil)
-            const heroBackground = document.querySelector('.hero-background');
-            if (heroBackground) {
-                heroBackground.style.transform = `translateY(${rate}px)`;
-            }
+            // const heroBackground = document.querySelector('.hero-background');
+            // if (heroBackground) {
+            //     heroBackground.style.transform = `translateY(${rate}px)`;
+            // }
             
             // Hero content parallax (mais sutil)
             const heroContent = document.querySelector('.hero-content');
@@ -778,4 +823,84 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Efeito de digitação (opcional - pode ser ativado)
     // initTypewriterEffect();
-}); 
+    
+    // Hero Carousel
+    function initHeroCarousel() {
+        const carousel = document.getElementById('hero-carousel');
+        if (!carousel) {
+            console.log('Carousel não encontrado');
+            return;
+        }
+        
+        const images = carousel.querySelectorAll('.carousel-img');
+        const indicators = carousel.querySelectorAll('.indicator');
+        const left = carousel.querySelector('.carousel-arrow.left');
+        const right = carousel.querySelector('.carousel-arrow.right');
+        
+        console.log('Carousel encontrado:', {
+            images: images.length,
+            indicators: indicators.length,
+            left: !!left,
+            right: !!right
+        });
+        
+        let current = 0;
+        let interval;
+
+        function show(index) {
+            console.log('Mostrando imagem:', index);
+            images.forEach((img, i) => {
+                img.classList.toggle('active', i === index);
+            });
+            indicators.forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+            current = index;
+        }
+
+        function next() {
+            show((current + 1) % images.length);
+        }
+        function prev() {
+            show((current - 1 + images.length) % images.length);
+        }
+
+        if (right) right.addEventListener('click', next);
+        if (left) left.addEventListener('click', prev);
+        indicators.forEach((dot, i) => {
+            dot.addEventListener('click', () => show(i));
+        });
+
+        function startAuto() {
+            interval = setInterval(next, 4000);
+        }
+        function stopAuto() {
+            clearInterval(interval);
+        }
+        carousel.addEventListener('mouseenter', stopAuto);
+        carousel.addEventListener('mouseleave', startAuto);
+        
+        // Mostrar primeira imagem
+        show(0);
+        startAuto();
+    }
+    
+    initHeroCarousel();
+    
+    // Efeito de digitação na hero-subtitle
+    function typewriterEffect(selector, text, speed = 32) {
+        const el = document.querySelector(selector);
+        if (!el) return;
+        el.textContent = '';
+        let i = 0;
+        function type() {
+            if (i < text.length) {
+                el.textContent += text.charAt(i);
+                i++;
+                setTimeout(type, speed);
+            }
+        }
+        type();
+    }
+    typewriterEffect('.hero-subtitle', 'Produtos de qualidade, serviços veterinários, banho e tosa. Tudo que seu pet precisa em um só lugar, com muito carinho e dedicação.', 32);
+});

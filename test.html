@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste - FarmVet Pet Store</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <a href="#inicio">
+                        <img src="SVG/LOGOPBRANCA.svg" alt="Logo FarmVet Pet Store" class="logo-svg" />
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main style="padding: 100px 20px;">
+        <div class="container">
+            <h1>Teste de Funcionalidades</h1>
+            
+            <section style="margin: 50px 0;">
+                <h2>Teste da Logo</h2>
+                <p>A logo deve aparecer acima no cabeçalho.</p>
+                <div style="background: #333; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                    <img src="SVG/LOGOPBRANCA.svg" alt="Logo FarmVet Pet Store" class="logo-svg" style="height: 60px;" />
+                </div>
+            </section>
+
+            <section style="margin: 50px 0;">
+                <h2>Teste da Seção de Contato</h2>
+                <div class="contact">
+                    <div class="container">
+                        <div class="section-header">
+                            <span class="section-badge">Contato</span>
+                            <h2>Entre em Contato Conosco</h2>
+                            <p>Estamos aqui para ajudar você e seu pet</p>
+                        </div>
+                        <div class="contact-content">
+                            <div class="contact-info">
+                                <div class="contact-item">
+                                    <div class="contact-icon">
+                                        <i class="fab fa-whatsapp"></i>
+                                    </div>
+                                    <div class="contact-details">
+                                        <h4>WhatsApp</h4>
+                                        <p>(62) 9 9101-0254</p>
+                                    </div>
+                                </div>
+                                <div class="contact-item">
+                                    <div class="contact-icon">
+                                        <i class="fas fa-phone"></i>
+                                    </div>
+                                    <div class="contact-details">
+                                        <h4>Telefone</h4>
+                                        <p>(62) 9 9101-0254</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="contact-form">
+                                <form id="contactForm">
+                                    <div class="form-group">
+                                        <input type="text" id="name" name="name" placeholder="Seu nome completo" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="email" id="email" name="email" placeholder="Seu e-mail" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <textarea id="message" name="message" placeholder="Descreva sua necessidade" rows="5" required></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-paper-plane"></i>
+                                        Enviar Mensagem
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html> 
