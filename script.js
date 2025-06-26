@@ -1073,7 +1073,6 @@ class FarmVetApp {
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; }
         .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-        .header { background: #2c2c2c; color: white; padding: 15px 0; }
         .nav { display: flex; justify-content: space-between; align-items: center; }
         .nav__logo img { height: 40px; }
         .hero { background: linear-gradient(135deg, #2c2c2c, #8b7355); color: white; padding: 60px 20px; text-align: center; min-height: 60vh; display: flex; align-items: center; }
@@ -1123,7 +1122,6 @@ class FarmVetApp {
         .hero { background: linear-gradient(135deg, #2c2c2c, #8b7355); color: white; padding: 60px 20px; text-align: center; }
         .btn { background: #8b7355; color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; display: inline-block; margin: 10px; }
         .section { padding: 40px 20px; }
-        .header { background: #2c2c2c; color: white; padding: 15px 0; }
         .nav { display: flex; justify-content: space-between; align-items: center; }
         .nav__logo img { height: 40px; }
         .nav__menu { display: none; }
