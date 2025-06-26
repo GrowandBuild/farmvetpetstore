@@ -1,21 +1,31 @@
 {
   "name": "FarmVet Pet Store",
   "short_name": "FarmVet",
-  "start_url": "index.html",
+  "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#2c2c2c",
   "description": "Pet shop premium, serviços veterinários e produtos para pets.",
+  "orientation": "portrait",
+  "scope": "/",
   "icons": [
     {
       "src": "SVG/LOGOPRETA.svg",
-      "sizes": "192x192",
-      "type": "image/svg+xml"
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
     },
     {
-      "src": "SVG/LOGOPRETA.svg",
+      "src": "img/logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "img/logo.png",
       "sizes": "512x512",
-      "type": "image/svg+xml"
+      "type": "image/png",
+      "purpose": "any"
     }
   ]
 } 

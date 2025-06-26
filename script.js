@@ -894,10 +894,50 @@ class FarmVetApp {
       try {
         await navigator.serviceWorker.register('/sw.js');
         console.log('✅ Service Worker registrado');
+        
+        // Verificar se PWA pode ser instalado
+        this.setupPWAInstall();
       } catch (error) {
         console.log('❌ Service Worker não registrado:', error);
       }
     }
+  }
+
+  setupPWAInstall() {
+    let deferredPrompt;
+    const installButton = document.getElementById('installPWA');
+    
+    if (!installButton) return;
+    
+    // Captura o evento beforeinstallprompt
+    window.addEventListener('beforeinstallprompt', (e) => {
+      console.log('PWA install prompt disponível');
+      e.preventDefault();
+      deferredPrompt = e;
+      
+      // Mostra o botão de instalação
+      installButton.style.display = 'inline-flex';
+      
+      // Adiciona evento de clique
+      installButton.addEventListener('click', async () => {
+        if (deferredPrompt) {
+          deferredPrompt.prompt();
+          const { outcome } = await deferredPrompt.userChoice;
+          console.log('PWA install result:', outcome);
+          
+          if (outcome === 'accepted') {
+            installButton.style.display = 'none';
+          }
+          deferredPrompt = null;
+        }
+      });
+    });
+    
+    // Esconde o botão se já instalado
+    window.addEventListener('appinstalled', () => {
+      console.log('PWA instalado');
+      installButton.style.display = 'none';
+    });
   }
 
   destroy() {
@@ -919,12 +959,63 @@ class FarmVetApp {
 // INICIALIZAÇÃO
 // ========================================
 
+// Função de debug para animações
+function debugAnimations() {
+  console.log('=== DEBUG ANIMAÇÕES ===');
+  
+  // Verificar se elementos da hero existem
+  const hero = document.querySelector('.hero');
+  const ledStrip = document.querySelector('.hero__led-strip');
+  const plant = document.querySelector('.hero__plant');
+  const plantRight = document.querySelector('.hero__plant-right');
+  
+  console.log('Hero:', hero);
+  console.log('LED Strip:', ledStrip);
+  console.log('Plant:', plant);
+  console.log('Plant Right:', plantRight);
+  
+  // Verificar se CSS está carregado
+  if (ledStrip) {
+    const styles = getComputedStyle(ledStrip);
+    console.log('LED Strip animation:', styles.animation);
+    console.log('LED Strip opacity:', styles.opacity);
+  }
+  
+  // Verificar se imagens carregaram
+  if (plant) {
+    console.log('Plant src:', plant.src);
+    console.log('Plant complete:', plant.complete);
+    console.log('Plant naturalWidth:', plant.naturalWidth);
+  }
+  
+  if (plantRight) {
+    console.log('Plant Right src:', plantRight.src);
+    console.log('Plant Right complete:', plantRight.complete);
+    console.log('Plant Right naturalWidth:', plantRight.naturalWidth);
+  }
+  
+  // Verificar carousel
+  const carousel = document.querySelector('.hero__carousel');
+  const carouselImages = document.querySelectorAll('.hero__carousel-img');
+  console.log('Carousel:', carousel);
+  console.log('Carousel images:', carouselImages.length);
+  
+  carouselImages.forEach((img, index) => {
+    console.log(`Image ${index}:`, img.src, 'Complete:', img.complete, 'Width:', img.naturalWidth);
+  });
+}
+
 // Inicia aplicação quando DOM estiver pronto
 const app = new FarmVetApp();
 
-// Expõe para debug (apenas em desenvolvimento)
+// Debug em desenvolvimento
 if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
   window.FarmVetApp = app;
+  
+  // Debug após carregamento
+  window.addEventListener('load', () => {
+    setTimeout(debugAnimations, 1000);
+  });
 }
 
 if ('serviceWorker' in navigator) {
