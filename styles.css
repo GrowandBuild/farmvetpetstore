@@ -1694,6 +1694,70 @@ ul, ol {
 }
 
 /* ========================================
+   COMPATIBILIDADE iOS/SAFARI
+   ======================================== */
+
+/* Detectar Safari */
+@supports (-webkit-appearance: none) {
+  /* Safari-specific fixes */
+  .hero__led-strip {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+  
+  .hero__plant,
+  .hero__plant-right {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+  
+  /* Melhorar performance de animações no Safari */
+  .hero__carousel-img {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+  
+  /* Fix para vídeo no Safari */
+  .hero__carousel-video {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+}
+
+/* Detectar iOS */
+@supports (-webkit-touch-callout: none) {
+  /* iOS-specific fixes */
+  .hero__led-strip {
+    will-change: opacity, filter;
+  }
+  
+  .hero__plant,
+  .hero__plant-right {
+    will-change: transform;
+  }
+  
+  /* Melhorar performance de scroll no iOS */
+  .hero {
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  /* Fix para botões no iOS */
+  .btn {
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  /* Fix para vídeo autoplay no iOS */
+  .hero__carousel-video {
+    -webkit-playsinline: true;
+    playsinline: true;
+  }
+}
+
+/* ========================================
    ACCESSIBILITY
    ======================================== */
 

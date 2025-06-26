@@ -909,7 +909,26 @@ class FarmVetApp {
     
     if (!installButton) return;
     
-    // Captura o evento beforeinstallprompt
+    // Detectar iPhone/Safari
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+    const isSafari = /Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent);
+    
+    console.log('iOS:', isIOS, 'Safari:', isSafari);
+    
+    if (isIOS && isSafari) {
+      // Para iPhone/Safari, mostrar instruções diferentes
+      installButton.innerHTML = '<i class="fas fa-plus" aria-hidden="true"></i> Adicionar à Tela Inicial';
+      installButton.style.display = 'inline-flex';
+      
+      installButton.addEventListener('click', () => {
+        // Mostrar instruções para iPhone
+        this.showIOSInstallInstructions();
+      });
+      
+      return;
+    }
+    
+    // Captura o evento beforeinstallprompt (Android/Chrome)
     window.addEventListener('beforeinstallprompt', (e) => {
       console.log('PWA install prompt disponível');
       e.preventDefault();
@@ -938,6 +957,26 @@ class FarmVetApp {
       console.log('PWA instalado');
       installButton.style.display = 'none';
     });
+  }
+
+  showIOSInstallInstructions() {
+    const instructions = `
+      <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); z-index: 10000; display: flex; align-items: center; justify-content: center; padding: 20px;">
+        <div style="background: white; border-radius: 16px; padding: 30px; max-width: 400px; text-align: center;">
+          <h3 style="margin-bottom: 20px; color: #2c2c2c;">Como instalar o app no iPhone</h3>
+          <ol style="text-align: left; line-height: 1.8;">
+            <li>Toque no botão <strong>Compartilhar</strong> <span style="color: #007AFF;">⎋</span></li>
+            <li>Role para baixo e toque em <strong>"Adicionar à Tela Inicial"</strong></li>
+            <li>Toque em <strong>"Adicionar"</strong></li>
+          </ol>
+          <button onclick="this.parentElement.parentElement.remove()" style="margin-top: 20px; background: #2c2c2c; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer;">
+            Entendi
+          </button>
+        </div>
+      </div>
+    `;
+    
+    document.body.insertAdjacentHTML('beforeend', instructions);
   }
 
   destroy() {

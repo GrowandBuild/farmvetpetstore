@@ -130,6 +130,9 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="msapplication-TileColor" content="#2c2c2c">
     <meta name="msapplication-tap-highlight" content="no">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-orientations" content="portrait">
 </head>
 <body>
     <!-- Skip to main content -->
@@ -207,7 +210,7 @@
             <img src="img/planta.webp" alt="Planta decorativa" class="hero__plant">
             <img src="img/planta2.png" alt="Planta decorativa direita" class="hero__plant-right">
             <div class="hero__background" aria-hidden="true">
-                <video class="hero__background-video" autoplay loop muted playsinline style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:center 30%;z-index:0;opacity:0.06;pointer-events:none;">
+                <video class="hero__background-video" autoplay loop muted playsinline webkit-playsinline style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:center 30%;z-index:0;opacity:0.06;pointer-events:none;" preload="metadata">
                     <source src="videos/videohero.mp4" type="video/mp4">
                 </video>
                 <div class="hero__background-led"></div>
@@ -263,7 +266,7 @@
                                 <img src="img/imagemde_dog2.png" alt="Cachorro brincando" class="hero__carousel-img" loading="lazy" data-type="image">
                                 <img src="img/imagemde_dog3.png" alt="Cachorro relaxado" class="hero__carousel-img" loading="lazy" data-type="image">
                                 <div class="hero__carousel-video-slide" data-type="video">
-                                    <video class="hero__carousel-video" autoplay loop muted playsinline poster="img/imagemdedog1.png" tabindex="-1">
+                                    <video class="hero__carousel-video" autoplay loop muted playsinline webkit-playsinline poster="img/imagemdedog1.png" tabindex="-1" preload="metadata">
                                         <source src="videos/videohero.mp4" type="video/mp4">
                                         Seu navegador não suporta vídeo.
                                     </video>
