@@ -1340,121 +1340,96 @@ class FarmVetApp {
   }
 
   setupPWAInstall() {
-    let deferredPrompt;
     const installButton = document.getElementById('installPWA');
-    
     if (!installButton) return;
-    
-    // Detecção MUITO MAIS PRECISA de iOS/Safari
+
+    let deferredPrompt;
     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
     const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-    const isStandalone = window.navigator.standalone === true;
-    const isInApp = window.navigator.userAgent.includes('FBAN') || 
-                   window.navigator.userAgent.includes('FBAV') ||
-                   window.navigator.userAgent.includes('Instagram') ||
-                   window.navigator.userAgent.includes('Line');
-    
-    console.log('PWA Debug:', {
-      isIOS,
-      isSafari,
-      isStandalone,
-      isInApp,
-      userAgent: navigator.userAgent
-    });
-    
-    // Se já está instalado, esconder botão
-    if (isStandalone) {
-      installButton.style.display = 'none';
-      console.log('PWA já instalado (standalone)');
-      return;
-    }
-    
-    // Se está em app externo, não mostrar
-    if (isInApp) {
-      installButton.style.display = 'none';
-      console.log('Em app externo, não mostrar PWA');
-      return;
-    }
-    
-    if (isIOS || isSafari) {
-      // ESTRATÉGIA AGRESSIVA PARA SAFARI
-      console.log('Aplicando estratégia agressiva para Safari');
-      
-      installButton.innerHTML = '<i class="fas fa-plus" aria-hidden="true"></i> Adicionar à Tela Inicial';
-      installButton.style.display = 'inline-flex';
-      
-      // Banner imediato
-      setTimeout(() => {
-        this.showIOSInstallBanner();
-      }, 1000);
-      
-      // Banner secundário após 5 segundos
-      setTimeout(() => {
-        this.showIOSInstallBannerSecondary();
-      }, 5000);
-      
-      // Banner final após 10 segundos
-      setTimeout(() => {
-        this.showIOSInstallBannerFinal();
-      }, 10000);
-      
-      installButton.addEventListener('click', () => {
-        this.showIOSInstallInstructions();
-      });
-      
-      // Verificar se pode instalar via meta tags
-      this.checkSafariInstallCapability();
-      
-      return;
-    }
-    
-    // Para Android/Chrome
+
+    // Esconder botão inicialmente
+    installButton.style.visibility = 'hidden';
+    installButton.style.height = '0';
+    installButton.style.margin = '0';
+    installButton.style.padding = '0';
+    installButton.style.border = 'none';
+    installButton.style.opacity = '0';
+
+    // Capturar evento beforeinstallprompt
     window.addEventListener('beforeinstallprompt', (e) => {
-      console.log('PWA install prompt disponível (Android)');
+      console.log('✅ PWA install prompt disponível');
       e.preventDefault();
       deferredPrompt = e;
       
-      installButton.style.display = 'inline-flex';
-      
-      installButton.addEventListener('click', async () => {
-        if (deferredPrompt) {
-          try {
-            deferredPrompt.prompt();
-            const { outcome } = await deferredPrompt.userChoice;
-            console.log('PWA install result:', outcome);
-            
-            if (outcome === 'accepted') {
-              installButton.style.display = 'none';
-              this.showInstallSuccess();
-            }
-            deferredPrompt = null;
-          } catch (error) {
-            console.error('Erro na instalação:', error);
-            this.showInstallError();
-          }
-        }
-      });
+      // Mostrar botão
+      installButton.style.visibility = 'visible';
+      installButton.style.height = 'auto';
+      installButton.style.margin = '';
+      installButton.style.padding = '';
+      installButton.style.border = '';
+      installButton.style.opacity = '1';
+      installButton.style.transition = 'all 0.3s ease';
     });
-    
-    // Fallback para Android se beforeinstallprompt não funcionar
-    setTimeout(() => {
-      if (!deferredPrompt && !isIOS && installButton.style.display === 'none') {
-        console.log('Fallback: mostrando botão de instalação manual');
-        installButton.innerHTML = '<i class="fas fa-download" aria-hidden="true"></i> Instalar App';
-        installButton.style.display = 'inline-flex';
+
+    // Instalar PWA
+    installButton.addEventListener('click', async () => {
+      if (deferredPrompt) {
+        console.log('🚀 Instalando PWA...');
+        deferredPrompt.prompt();
+        const { outcome } = await deferredPrompt.userChoice;
         
-        installButton.addEventListener('click', () => {
-          this.showAndroidInstallInstructions();
-        });
+        if (outcome === 'accepted') {
+          console.log('✅ PWA instalado com sucesso');
+          this.showInstallSuccess();
+        } else {
+          console.log('❌ PWA não foi instalado');
+          this.showInstallError();
+        }
+        
+        deferredPrompt = null;
+        installButton.style.visibility = 'hidden';
+        installButton.style.height = '0';
+        installButton.style.margin = '0';
+        installButton.style.padding = '0';
+        installButton.style.border = 'none';
+        installButton.style.opacity = '0';
+      } else if (isIOS) {
+        console.log('📱 Mostrando instruções iOS');
+        this.showIOSInstallInstructions();
+      } else {
+        console.log('🤖 Mostrando instruções Android');
+        this.showAndroidInstallInstructions();
       }
-    }, 5000);
-    
-    // Esconde o botão se já instalado
-    window.addEventListener('appinstalled', () => {
-      console.log('PWA instalado');
-      installButton.style.display = 'none';
-      this.showInstallSuccess();
     });
+
+    // Verificar se já está instalado
+    if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) {
+      console.log('✅ PWA já está instalado');
+      installButton.style.visibility = 'hidden';
+      installButton.style.height = '0';
+      installButton.style.margin = '0';
+      installButton.style.padding = '0';
+      installButton.style.border = 'none';
+      installButton.style.opacity = '0';
+    }
+
+    // Verificar se é iOS e mostrar banner específico
+    if (isIOS) {
+      console.log('🍎 Detectado iOS, verificando capacidade de instalação');
+      this.checkSafariInstallCapability();
+    }
+
+    // Verificar se não há prompt e não é iOS
+    if (!deferredPrompt && !isIOS && installButton.style.visibility === 'hidden') {
+      console.log('⚠️ PWA não pode ser instalado automaticamente');
+      // Manter botão escondido
+      installButton.style.visibility = 'hidden';
+      installButton.style.height = '0';
+      installButton.style.margin = '0';
+      installButton.style.padding = '0';
+      installButton.style.border = 'none';
+      installButton.style.opacity = '0';
+    }
   }
 
   checkSafariInstallCapability() {
