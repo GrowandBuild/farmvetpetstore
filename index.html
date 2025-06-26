@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="FarmVet Pet Store - Pet shop completo com produtos premium, serviços veterinários e banho e tosa. Tudo para seu pet em um só lugar.">
+    <meta name="keywords" content="pet shop, veterinário, banho e tosa, ração premium, produtos para pets, Brasília">
+    <meta name="author" content="FarmVet Pet Store">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://farmvetpetstore.com/">
+    <meta property="og:title" content="FarmVet Pet Store - Pet Shop Premium">
+    <meta property="og:description" content="Produtos premium, serviços veterinários e banho e tosa. Tudo que seu pet precisa em um só lugar.">
+    <meta property="og:image" content="https://farmvetpetstore.com/og-image.jpg">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="FarmVet Pet Store - Pet Shop Premium">
+    <meta name="twitter:description" content="Produtos premium, serviços veterinários e banho e tosa.">
+    <meta name="twitter:image" content="https://farmvetpetstore.com/twitter-image.jpg">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="SVG/LOGOPRETA.svg">
+    <link rel="apple-touch-icon" href="SVG/LOGOPRETA.svg">
+    
+    <!-- Preload Critical Resources -->
+    <link rel="preload" href="styles.css" as="style">
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" as="style">
+    
+    <!-- Critical CSS Inline -->
+    <style>
+        /* Critical CSS - Above the fold */
+        :root {
+            --color-primary: #2c2c2c;
+            --color-secondary: #8b7355;
+            --color-accent: #a0522d;
+            --color-success: #10b981;
+            --color-danger: #ef4444;
+            --color-text: #1a1a1a;
+            --color-text-light: #6b7280;
+            --color-bg: #ffffff;
+            --color-bg-secondary: #f8f9fa;
+            --color-border: #e5e7eb;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
+            --radius: 8px;
+            --radius-lg: 16px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --container-max: 1200px;
+            --font-sans: 'Inter', system-ui, sans-serif;
+            --font-display: 'Poppins', system-ui, sans-serif;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+        
+        body {
+            font-family: var(--font-sans);
+            line-height: 1.6;
+            color: var(--color-text);
+            background: var(--color-bg);
+            overflow-x: hidden;
+        }
+        
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 6px;
+            background: var(--color-primary);
+            color: white;
+            padding: 8px 16px;
+            text-decoration: none;
+            border-radius: var(--radius);
+            z-index: 10000;
+            transition: var(--transition);
+        }
+        
+        .skip-link:focus {
+            top: 6px;
+        }
+        
+        .container {
+            max-width: var(--container-max);
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        @media (min-width: 640px) {
+            .container {
+                padding: 0 1.5rem;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .container {
+                padding: 0 2rem;
+            }
+        }
+    </style>
+    
+    <!-- Non-Critical CSS -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap">
+    
+    <!-- Font Awesome - Load async -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+    
+    <title>FarmVet Pet Store - Pet Shop Premium | Produtos e Serviços para Pets</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2c2c2c">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="FarmVet">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="msapplication-TileColor" content="#2c2c2c">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-orientations" content="portrait">
+    <meta name="apple-itunes-app" content="app-argument=farmvet">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-capable" content="standalone">
+    <meta name="mobile-web-app-capable" content="standalone">
+    <meta name="application-name" content="FarmVet">
+    <meta name="msapplication-TileImage" content="img/logo.png">
+    <meta name="msapplication-config" content="none">
+    <meta name="referrer" content="no-referrer">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <meta name="security" content="trusted">
+    <meta name="trusted-site" content="true">
+</head>
+<body>
+    <!-- Skip to main content -->
+    <a href="#main-content" class="skip-link">Pular para o conteúdo principal</a>
+    
+    <!-- Header -->
+    <header class="header" role="banner">
+        <nav class="nav" role="navigation" aria-label="Navegação principal">
+            <div class="container">
+                <div class="nav__content">
+                    <div class="nav__logo">
+                        <a href="#hero" aria-label="FarmVet Pet Store - Página inicial">
+                            <img src="SVG/LOGOPBRANCA.svg" alt="FarmVet Pet Store" class="nav__logo-img" width="180" height="60">
+                        </a>
+                    </div>
+                    
+                    <ul class="nav__menu" role="menubar">
+                        <li class="nav__menu-user only-mobile" style="display: flex; align-items: center; gap: 0.8em; margin-bottom: 1.2em;">
+                            <span style="display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, #232323 60%, #C0C0C0 100%); box-shadow: 0 2px 8px #0002; color: #fff; font-size: 1.5em;">
+                                <i class="fas fa-user"></i>
+                            </span>
+                            <span style="color: #fff; font-size: 1.08em; font-weight: 600; letter-spacing: 0.5px;">Olá, visitante!</span>
+                        </li>
+                        <li role="none">
+                            <a href="#hero" role="menuitem" class="active">
+                                <i class="fas fa-home" aria-hidden="true"></i> Início
+                            </a>
+                        </li>
+                        <li role="none">
+                            <a href="produtos/produtos.html" role="menuitem">
+                                <i class="fas fa-store" aria-hidden="true"></i> Produtos
+                            </a>
+                        </li>
+                        <li role="none">
+                            <a href="servicos/servicos.html" role="menuitem">
+                                <i class="fas fa-stethoscope" aria-hidden="true"></i> Serviços
+                            </a>
+                        </li>
+                        <li role="none">
+                            <a href="#lojas" role="menuitem">
+                                <i class="fas fa-map-marker-alt" aria-hidden="true"></i> Lojas
+                            </a>
+                        </li>
+                        <li role="none">
+                            <a href="blog/blog.html" role="menuitem">
+                                <i class="fas fa-blog" aria-hidden="true"></i> Blog
+                            </a>
+                        </li>
+                        <li role="none">
+                            <a href="#depoimentos" role="menuitem">
+                                <i class="fas fa-comment-dots" aria-hidden="true"></i> Depoimentos
+                            </a>
+                        </li>
+                        <li role="none">
+                            <a href="#contato" role="menuitem">
+                                <i class="fas fa-envelope" aria-hidden="true"></i> Contato
+                            </a>
+                        </li>
+                    </ul>
+                    
+                    <button class="nav__toggle" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav-menu">
+                        <span class="nav__toggle-line"></span>
+                        <span class="nav__toggle-line"></span>
+                        <span class="nav__toggle-line"></span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main id="main-content" role="main">
+        <!-- Hero Section -->
+        <section id="hero" class="hero" role="banner" aria-labelledby="hero-title">
+            <div class="hero__led-strip"></div>
+            <img src="img/planta.webp" alt="Planta decorativa" class="hero__plant">
+            <img src="img/planta2.png" alt="Planta decorativa direita" class="hero__plant-right">
+            <div class="hero__background" aria-hidden="true">
+                <video class="hero__background-video" autoplay loop muted playsinline webkit-playsinline style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;object-position:center 30%;z-index:0;opacity:0.06;pointer-events:none;" preload="metadata">
+                    <source src="videos/videohero.mp4" type="video/mp4">
+                </video>
+                <div class="hero__background-led"></div>
+            </div>
+            <div class="container">
+                <div class="hero__content">
+                    <div class="hero__text">
+                        <div class="hero__badge">
+                            <i class="fas fa-paw" aria-hidden="true"></i>
+                            <span>Pet Shop Premium</span>
+                        </div>
+                        
+                        <h1 id="hero-title" class="hero__title">
+                            Cuidando do seu <span class="hero__highlight">melhor amigo</span> com excelência
+                        </h1>
+                        
+                        <p class="hero__subtitle digital-glitch">
+                            Produtos premium, serviços veterinários especializados e banho e tosa profissional. 
+                            Tudo que seu pet merece em um só lugar.
+                        </p>
+                        
+                        <div class="hero__info">
+                            <div class="hero__hours">
+                                <!-- Removido: <i class="fas fa-clock" aria-hidden="true"></i> e spans de horário -->
+                            </div>
+                        </div>
+                        
+                        <div class="hero__actions">
+                            <a href="https://wa.me/5562991010254" class="btn btn--primary" target="_blank" rel="noopener">
+                                <i class="fab fa-whatsapp" aria-hidden="true"></i>
+                                Agendar Serviço
+                            </a>
+                            <a href="#produtos" class="btn btn--primary">
+                                <i class="fas fa-shopping-bag" aria-hidden="true"></i>
+                                Ver Produtos
+                            </a>
+                            <button id="installPWA" class="btn btn--secondary">
+                                <i class="fas fa-mobile-alt" aria-hidden="true"></i>
+                                Usar no App
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="hero__visual">
+                        <div class="hero__carousel-filter" role="tablist" aria-label="Filtrar slides">
+                            <button class="hero__carousel-filter-btn hero__carousel-filter-btn--active" data-filter="images" role="tab" aria-selected="true">Imagens</button>
+                            <button class="hero__carousel-filter-btn" data-filter="video" role="tab" aria-selected="false">Vídeo</button>
+                            <button class="hero__carousel-filter-btn" data-filter="all" role="tab" aria-selected="false">Todos</button>
+                        </div>
+                        <div class="hero__carousel" role="region" aria-label="Galeria de imagens e vídeo">
+                            <div class="hero__carousel-track">
+                                <img src="img/imagemdedog1.png" alt="Cachorro feliz" class="hero__carousel-img hero__carousel-img--active" loading="eager" data-type="image">
+                                <img src="img/imagemde_dog2.png" alt="Cachorro brincando" class="hero__carousel-img" loading="lazy" data-type="image">
+                                <img src="img/imagemde_dog3.png" alt="Cachorro relaxado" class="hero__carousel-img" loading="lazy" data-type="image">
+                                <div class="hero__carousel-video-slide" data-type="video">
+                                    <video class="hero__carousel-video" autoplay loop muted playsinline webkit-playsinline poster="img/imagemdedog1.png" tabindex="-1" preload="metadata">
+                                        <source src="videos/videohero.mp4" type="video/mp4">
+                                        Seu navegador não suporta vídeo.
+                                    </video>
+                                </div>
+                            </div>
+                            <button class="hero__carousel-btn hero__carousel-btn--prev" aria-label="Slide anterior">
+                                <i class="fas fa-chevron-left" aria-hidden="true"></i>
+                            </button>
+                            <button class="hero__carousel-btn hero__carousel-btn--next" aria-label="Próximo slide">
+                                <i class="fas fa-chevron-right" aria-hidden="true"></i>
+                            </button>
+                            <div class="hero__carousel-indicators" role="tablist"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Produtos Section -->
+        <section id="produtos" class="section section--products">
+            <div class="container">
+                <header class="section__header">
+                    <div class="section__badge">
+                        <i class="fas fa-star" aria-hidden="true"></i>
+                        <span>Produtos Premium</span>
+                    </div>
+                    <h2 class="section__title">Qualidade Excepcional para seu Pet</h2>
+                    <p class="section__subtitle">
+                        Selecionamos apenas os melhores produtos das marcas mais reconhecidas do mercado. 
+                        Nutrição, higiene, conforto e diversão para seu pet.
+                    </p>
+                </header>
+                
+                <div class="products-grid">
+                    <article class="product-card">
+                        <div class="product-card__icon">
+                            <i class="fas fa-utensils" aria-hidden="true"></i>
+                        </div>
+                        <div class="product-card__content">
+                            <h3 class="product-card__title">Rações Premium</h3>
+                            <p class="product-card__description">
+                                Nutrição de alta qualidade para todas as fases da vida do seu pet.
+                            </p>
+                            <ul class="product-card__features">
+                                <li>Filhotes, adultos e idosos</li>
+                                <li>Rações especiais e terapêuticas</li>
+                                <li>Marcas líderes mundiais</li>
+                            </ul>
+                        </div>
+                    </article>
+                    
+                    <article class="product-card">
+                        <div class="product-card__icon">
+                            <i class="fas fa-bone" aria-hidden="true"></i>
+                        </div>
+                        <div class="product-card__content">
+                            <h3 class="product-card__title">Petiscos & Brinquedos</h3>
+                            <p class="product-card__description">
+                                Petiscos naturais e brinquedos que estimulam e divertem.
+                            </p>
+                            <ul class="product-card__features">
+                                <li>Petiscos saudáveis e naturais</li>
+                                <li>Brinquedos interativos</li>
+                                <li>Bolas, pelúcias e mordedores</li>
+                            </ul>
+                        </div>
+                    </article>
+                    
+                    <article class="product-card">
+                        <div class="product-card__icon">
+                            <i class="fas fa-pills" aria-hidden="true"></i>
+                        </div>
+                        <div class="product-card__content">
+                            <h3 class="product-card__title">Medicamentos</h3>
+                            <p class="product-card__description">
+                                Saúde e prevenção com produtos confiáveis e seguros.
+                            </p>
+                            <ul class="product-card__features">
+                                <li>Vermífugos e antipulgas</li>
+                                <li>Suplementos vitamínicos</li>
+                                <li>Produtos de higiene</li>
+                            </ul>
+                        </div>
+                    </article>
+                    
+                    <article class="product-card">
+                        <div class="product-card__icon">
+                            <i class="fas fa-tshirt" aria-hidden="true"></i>
+                        </div>
+                        <div class="product-card__content">
+                            <h3 class="product-card__title">Acessórios</h3>
+                            <p class="product-card__description">
+                                Conforto, estilo e praticidade para o dia a dia do seu pet.
+                            </p>
+                            <ul class="product-card__features">
+                                <li>Coleiras e guias</li>
+                                <li>Roupas e camas</li>
+                                <li>Transportadoras</li>
+                            </ul>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Serviços Section -->
+        <section id="servicos" class="section section--services">
+            <div class="container">
+                <header class="section__header">
+                    <div class="section__badge">
+                        <i class="fas fa-heart" aria-hidden="true"></i>
+                        <span>Nossos Serviços</span>
+                    </div>
+                    <h2 class="section__title">Cuidados Especializados</h2>
+                    <p class="section__subtitle">
+                        Oferecemos serviços veterinários, banho e tosa profissional com toda a dedicação 
+                        que seu pet merece.
+                    </p>
+                </header>
+                
+                <div class="services-grid">
+                    <article class="service-card">
+                        <div class="service-card__visual">
+                            <img src="img/lojasanorte1.png" alt="Serviços veterinários" class="service-card__img" loading="lazy">
+                            <div class="service-card__overlay">
+                                <i class="fas fa-stethoscope" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                        <div class="service-card__content">
+                            <h3 class="service-card__title">Veterinário</h3>
+                            <p class="service-card__description">
+                                Consultas, vacinas, exames e tratamentos com profissionais especializados.
+                            </p>
+                            <ul class="service-card__features">
+                                <li>Consultas preventivas</li>
+                                <li>Vacinação</li>
+                                <li>Exames laboratoriais</li>
+                            </ul>
+                        </div>
+                    </article>
+                    
+                    <article class="service-card">
+                        <div class="service-card__visual">
+                            <img src="img/lojasanorte2.png" alt="Banho e tosa" class="service-card__img" loading="lazy">
+                            <div class="service-card__overlay">
+                                <i class="fas fa-cut" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                        <div class="service-card__content">
+                            <h3 class="service-card__title">Banho & Tosa</h3>
+                            <p class="service-card__description">
+                                Banho profissional, tosa higiênica e estética com produtos premium.
+                            </p>
+                            <ul class="service-card__features">
+                                <li>Banho com produtos premium</li>
+                                <li>Tosa higiênica</li>
+                                <li>Tosa estética</li>
+                            </ul>
+                        </div>
+                    </article>
+                    
+                    <article class="service-card">
+                        <div class="service-card__visual">
+                            <img src="img/lojasanorte3.png" alt="Hotelaria" class="service-card__img" loading="lazy">
+                            <div class="service-card__overlay">
+                                <i class="fas fa-home" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                        <div class="service-card__content">
+                            <h3 class="service-card__title">Hotelaria</h3>
+                            <p class="service-card__description">
+                                Hospedagem segura e confortável para quando você precisar viajar.
+                            </p>
+                            <ul class="service-card__features">
+                                <li>Hospedagem 24h</li>
+                                <li>Monitoramento</li>
+                                <li>Alimentação inclusa</li>
+                            </ul>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Depoimentos Section -->
+        <section id="depoimentos" class="section section--testimonials">
+            <div class="container">
+                <header class="section__header">
+                    <div class="section__badge">
+                        <i class="fas fa-quote-left" aria-hidden="true"></i>
+                        <span>Depoimentos</span>
+                    </div>
+                    <h2 class="section__title">O que nossos clientes dizem</h2>
+                    <p class="section__subtitle">
+                        A satisfação dos nossos clientes e seus pets é nossa maior recompensa.
+                    </p>
+                </header>
+                
+                <div class="testimonials-grid">
+                    <article class="testimonial-card testimonial-card--featured">
+                        <div class="testimonial-card__header">
+                            <div class="testimonial-card__avatar">
+                                <i class="fas fa-dog" aria-hidden="true"></i>
+                            </div>
+                            <div class="testimonial-card__rating">
+                                <i class="fas fa-star" aria-hidden="true"></i>
+                                <i class="fas fa-star" aria-hidden="true"></i>
+                                <i class="fas fa-star" aria-hidden="true"></i>
+                                <i class="fas fa-star" aria-hidden="true"></i>
+                                <i class="fas fa-star" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                        <blockquote class="testimonial-card__content">
+                            <p>
+                                "Excelente atendimento! Meu cachorro adora ir lá. Os profissionais são muito 
+                                atenciosos e os produtos são de ótima qualidade. Recomendo muito!"
+                            </p>
+                        </blockquote>
+                        <footer class="testimonial-card__footer">
+                            <cite class="testimonial-card__author">
+                                <strong>Maria Silva</strong>
+                                <span>Tutora do Thor</span>
+                            </cite>
+                        </footer>
+                    </article>
+                    
+                    <article class="testimonial-card">
+                        <div class="testimonial-card__header">
+                            <div class="testimonial-card__avatar">
+                                <i class="fas fa-cat" aria-hidden="true"></i>
+                            </div>
+                            <div class="testimonial-card__rating">
+                                <i class="fas fa-star" aria-hidden="true"></i>
+                                <i class="fas fa-star" aria-hidden="true"></i>
+                                <i class="fas fa-star" aria-hidden="true"></i>
+                                <i class="fas fa-star" aria-hidden="true"></i>
+                                <i class="fas fa-star" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                        <blockquote class="testimonial-card__content">
+                            <p>
+                                "Serviços veterinários de primeira! Minha gata foi muito bem atendida. 
+                                Preços justos e profissionais competentes."
+                            </p>
+                        </blockquote>
+                        <footer class="testimonial-card__footer">
+                            <cite class="testimonial-card__author">
+                                <strong>João Santos</strong>
+                                <span>Tutor da Luna</span>
+                            </cite>
+                        </footer>
+                    </article>
+                    
+                    <article class="testimonial-card">
+                        <div class="testimonial-card__header">
+                            <div class="testimonial-card__avatar">
+                                <i class="fas fa-dog" aria-hidden="true"></i>
+                            </div>
+                            <div class="testimonial-card__rating">
+                                <i class="fas fa-star" aria-hidden="true"></i>
+                                <i class="fas fa-star" aria-hidden="true"></i>
+                                <i class="fas fa-star" aria-hidden="true"></i>
+                                <i class="fas fa-star" aria-hidden="true"></i>
+                                <i class="fas fa-star" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                        <blockquote class="testimonial-card__content">
+                            <p>
+                                "Banho e tosa perfeitos! Meu cachorro sempre volta lindo e cheiroso. 
+                                A equipe é muito profissional e carinhosa."
+                            </p>
+                        </blockquote>
+                        <footer class="testimonial-card__footer">
+                            <cite class="testimonial-card__author">
+                                <strong>Ana Costa</strong>
+                                <span>Tutora do Rex</span>
+                            </cite>
+                        </footer>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Lojas Section -->
+        <section id="lojas" class="section section--locations">
+            <div class="container">
+                <header class="section__header">
+                    <div class="section__badge">
+                        <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                        <span>Nossas Lojas</span>
+                    </div>
+                    <h2 class="section__title">Encontre a FarmVet mais próxima</h2>
+                    <p class="section__subtitle">
+                        Estamos presentes em diferentes localizações para melhor atendê-lo.
+                    </p>
+                </header>
+                
+                <div class="locations-grid">
+                    <article class="location-card">
+                        <div class="location-card__visual">
+                            <img src="img/lojasanorte1.png" alt="FarmVet Asa Norte" class="location-card__img" loading="lazy">
+                        </div>
+                        <div class="location-card__content">
+                            <h3 class="location-card__title">FarmVet Asa Norte</h3>
+                            <p class="location-card__address">
+                                <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                                <span>Asa Norte, Brasília - DF</span>
+                            </p>
+                            <p class="location-card__phone">
+                                <i class="fas fa-phone" aria-hidden="true"></i>
+                                <a href="tel:+5562991010254">(62) 99101-0254</a>
+                            </p>
+                        </div>
+                    </article>
+                    
+                    <article class="location-card">
+                        <div class="location-card__visual">
+                            <img src="img/lojaasanorte2.png" alt="FarmVet Taguatinga" class="location-card__img" loading="lazy">
+                        </div>
+                        <div class="location-card__content">
+                            <h3 class="location-card__title">FarmVet Taguatinga</h3>
+                            <p class="location-card__address">
+                                <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                                <span>Taguatinga, Brasília - DF</span>
+                            </p>
+                            <p class="location-card__phone">
+                                <i class="fas fa-phone" aria-hidden="true"></i>
+                                <a href="tel:+5562991010254">(62) 99101-0254</a>
+                            </p>
+                        </div>
+                    </article>
+                    
+                    <article class="location-card">
+                        <div class="location-card__visual">
+                            <img src="img/loja_asanorte3.png" alt="FarmVet Águas Claras" class="location-card__img" loading="lazy">
+                        </div>
+                        <div class="location-card__content">
+                            <h3 class="location-card__title">FarmVet Águas Claras</h3>
+                            <p class="location-card__address">
+                                <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                                <span>Águas Claras, Brasília - DF</span>
+                            </p>
+                            <p class="location-card__phone">
+                                <i class="fas fa-phone" aria-hidden="true"></i>
+                                <a href="tel:+5562991010254">(62) 99101-0254</a>
+                            </p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contato Section -->
+        <section id="contato" class="section section--contact">
+            <div class="container">
+                <div class="contact__content">
+                    <div class="contact__info">
+                        <header class="section__header">
+                            <div class="section__badge">
+                                <i class="fas fa-envelope" aria-hidden="true"></i>
+                                <span>Contato</span>
+                            </div>
+                            <h2 class="section__title">Entre em contato</h2>
+                            <p class="section__subtitle">
+                                Estamos aqui para ajudar você e seu pet. Entre em contato conosco!
+                            </p>
+                        </header>
+                        
+                        <div class="contact__details">
+                            <div class="contact__item">
+                                <div class="contact__icon">
+                                    <i class="fas fa-phone" aria-hidden="true"></i>
+                                </div>
+                                <div class="contact__text">
+                                    <h3>Telefone</h3>
+                                    <p><a href="tel:+5562991010254">(62) 99101-0254</a></p>
+                                </div>
+                            </div>
+                            
+                            <div class="contact__item">
+                                <div class="contact__icon">
+                                    <i class="fab fa-whatsapp" aria-hidden="true"></i>
+                                </div>
+                                <div class="contact__text">
+                                    <h3>WhatsApp</h3>
+                                    <p><a href="https://wa.me/5562991010254" target="_blank" rel="noopener">Enviar mensagem</a></p>
+                                </div>
+                            </div>
+                            
+                            <div class="contact__item">
+                                <div class="contact__icon">
+                                    <i class="fas fa-clock" aria-hidden="true"></i>
+                                </div>
+                                <div class="contact__text">
+                                    <h3>Horário de Funcionamento</h3>
+                                    <p>Segunda a Sábado: 10h às 22h<br>
+                                    Domingo e Feriados: 13h às 19h</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="contact__form">
+                        <form class="form" id="contact-form">
+                            <div class="form__group">
+                                <label for="name" class="form__label">Nome completo</label>
+                                <input type="text" id="name" name="name" class="form__input" required>
+                            </div>
+                            
+                            <div class="form__group">
+                                <label for="email" class="form__label">E-mail</label>
+                                <input type="email" id="email" name="email" class="form__input" required>
+                            </div>
+                            
+                            <div class="form__group">
+                                <label for="phone" class="form__label">Telefone</label>
+                                <input type="tel" id="phone" name="phone" class="form__input" required>
+                            </div>
+                            
+                            <div class="form__group">
+                                <label for="service" class="form__label">Serviço de interesse</label>
+                                <select id="service" name="service" class="form__select" required>
+                                    <option value="">Selecione um serviço</option>
+                                    <option value="veterinario">Veterinário</option>
+                                    <option value="banho-tosa">Banho e Tosa</option>
+                                    <option value="produtos">Produtos</option>
+                                    <option value="hotelaria">Hotelaria</option>
+                                    <option value="outro">Outro</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form__group">
+                                <label for="message" class="form__label">Mensagem</label>
+                                <textarea id="message" name="message" class="form__textarea" rows="4" required></textarea>
+                            </div>
+                            
+                            <button type="submit" class="btn btn--primary btn--full">
+                                <i class="fas fa-paper-plane" aria-hidden="true"></i>
+                                Enviar Mensagem
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div class="app-footer-bar">
+        <a href="produtos/produtos.html" class="app-footer-bar__icon" style="color: #C0C0C0; font-size: 1.25em; margin-right: 1.2em;" title="Produtos">
+            <i class="fas fa-store"></i>
+        </a>
+        <a href="blog/blog.html" class="app-footer-bar__icon" style="color: #C0C0C0; font-size: 1.25em; margin-right: 1.2em;" title="Blog">
+            <i class="fas fa-blog"></i>
+        </a>
+        <span class="app-footer-bar__icon" style="color: #C0C0C0; font-size: 1.25em; margin-right: 0.7em;">
+            <i class="fa-regular fa-clock"></i>
+        </span>
+        <span class="app-footer-bar__text">
+            10h-22h (Seg-Sáb) &nbsp;|&nbsp; 13h-19h (Dom/Feriados)
+        </span>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+        <div class="container">
+            <div class="footer__content">
+                <div class="footer__brand">
+                    <img src="SVG/LOGOPRETA.svg" alt="FarmVet Pet Store" class="footer__logo" width="150" height="50">
+                    <p class="footer__description">
+                        Cuidando do seu melhor amigo com excelência e amor desde sempre.
+                    </p>
+                    <div class="footer__social">
+                        <a href="#" class="footer__social-link" aria-label="Facebook">
+                            <i class="fab fa-facebook" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" class="footer__social-link" aria-label="Instagram">
+                            <i class="fab fa-instagram" aria-hidden="true"></i>
+                        </a>
+                        <a href="#" class="footer__social-link" aria-label="WhatsApp">
+                            <i class="fab fa-whatsapp" aria-hidden="true"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer__links">
+                    <h3 class="footer__title">Links Rápidos</h3>
+                    <ul class="footer__list">
+                        <li><a href="#hero">Início</a></li>
+                        <li><a href="#produtos">Produtos</a></li>
+                        <li><a href="servicos/servicos.html">Serviços</a></li>
+                        <li><a href="#depoimentos">Depoimentos</a></li>
+                        <li><a href="#lojas">Lojas</a></li>
+                        <li><a href="#contato">Contato</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer__services">
+                    <h3 class="footer__title">Nossos Serviços</h3>
+                    <ul class="footer__list">
+                        <li>Veterinário</li>
+                        <li>Banho e Tosa</li>
+                        <li>Hotelaria</li>
+                        <li>Produtos Premium</li>
+                        <li>Vacinação</li>
+                        <li>Exames</li>
+                    </ul>
+                </div>
+                
+                <div class="footer__contact">
+                    <h3 class="footer__title">Contato</h3>
+                    <div class="footer__contact-info">
+                        <p>
+                            <i class="fas fa-phone" aria-hidden="true"></i>
+                            <a href="tel:+5562991010254">(62) 99101-0254</a>
+                        </p>
+                        <p>
+                            <i class="fas fa-clock" aria-hidden="true"></i>
+                            Seg-Sáb: 10h-22h<br>
+                            Dom/Feriados: 13h-19h
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer__bottom">
+                <p>&copy; 2024 FarmVet Pet Store. Todos os direitos reservados.</p>
+                <p>Desenvolvido com <i class="fas fa-heart" aria-hidden="true"></i> para pets e seus tutores</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Float -->
+    <a href="https://wa.me/5562991010254" class="whatsapp-float" target="_blank" rel="noopener" aria-label="Abrir WhatsApp">
+        <i class="fab fa-whatsapp" aria-hidden="true"></i>
+    </a>
+
+    <!-- Scripts -->
+    <script src="script.js" defer></script>
+</body>
+</html>

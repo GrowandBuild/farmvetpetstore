@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Produtos | FarmVet Pet Store</title>
+  <meta name="description" content="Produtos premium para pets - Rações, brinquedos, acessórios e muito mais na FarmVet Pet Store.">
+  <link rel="icon" type="image/svg+xml" href="SVG/LOGOPRETA.svg">
+  <link rel="preload" href="styles.css" as="style">
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" as="style">
+  <style>
+    :root {
+        --color-primary: #2c2c2c;
+        --color-secondary: #8b7355;
+        --color-accent: #a0522d;
+        --color-success: #10b981;
+        --color-danger: #ef4444;
+        --color-text: #1a1a1a;
+        --color-text-light: #6b7280;
+        --color-bg: #ffffff;
+        --color-bg-secondary: #f8f9fa;
+        --color-border: #e5e7eb;
+        --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+        --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+        --shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
+        --radius: 8px;
+        --radius-lg: 16px;
+        --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        --container-max: 1200px;
+        --font-sans: 'Inter', system-ui, sans-serif;
+        --font-display: 'Poppins', system-ui, sans-serif;
+    }
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    html {
+        scroll-behavior: smooth;
+        overflow-x: hidden;
+    }
+    body {
+        font-family: var(--font-sans);
+        line-height: 1.6;
+        color: var(--color-text);
+        background: var(--color-bg);
+        overflow-x: hidden;
+    }
+    .skip-link {
+        position: absolute;
+        top: -40px;
+        left: 6px;
+        background: var(--color-primary);
+        color: white;
+        padding: 8px 16px;
+        text-decoration: none;
+        border-radius: var(--radius);
+        z-index: 10000;
+        transition: var(--transition);
+    }
+    .skip-link:focus {
+        top: 6px;
+    }
+    .container {
+        max-width: var(--container-max);
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+    @media (min-width: 640px) {
+        .container {
+            padding: 0 1.5rem;
+        }
+    }
+    @media (min-width: 1024px) {
+        .container {
+            padding: 0 2rem;
+        }
+    }
+  </style>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap">
+</head>
+<body>
+  <!-- Header -->
+  <header class="header" style="position:relative; box-shadow:0 2px 8px #0001;">
+    <nav class="nav" aria-label="Navegação dos produtos">
+      <div class="container">
+        <div class="nav__content">
+          <div class="nav__logo">
+            <a href="index.html" aria-label="Voltar para o site principal">
+              <img src="SVG/LOGOPRETA.svg" alt="FarmVet Pet Store" class="nav__logo-img" width="150" height="50">
+            </a>
+          </div>
+          <ul class="nav__menu">
+            <li><a href="../index.html">Início</a></li>
+            <li><a href="../blog/blog.html">Blog</a></li>
+            <li><a href="#produtos">Produtos</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main-content" style="padding-top:100px;">
+    <!-- Hero Section -->
+    <section class="section hero-section">
+      <div class="container">
+        <div class="hero-content">
+          <h1 class="hero-title">Produtos Premium para seu Pet</h1>
+          <p class="hero-subtitle">Qualidade, conforto e saúde para o seu melhor amigo</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Filtros -->
+    <section class="section filters-section">
+      <div class="container">
+        <div class="filters">
+          <button class="filter-btn active" data-category="todos">Todos</button>
+          <button class="filter-btn" data-category="racao">Rações</button>
+          <button class="filter-btn" data-category="brinquedos">Brinquedos</button>
+          <button class="filter-btn" data-category="acessorios">Acessórios</button>
+          <button class="filter-btn" data-category="higiene">Higiene</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Produtos -->
+    <section class="section" id="produtos">
+      <div class="container">
+        <div class="products-grid">
+          <!-- Produto 1 - Ração Premium -->
+          <article class="product-card" data-category="racao">
+            <div class="product-card__image">
+              <img src="imagemdedog1.png" alt="Ração Premium para Cães" class="product-image">
+              <div class="product-card__badge">Premium</div>
+            </div>
+            <div class="product-card__content">
+              <h3 class="product-card__title">Ração Premium para Cães</h3>
+              <p class="product-card__description">Ração super premium com proteínas de alta qualidade e vitaminas essenciais</p>
+              <div class="product-card__price">
+                <span class="price-old">R$ 89,90</span>
+                <span class="price-current">R$ 69,90</span>
+              </div>
+              <button class="product-card__btn" onclick="comprarProduto('Ração Premium para Cães', 'R$ 69,90')">
+                <i class="fab fa-whatsapp"></i>
+                Comprar no WhatsApp
+              </button>
+            </div>
+          </article>
+
+          <!-- Produto 2 - Brinquedo Interativo -->
+          <article class="product-card" data-category="brinquedos">
+            <div class="product-card__image">
+              <img src="imagemde dog 2.png" alt="Brinquedo Interativo" class="product-image">
+              <div class="product-card__badge">Novo</div>
+            </div>
+            <div class="product-card__content">
+              <h3 class="product-card__title">Brinquedo Interativo</h3>
+              <p class="product-card__description">Brinquedo que estimula a inteligência e mantém seu pet ativo</p>
+              <div class="product-card__price">
+                <span class="price-current">R$ 45,00</span>
+              </div>
+              <button class="product-card__btn" onclick="comprarProduto('Brinquedo Interativo', 'R$ 45,00')">
+                <i class="fab fa-whatsapp"></i>
+                Comprar no WhatsApp
+              </button>
+            </div>
+          </article>
+
+          <!-- Produto 3 - Coleira Premium -->
+          <article class="product-card" data-category="acessorios">
+            <div class="product-card__image">
+              <img src="imagemde dog 3 copiar.png" alt="Coleira Premium" class="product-image">
+              <div class="product-card__badge">Mais Vendido</div>
+            </div>
+            <div class="product-card__content">
+              <h3 class="product-card__title">Coleira Premium</h3>
+              <p class="product-card__description">Coleira confortável e resistente com design moderno</p>
+              <div class="product-card__price">
+                <span class="price-old">R$ 75,00</span>
+                <span class="price-current">R$ 59,90</span>
+              </div>
+              <button class="product-card__btn" onclick="comprarProduto('Coleira Premium', 'R$ 59,90')">
+                <i class="fab fa-whatsapp"></i>
+                Comprar no WhatsApp
+              </button>
+            </div>
+          </article>
+
+          <!-- Produto 4 - Shampoo Especial -->
+          <article class="product-card" data-category="higiene">
+            <div class="product-card__image">
+              <img src="../img/lojasanorte1.png" alt="Shampoo Especial para Pets" class="product-image">
+              <div class="product-card__badge">Hipoalergênico</div>
+            </div>
+            <div class="product-card__content">
+              <h3 class="product-card__title">Shampoo Especial para Pets</h3>
+              <p class="product-card__description">Shampoo hipoalergênico com pH neutro e fragrância suave</p>
+              <div class="product-card__price">
+                <span class="price-current">R$ 32,90</span>
+              </div>
+              <button class="product-card__btn" onclick="comprarProduto('Shampoo Especial para Pets', 'R$ 32,90')">
+                <i class="fab fa-whatsapp"></i>
+                Comprar no WhatsApp
+              </button>
+            </div>
+          </article>
+
+          <!-- Produto 5 - Ração para Gatos -->
+          <article class="product-card" data-category="racao">
+            <div class="product-card__image">
+              <img src="lojaasanorte2.png" alt="Ração Premium para Gatos" class="product-image">
+              <div class="product-card__badge">Premium</div>
+            </div>
+            <div class="product-card__content">
+              <h3 class="product-card__title">Ração Premium para Gatos</h3>
+              <p class="product-card__description">Ração específica para gatos com taurina e ômega 3</p>
+              <div class="product-card__price">
+                <span class="price-old">R$ 95,00</span>
+                <span class="price-current">R$ 79,90</span>
+              </div>
+              <button class="product-card__btn" onclick="comprarProduto('Ração Premium para Gatos', 'R$ 79,90')">
+                <i class="fab fa-whatsapp"></i>
+                Comprar no WhatsApp
+              </button>
+            </div>
+          </article>
+
+          <!-- Produto 6 - Cama para Pets -->
+          <article class="product-card" data-category="acessorios">
+            <div class="product-card__image">
+              <img src="lojaterraçõ2.png" alt="Cama Confortável para Pets" class="product-image">
+              <div class="product-card__badge">Conforto</div>
+            </div>
+            <div class="product-card__content">
+              <h3 class="product-card__title">Cama Confortável para Pets</h3>
+              <p class="product-card__description">Cama macia e confortável para seu pet descansar</p>
+              <div class="product-card__price">
+                <span class="price-current">R$ 120,00</span>
+              </div>
+              <button class="product-card__btn" onclick="comprarProduto('Cama Confortável para Pets', 'R$ 120,00')">
+                <i class="fab fa-whatsapp"></i>
+                Comprar no WhatsApp
+              </button>
+            </div>
+          </article>
+
+          <!-- Produto 7 - Petisco Natural -->
+          <article class="product-card" data-category="racao">
+            <div class="product-card__image">
+              <img src="lojaterraço3.png" alt="Petisco Natural" class="product-image">
+              <div class="product-card__badge">Natural</div>
+            </div>
+            <div class="product-card__content">
+              <h3 class="product-card__title">Petisco Natural</h3>
+              <p class="product-card__description">Petiscos 100% naturais sem conservantes artificiais</p>
+              <div class="product-card__price">
+                <span class="price-current">R$ 28,90</span>
+              </div>
+              <button class="product-card__btn" onclick="comprarProduto('Petisco Natural', 'R$ 28,90')">
+                <i class="fab fa-whatsapp"></i>
+                Comprar no WhatsApp
+              </button>
+            </div>
+          </article>
+
+          <!-- Produto 8 - Escova para Pets -->
+          <article class="product-card" data-category="higiene">
+            <div class="product-card__image">
+              <img src="../img/loja_asanorte3.png" alt="Escova para Pets" class="product-image">
+              <div class="product-card__badge">Essencial</div>
+            </div>
+            <div class="product-card__content">
+              <h3 class="product-card__title">Escova para Pets</h3>
+              <p class="product-card__description">Escova de qualidade para manter a pelagem do seu pet</p>
+              <div class="product-card__price">
+                <span class="price-current">R$ 35,00</span>
+              </div>
+              <button class="product-card__btn" onclick="comprarProduto('Escova para Pets', 'R$ 35,00')">
+                <i class="fab fa-whatsapp"></i>
+                Comprar no WhatsApp
+              </button>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="section cta-section">
+      <div class="container">
+        <div class="cta-content">
+          <h2>Não encontrou o que procura?</h2>
+          <p>Entre em contato conosco! Temos muito mais produtos disponíveis.</p>
+          <a href="https://wa.me/5562991010254?text=Olá! Gostaria de saber mais sobre os produtos da FarmVet Pet Store" class="cta-btn" target="_blank">
+            <i class="fab fa-whatsapp"></i>
+            Falar no WhatsApp
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__content">
+        <div class="footer__brand">
+          <img src="SVG/LOGOPBRANCA.svg" alt="FarmVet Pet Store" class="footer__logo" width="150" height="50">
+          <p class="footer__description">
+            Cuidando do seu melhor amigo com excelência e amor desde sempre.
+          </p>
+          <div class="footer__social">
+            <a href="#" class="footer__social-link" aria-label="Facebook">
+              <i class="fab fa-facebook" aria-hidden="true"></i>
+            </a>
+            <a href="#" class="footer__social-link" aria-label="Instagram">
+              <i class="fab fa-instagram" aria-hidden="true"></i>
+            </a>
+            <a href="#" class="footer__social-link" aria-label="WhatsApp">
+              <i class="fab fa-whatsapp" aria-hidden="true"></i>
+            </a>
+          </div>
+        </div>
+        <div class="footer__links">
+          <h3 class="footer__title">Links Rápidos</h3>
+          <ul class="footer__list">
+            <li><a href="../index.html">Início</a></li>
+            <li><a href="../blog/blog.html">Blog</a></li>
+            <li><a href="#produtos">Produtos</a></li>
+          </ul>
+        </div>
+        <div class="footer__services">
+          <h3 class="footer__title">Nossos Serviços</h3>
+          <ul class="footer__list">
+            <li>Veterinário</li>
+            <li>Banho e Tosa</li>
+            <li>Hotelaria</li>
+            <li>Produtos Premium</li>
+            <li>Vacinação</li>
+            <li>Exames</li>
+          </ul>
+        </div>
+        <div class="footer__contact">
+          <h3 class="footer__title">Contato</h3>
+          <div class="footer__contact-info">
+            <p>
+              <i class="fas fa-phone" aria-hidden="true"></i>
+              <a href="tel:+5562991010254">(62) 99101-0254</a>
+            </p>
+            <p>
+              <i class="fas fa-clock" aria-hidden="true"></i>
+              Seg-Sáb: 10h-22h<br>
+              Dom/Feriados: 13h-19h
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; 2024 FarmVet Pet Store. Todos os direitos reservados.</p>
+        <p>Desenvolvido com <i class="fas fa-heart" aria-hidden="true"></i> para pets e seus tutores</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://kit.fontawesome.com/2b8e1e2e2a.js" crossorigin="anonymous"></script>
+  <script>
+    // Função para comprar produto via WhatsApp
+    function comprarProduto(nome, preco) {
+      const mensagem = `Olá! Gostaria de comprar o produto: ${nome} - ${preco}`;
+      const url = `https://wa.me/5562991010254?text=${encodeURIComponent(mensagem)}`;
+      window.open(url, '_blank');
+    }
+
+    // Filtros de produtos
+    document.addEventListener('DOMContentLoaded', function() {
+      const filterBtns = document.querySelectorAll('.filter-btn');
+      const productCards = document.querySelectorAll('.product-card');
+
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+          // Remove active class de todos os botões
+          filterBtns.forEach(b => b.classList.remove('active'));
+          // Adiciona active class ao botão clicado
+          this.classList.add('active');
+
+          const category = this.getAttribute('data-category');
+
+          productCards.forEach(card => {
+            if (category === 'todos' || card.getAttribute('data-category') === category) {
+              card.style.display = 'block';
+            } else {
+              card.style.display = 'none';
+            }
+          });
+        });
+      });
+    });
+  </script>
+</body>
+</html>
+
+<style>
+/* Hero Section */
+.hero-section {
+  background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-accent) 100%);
+  color: white;
+  text-align: center;
+  padding: 4rem 0;
+}
+
+.hero-title {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--color-text-white);
+}
+
+.hero-subtitle {
+  font-size: 1.2rem;
+  opacity: 0.9;
+  color: var(--color-text-white);
+}
+
+/* Filtros */
+.filters-section {
+  background: var(--color-bg-secondary);
+  padding: 2rem 0;
+}
+
+.filters {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  padding: 0.75rem 1.5rem;
+  border: 2px solid var(--color-border);
+  background: var(--color-bg);
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+  background: var(--color-accent);
+  color: var(--color-text-white);
+  border-color: var(--color-accent);
+}
+
+/* Grid de Produtos */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+/* Cards de Produto */
+.product-card {
+  background: var(--color-bg);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-xl);
+}
+
+.product-card__image {
+  position: relative;
+  height: 250px;
+  overflow: hidden;
+}
+
+.product-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover .product-image {
+  transform: scale(1.05);
+}
+
+.product-card__badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: var(--color-accent);
+  color: var(--color-text-white);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.product-card__content {
+  padding: 1.5rem;
+}
+
+.product-card__title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--color-text);
+}
+
+.product-card__description {
+  color: var(--color-text-light);
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+.product-card__price {
+  margin-bottom: 1.5rem;
+}
+
+.price-old {
+  text-decoration: line-through;
+  color: var(--color-text-lighter);
+  font-size: 0.9rem;
+  margin-right: 0.5rem;
+}
+
+.price-current {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-accent);
+}
+
+.product-card__btn {
+  width: 100%;
+  padding: 1rem;
+  background: var(--color-success);
+  color: var(--color-text-white);
+  border: none;
+  border-radius: var(--radius);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.product-card__btn:hover {
+  background: var(--color-success-dark);
+}
+
+/* CTA Section */
+.cta-section {
+  background: linear-gradient(135deg, var(--color-secondary) 0%, var(--color-accent) 100%);
+  color: var(--color-text-white);
+  text-align: center;
+  padding: 4rem 0;
+}
+
+.cta-content h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: var(--color-text-white);
+}
+
+.cta-content p {
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  opacity: 0.9;
+  color: var(--color-text-white);
+}
+
+.cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 2rem;
+  background: var(--color-success);
+  color: var(--color-text-white);
+  text-decoration: none;
+  border-radius: var(--radius);
+  font-weight: 600;
+  transition: background 0.3s ease;
+}
+
+.cta-btn:hover {
+  background: var(--color-success-dark);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2rem;
+  }
+  
+  .products-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .filters {
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding-bottom: 1rem;
+  }
+  
+  .filter-btn {
+    white-space: nowrap;
+  }
+  
+  .cta-content h2 {
+    font-size: 2rem;
+  }
+}
+</style> 
