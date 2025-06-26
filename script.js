@@ -888,52 +888,20 @@ class FarmVetApp {
   }
 
   applyAntivirusProtection() {
-    // Remover scripts suspeitos que podem ser detectados como malware
-    const suspiciousScripts = document.querySelectorAll('script[src*="analytics"], script[src*="tracking"], script[src*="ads"]');
-    suspiciousScripts.forEach(script => {
-      console.log('Removendo script suspeito:', script.src);
-      script.remove();
-    });
+    // APENAS detectar Avast, mas NÃO alterar o design
+    console.log('Avast detectado, mas mantendo design original');
     
-    // Simplificar o site para evitar falsos positivos
-    this.simplifyForAntivirus();
-    
-    // Adicionar headers de segurança
-    this.addSecurityHeaders();
+    // Não remover elementos visuais, apenas adicionar proteções
+    this.addAntivirusProtectionOnly();
   }
 
-  simplifyForAntivirus() {
-    // Remover elementos que podem ser detectados como suspeitos
-    const suspiciousElements = [
-      '.hero__led-strip', // Animações podem ser suspeitas
-      '.hero__carousel-video', // Vídeos podem ser bloqueados
-      'script[src*="external"]', // Scripts externos
-      'iframe' // Iframes podem ser bloqueados
-    ];
+  addAntivirusProtectionOnly() {
+    // Apenas adicionar headers de segurança, sem mexer no visual
+    console.log('Aplicando apenas proteções de segurança');
     
-    suspiciousElements.forEach(selector => {
-      const elements = document.querySelectorAll(selector);
-      elements.forEach(el => {
-        console.log('Removendo elemento suspeito:', selector);
-        el.style.display = 'none';
-      });
-    });
-    
-    // Simplificar animações
-    const animatedElements = document.querySelectorAll('.hero__plant, .hero__plant-right');
-    animatedElements.forEach(el => {
-      if (el) {
-        el.style.animation = 'none';
-        el.style.transform = 'none';
-      }
-    });
-  }
-
-  addSecurityHeaders() {
-    // Adicionar meta tags de segurança
+    // Adicionar meta tags de segurança sem afetar o design
     const securityMeta = [
       { name: 'referrer', content: 'no-referrer' },
-      { name: 'robots', content: 'noindex, nofollow' },
       { 'http-equiv': 'X-Content-Type-Options', content: 'nosniff' },
       { 'http-equiv': 'X-Frame-Options', content: 'DENY' }
     ];
@@ -1099,7 +1067,7 @@ class FarmVetApp {
   applyCompleteFallback() {
     console.log('Aplicando fallback completo para iOS');
     
-    // CSS básico para funcionar
+    // CSS básico para funcionar, mas mantendo o design original
     const basicCSS = `
       <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -1131,15 +1099,18 @@ class FarmVetApp {
       document.head.appendChild(style);
     }
     
-    // Remover elementos problemáticos
+    // NÃO remover elementos visuais, apenas verificar se carregaram
     const problematicElements = document.querySelectorAll('.hero__led-strip, .hero__plant, .hero__plant-right, .hero__carousel-video');
     problematicElements.forEach(el => {
-      if (el) el.style.display = 'none';
+      if (el && !el.complete) {
+        console.log('Elemento não carregou completamente:', el);
+      }
     });
     
-    // Simplificar carousel
+    // Manter carousel original, apenas verificar se funciona
     const carousel = document.querySelector('.hero__carousel');
-    if (carousel) {
+    if (carousel && !carousel.children.length) {
+      console.log('Carousel vazio, aplicando fallback mínimo');
       carousel.innerHTML = '<img src="img/imagemdedog1.png" alt="FarmVet" style="max-width: 100%; height: auto; border-radius: 12px;">';
     }
   }
@@ -1512,6 +1483,29 @@ class FarmVetApp {
     }
   }
 
+  showIOSInstallBanner() {
+    const banner = `
+      <div id="ios-banner" style="position: fixed; top: 0; left: 0; right: 0; background: linear-gradient(135deg, #2c2c2c, #8b7355); color: white; padding: 12px 20px; z-index: 10001; display: flex; align-items: center; justify-content: space-between; font-size: 14px; box-shadow: 0 2px 10px rgba(0,0,0,0.2);">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <i class="fas fa-mobile-alt" style="font-size: 18px;"></i>
+          <span>Adicione o FarmVet à sua tela inicial para uma experiência melhor!</span>
+        </div>
+        <div style="display: flex; gap: 10px;">
+          <button onclick="document.getElementById('ios-banner').remove()" style="background: none; border: 1px solid white; color: white; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer;">
+            Agora não
+          </button>
+          <button onclick="document.getElementById('ios-banner').remove(); document.getElementById('installPWA').click()" style="background: white; color: #2c2c2c; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: bold; cursor: pointer;">
+            Instalar
+          </button>
+        </div>
+      </div>
+    `;
+    
+    if (!document.getElementById('ios-banner')) {
+      document.body.insertAdjacentHTML('afterbegin', banner);
+    }
+  }
+
   showIOSInstallBannerSecondary() {
     if (document.getElementById('ios-banner-secondary')) return;
     
@@ -1552,6 +1546,46 @@ class FarmVetApp {
     `;
     
     document.body.insertAdjacentHTML('beforeend', banner);
+  }
+
+  showIOSInstallInstructions() {
+    const instructions = `
+      <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); z-index: 10000; display: flex; align-items: center; justify-content: center; padding: 20px;">
+        <div style="background: white; border-radius: 16px; padding: 30px; max-width: 400px; text-align: center;">
+          <h3 style="margin-bottom: 20px; color: #2c2c2c;">Como instalar o app no iPhone</h3>
+          <ol style="text-align: left; line-height: 1.8;">
+            <li>Toque no botão <strong>Compartilhar</strong> <span style="color: #007AFF;">⎋</span></li>
+            <li>Role para baixo e toque em <strong>"Adicionar à Tela Inicial"</strong></li>
+            <li>Toque em <strong>"Adicionar"</strong></li>
+          </ol>
+          <button onclick="this.parentElement.parentElement.remove()" style="margin-top: 20px; background: #2c2c2c; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer;">
+            Entendi
+          </button>
+        </div>
+      </div>
+    `;
+    
+    document.body.insertAdjacentHTML('beforeend', instructions);
+  }
+
+  showAndroidInstallInstructions() {
+    const instructions = `
+      <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); z-index: 10000; display: flex; align-items: center; justify-content: center; padding: 20px;">
+        <div style="background: white; border-radius: 16px; padding: 30px; max-width: 400px; text-align: center;">
+          <h3 style="margin-bottom: 20px; color: #2c2c2c;">Como instalar o app no Android</h3>
+          <ol style="text-align: left; line-height: 1.8;">
+            <li>Toque no menu <strong>⋮</strong> (três pontos)</li>
+            <li>Selecione <strong>"Adicionar à tela inicial"</strong></li>
+            <li>Toque em <strong>"Adicionar"</strong></li>
+          </ol>
+          <button onclick="this.parentElement.parentElement.remove()" style="margin-top: 20px; background: #2c2c2c; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer;">
+            Entendi
+          </button>
+        </div>
+      </div>
+    `;
+    
+    document.body.insertAdjacentHTML('beforeend', instructions);
   }
 
   showInstallSuccess() {
