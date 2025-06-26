@@ -1122,14 +1122,6 @@ class FarmVetApp {
         .hero { background: linear-gradient(135deg, #2c2c2c, #8b7355); color: white; padding: 60px 20px; text-align: center; }
         .btn { background: #8b7355; color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; display: inline-block; margin: 10px; }
         .section { padding: 40px 20px; }
-        .nav { display: flex; justify-content: space-between; align-items: center; }
-        .nav__logo img { height: 40px; }
-        .nav__menu { display: none; }
-        .nav__toggle { display: block; background: none; border: none; color: white; font-size: 24px; }
-        @media (min-width: 768px) {
-          .nav__menu { display: flex; list-style: none; gap: 20px; }
-          .nav__toggle { display: none; }
-        }
       </style>
     `;
     
