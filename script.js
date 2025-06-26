@@ -1362,59 +1362,49 @@ class FarmVetApp {
       deferredPrompt = e;
     });
 
-    // Instalar PWA ou mostrar instruções
-    installButton.addEventListener('click', async () => {
-      if (deferredPrompt) {
-        console.log('🚀 Instalando PWA...');
-        deferredPrompt.prompt();
-        const { outcome } = await deferredPrompt.userChoice;
-        
-        if (outcome === 'accepted') {
-          console.log('✅ PWA instalado com sucesso');
-          this.showInstallSuccess();
-        } else {
-          console.log('❌ PWA não foi instalado');
-          this.showInstallError();
-        }
-        
-        deferredPrompt = null;
-      } else if (isIOS) {
-        console.log('📱 Mostrando instruções iOS');
-        this.showIOSInstallInstructions();
-      } else {
-        console.log('🤖 Mostrando instruções Android');
-        this.showAndroidInstallInstructions();
-      }
-    });
-
     // Verificar se já está instalado
     if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) {
       console.log('✅ PWA já está instalado');
-      installButton.innerHTML = '<i class="fas fa-check" aria-hidden="true"></i> App Instalado';
-      installButton.style.opacity = '0.7';
-      installButton.disabled = true;
-    }
-
-    // Verificar se é iOS e mostrar banner específico
-    if (isIOS) {
-      console.log('🍎 Detectado iOS, verificando capacidade de instalação');
-      this.checkSafariInstallCapability();
-    }
-  }
-
-  checkSafariInstallCapability() {
-    // Verificar se tem as meta tags necessárias
-    const appleMobileWebAppCapable = document.querySelector('meta[name="apple-mobile-web-app-capable"]');
-    const appleTouchIcon = document.querySelector('link[rel="apple-touch-icon"]');
-    
-    console.log('Safari PWA Capability:', {
-      appleMobileWebAppCapable: !!appleMobileWebAppCapable,
-      appleTouchIcon: !!appleTouchIcon,
-      manifest: !!document.querySelector('link[rel="manifest"]')
-    });
-    
-    if (!appleMobileWebAppCapable || !appleTouchIcon) {
-      console.warn('Meta tags PWA faltando para Safari');
+      installButton.innerHTML = '<i class="fas fa-mobile-alt" aria-hidden="true"></i> Abrir App';
+      installButton.addEventListener('click', () => {
+        // Se já está instalado, apenas recarrega a página para abrir no app
+        window.location.reload();
+      });
+    } else {
+      // Instalar PWA diretamente
+      installButton.addEventListener('click', async () => {
+        if (deferredPrompt) {
+          console.log('🚀 Instalando PWA...');
+          deferredPrompt.prompt();
+          const { outcome } = await deferredPrompt.userChoice;
+          
+          if (outcome === 'accepted') {
+            console.log('✅ PWA instalado com sucesso');
+            this.showInstallSuccess();
+          } else {
+            console.log('❌ PWA não foi instalado');
+            this.showInstallError();
+          }
+          
+          deferredPrompt = null;
+        } else if (isIOS || isSafari) {
+          // Para iOS/Safari, mostrar banner de instalação
+          console.log('📱 Safari/iOS detectado, mostrando banner');
+          this.showIOSInstallBanner();
+        } else {
+          // Para Android sem prompt, tentar instalar via manifest
+          console.log('🤖 Tentando instalar no Android');
+          if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.ready.then(() => {
+              // Tentar instalar via manifest
+              const manifestLink = document.querySelector('link[rel="manifest"]');
+              if (manifestLink) {
+                window.location.href = manifestLink.href;
+              }
+            });
+          }
+        }
+      });
     }
   }
 
