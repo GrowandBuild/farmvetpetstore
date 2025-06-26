@@ -835,6 +835,9 @@ class FarmVetApp {
     console.log('🚀 FarmVet Pet Store iniciando...');
     
     try {
+      // Verificar se recursos críticos carregaram
+      this.checkCriticalResources();
+      
       // Inicializa módulos
       this.initModules();
       
@@ -844,7 +847,79 @@ class FarmVetApp {
       console.log('✅ FarmVet Pet Store iniciado com sucesso!');
     } catch (error) {
       console.error('❌ Erro ao inicializar aplicação:', error);
+      this.showErrorFallback();
     }
+  }
+
+  checkCriticalResources() {
+    // Verificar se CSS carregou
+    const styles = document.querySelector('link[href*="styles.css"]');
+    if (!styles || !styles.sheet) {
+      console.warn('CSS não carregou, aplicando fallback');
+      this.applyCSSFallback();
+    }
+    
+    // Verificar se imagens críticas carregaram
+    const criticalImages = [
+      'img/imagemdedog1.png',
+      'img/planta.webp',
+      'img/planta2.png'
+    ];
+    
+    criticalImages.forEach(src => {
+      const img = new Image();
+      img.onerror = () => {
+        console.warn(`Imagem crítica não carregou: ${src}`);
+      };
+      img.src = src;
+    });
+  }
+
+  applyCSSFallback() {
+    const fallbackCSS = `
+      <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 20px; background: #f8f9fa; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .hero { background: linear-gradient(135deg, #2c2c2c, #8b7355); color: white; padding: 60px 20px; text-align: center; }
+        .btn { background: #8b7355; color: white; padding: 12px 24px; text-decoration: none; border-radius: 8px; display: inline-block; margin: 10px; }
+        .section { padding: 40px 20px; }
+        .header { background: #2c2c2c; color: white; padding: 15px 0; }
+        .nav { display: flex; justify-content: space-between; align-items: center; }
+        .nav__logo img { height: 40px; }
+        .nav__menu { display: none; }
+        .nav__toggle { display: block; background: none; border: none; color: white; font-size: 24px; }
+        @media (min-width: 768px) {
+          .nav__menu { display: flex; list-style: none; gap: 20px; }
+          .nav__toggle { display: none; }
+        }
+      </style>
+    `;
+    
+    if (!document.querySelector('#css-fallback')) {
+      const style = document.createElement('style');
+      style.id = 'css-fallback';
+      style.textContent = fallbackCSS;
+      document.head.appendChild(style);
+    }
+  }
+
+  showErrorFallback() {
+    const errorMessage = `
+      <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: #f8f9fa; display: flex; align-items: center; justify-content: center; z-index: 10000;">
+        <div style="background: white; padding: 40px; border-radius: 12px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.1); max-width: 400px;">
+          <div style="font-size: 48px; margin-bottom: 20px;">⚠️</div>
+          <h2 style="color: #2c2c2c; margin-bottom: 15px;">Ops! Algo deu errado</h2>
+          <p style="color: #6b7280; margin-bottom: 20px; line-height: 1.6;">
+            Houve um problema ao carregar o site. Tente recarregar a página.
+          </p>
+          <button onclick="window.location.reload()" style="background: #2c2c2c; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer;">
+            Recarregar Página
+          </button>
+        </div>
+      </div>
+    `;
+    
+    document.body.innerHTML = errorMessage;
   }
 
   initModules() {
@@ -892,14 +967,69 @@ class FarmVetApp {
   async initServiceWorker() {
     if ('serviceWorker' in navigator) {
       try {
-        await navigator.serviceWorker.register('/sw.js');
+        const registration = await navigator.serviceWorker.register('/sw.js');
         console.log('✅ Service Worker registrado');
         
         // Verificar se PWA pode ser instalado
         this.setupPWAInstall();
+        
+        // Verificar se há atualizações
+        registration.addEventListener('updatefound', () => {
+          const newWorker = registration.installing;
+          newWorker.addEventListener('statechange', () => {
+            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+              console.log('Nova versão do Service Worker disponível');
+              this.showUpdateNotification();
+            }
+          });
+        });
+        
+        // Tratar erros do service worker
+        registration.addEventListener('error', (error) => {
+          console.error('Erro no Service Worker:', error);
+        });
+        
       } catch (error) {
         console.log('❌ Service Worker não registrado:', error);
+        // Fallback: tentar registrar novamente após um tempo
+        setTimeout(() => {
+          this.retryServiceWorkerRegistration();
+        }, 5000);
       }
+    }
+  }
+
+  async retryServiceWorkerRegistration() {
+    try {
+      // Remover service worker antigo se existir
+      const registrations = await navigator.serviceWorker.getRegistrations();
+      for (let registration of registrations) {
+        await registration.unregister();
+      }
+      
+      // Tentar registrar novamente
+      await navigator.serviceWorker.register('/sw.js');
+      console.log('✅ Service Worker registrado na segunda tentativa');
+    } catch (error) {
+      console.log('❌ Falha na segunda tentativa:', error);
+    }
+  }
+
+  showUpdateNotification() {
+    const notification = `
+      <div id="update-notification" style="position: fixed; bottom: 20px; left: 20px; right: 20px; background: #2c2c2c; color: white; padding: 16px; border-radius: 12px; z-index: 10003; box-shadow: 0 4px 12px rgba(0,0,0,0.2); display: flex; align-items: center; justify-content: space-between;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <i class="fas fa-sync-alt" style="color: #8b7355;"></i>
+          <span>Nova versão disponível!</span>
+        </div>
+        <button onclick="window.location.reload()" style="background: #8b7355; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 14px;">
+          Atualizar
+        </button>
+      </div>
+    `;
+    
+    if (!document.getElementById('update-notification')) {
+      document.body.insertAdjacentHTML('beforeend', notification);
     }
   }
 
@@ -912,51 +1042,103 @@ class FarmVetApp {
     // Detectar iPhone/Safari
     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
     const isSafari = /Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent);
+    const isStandalone = window.navigator.standalone === true;
     
-    console.log('iOS:', isIOS, 'Safari:', isSafari);
+    console.log('iOS:', isIOS, 'Safari:', isSafari, 'Standalone:', isStandalone);
+    
+    // Se já está instalado, esconder botão
+    if (isStandalone) {
+      installButton.style.display = 'none';
+      return;
+    }
     
     if (isIOS && isSafari) {
-      // Para iPhone/Safari, mostrar instruções diferentes
+      // Para iPhone/Safari, mostrar sempre
       installButton.innerHTML = '<i class="fas fa-plus" aria-hidden="true"></i> Adicionar à Tela Inicial';
       installButton.style.display = 'inline-flex';
       
+      // Mostrar banner de instalação após 3 segundos
+      setTimeout(() => {
+        this.showIOSInstallBanner();
+      }, 3000);
+      
       installButton.addEventListener('click', () => {
-        // Mostrar instruções para iPhone
         this.showIOSInstallInstructions();
       });
       
       return;
     }
     
-    // Captura o evento beforeinstallprompt (Android/Chrome)
+    // Para Android/Chrome
     window.addEventListener('beforeinstallprompt', (e) => {
       console.log('PWA install prompt disponível');
       e.preventDefault();
       deferredPrompt = e;
       
-      // Mostra o botão de instalação
       installButton.style.display = 'inline-flex';
       
-      // Adiciona evento de clique
       installButton.addEventListener('click', async () => {
         if (deferredPrompt) {
-          deferredPrompt.prompt();
-          const { outcome } = await deferredPrompt.userChoice;
-          console.log('PWA install result:', outcome);
-          
-          if (outcome === 'accepted') {
-            installButton.style.display = 'none';
+          try {
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            console.log('PWA install result:', outcome);
+            
+            if (outcome === 'accepted') {
+              installButton.style.display = 'none';
+              this.showInstallSuccess();
+            }
+            deferredPrompt = null;
+          } catch (error) {
+            console.error('Erro na instalação:', error);
+            this.showInstallError();
           }
-          deferredPrompt = null;
         }
       });
     });
+    
+    // Fallback para Android se beforeinstallprompt não funcionar
+    setTimeout(() => {
+      if (!deferredPrompt && !isIOS && installButton.style.display === 'none') {
+        console.log('Fallback: mostrando botão de instalação manual');
+        installButton.innerHTML = '<i class="fas fa-download" aria-hidden="true"></i> Instalar App';
+        installButton.style.display = 'inline-flex';
+        
+        installButton.addEventListener('click', () => {
+          this.showAndroidInstallInstructions();
+        });
+      }
+    }, 5000);
     
     // Esconde o botão se já instalado
     window.addEventListener('appinstalled', () => {
       console.log('PWA instalado');
       installButton.style.display = 'none';
+      this.showInstallSuccess();
     });
+  }
+
+  showIOSInstallBanner() {
+    const banner = `
+      <div id="ios-banner" style="position: fixed; top: 0; left: 0; right: 0; background: linear-gradient(135deg, #2c2c2c, #8b7355); color: white; padding: 12px 20px; z-index: 10001; display: flex; align-items: center; justify-content: space-between; font-size: 14px; box-shadow: 0 2px 10px rgba(0,0,0,0.2);">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <i class="fas fa-mobile-alt" style="font-size: 18px;"></i>
+          <span>Adicione o FarmVet à sua tela inicial para uma experiência melhor!</span>
+        </div>
+        <div style="display: flex; gap: 10px;">
+          <button onclick="document.getElementById('ios-banner').remove()" style="background: none; border: 1px solid white; color: white; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer;">
+            Agora não
+          </button>
+          <button onclick="document.getElementById('ios-banner').remove(); document.getElementById('installPWA').click()" style="background: white; color: #2c2c2c; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: bold; cursor: pointer;">
+            Instalar
+          </button>
+        </div>
+      </div>
+    `;
+    
+    if (!document.getElementById('ios-banner')) {
+      document.body.insertAdjacentHTML('afterbegin', banner);
+    }
   }
 
   showIOSInstallInstructions() {
@@ -977,6 +1159,60 @@ class FarmVetApp {
     `;
     
     document.body.insertAdjacentHTML('beforeend', instructions);
+  }
+
+  showAndroidInstallInstructions() {
+    const instructions = `
+      <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); z-index: 10000; display: flex; align-items: center; justify-content: center; padding: 20px;">
+        <div style="background: white; border-radius: 16px; padding: 30px; max-width: 400px; text-align: center;">
+          <h3 style="margin-bottom: 20px; color: #2c2c2c;">Como instalar o app no Android</h3>
+          <ol style="text-align: left; line-height: 1.8;">
+            <li>Toque no menu <strong>⋮</strong> (três pontos)</li>
+            <li>Selecione <strong>"Adicionar à tela inicial"</strong></li>
+            <li>Toque em <strong>"Adicionar"</strong></li>
+          </ol>
+          <button onclick="this.parentElement.parentElement.remove()" style="margin-top: 20px; background: #2c2c2c; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer;">
+            Entendi
+          </button>
+        </div>
+      </div>
+    `;
+    
+    document.body.insertAdjacentHTML('beforeend', instructions);
+  }
+
+  showInstallSuccess() {
+    const success = `
+      <div style="position: fixed; top: 20px; right: 20px; background: #10b981; color: white; padding: 16px 20px; border-radius: 8px; z-index: 10002; box-shadow: 0 4px 12px rgba(0,0,0,0.15); display: flex; align-items: center; gap: 10px;">
+        <i class="fas fa-check-circle"></i>
+        <span>App instalado com sucesso!</span>
+        <button onclick="this.parentElement.remove()" style="background: none; border: none; color: white; margin-left: 10px; cursor: pointer;">×</button>
+      </div>
+    `;
+    
+    document.body.insertAdjacentHTML('beforeend', success);
+    
+    setTimeout(() => {
+      const notification = document.querySelector('[style*="background: #10b981"]');
+      if (notification) notification.remove();
+    }, 5000);
+  }
+
+  showInstallError() {
+    const error = `
+      <div style="position: fixed; top: 20px; right: 20px; background: #ef4444; color: white; padding: 16px 20px; border-radius: 8px; z-index: 10002; box-shadow: 0 4px 12px rgba(0,0,0,0.15); display: flex; align-items: center; gap: 10px;">
+        <i class="fas fa-exclamation-circle"></i>
+        <span>Erro na instalação. Tente novamente.</span>
+        <button onclick="this.parentElement.remove()" style="background: none; border: none; color: white; margin-left: 10px; cursor: pointer;">×</button>
+      </div>
+    `;
+    
+    document.body.insertAdjacentHTML('beforeend', error);
+    
+    setTimeout(() => {
+      const notification = document.querySelector('[style*="background: #ef4444"]');
+      if (notification) notification.remove();
+    }, 5000);
   }
 
   destroy() {
