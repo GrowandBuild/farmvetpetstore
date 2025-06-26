@@ -925,4 +925,10 @@ const app = new FarmVetApp();
 // Expõe para debug (apenas em desenvolvimento)
 if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
   window.FarmVetApp = app;
+}
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function() {
+    navigator.serviceWorker.register('sw.js');
+  });
 } 

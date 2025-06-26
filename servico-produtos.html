@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Produtos Premium | FarmVet Pet Store</title>
+  <meta name="description" content="Produtos premium para pets: rações, acessórios, medicamentos, entrega em domicílio. FarmVet Pet Store.">
+  <link rel="icon" type="image/svg+xml" href="SVG/LOGOPRETA.svg">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap">
+</head>
+<body>
+  <header class="header header-modern">
+    <nav class="nav nav-modern" aria-label="Navegação dos serviços">
+      <div class="container header-modern__container">
+        <div class="nav__content header-modern__content">
+          <div class="nav__logo header-modern__logo">
+            <a href="index.html" aria-label="Voltar para o site principal">
+              <img src="SVG/LOGOPRETA.svg" alt="FarmVet Pet Store" class="nav__logo-img" width="150" height="50">
+            </a>
+          </div>
+          <ul class="nav__menu header-modern__menu">
+            <li><a href="index.html">Início</a></li>
+            <li><a href="servicos.html">Serviços</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <main style="padding-top:90px;">
+    <section class="service-view">
+      <div class="container service-view__container">
+        <div class="service-view__grid">
+          <div class="service-view__visual">
+            <img src="img/loja asanorte3.png" alt="Produtos premium" class="service-view__img">
+          </div>
+          <div class="service-view__content">
+            <span class="service-view__badge">Produtos Premium</span>
+            <h1 class="service-view__title">As melhores marcas para o bem-estar do seu pet</h1>
+            <p class="service-view__desc">Rações premium, acessórios, medicamentos e entrega em domicílio. Tudo para saúde, diversão e conforto do seu pet!</p>
+            <ul class="service-view__features">
+              <li>Rações premium</li>
+              <li>Acessórios</li>
+              <li>Medicamentos</li>
+              <li>Entrega em domicílio</li>
+            </ul>
+            <div class="service-view__price">Valores variados</div>
+            <div class="service-view__actions">
+              <a href="https://wa.me/5562991010254" class="btn btn-primary" target="_blank"><i class="fab fa-whatsapp"></i> Falar no WhatsApp</a>
+              <a href="produtos.html" class="btn btn-outline"><i class="fas fa-store"></i> Ver Loja</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <style>
+  .service-view__container { max-width: 1100px; margin: 0 auto; background: #faf8f6; border-radius: 2rem; box-shadow: 0 4px 32px #a0522d0a; padding: 2.5rem 2rem; border: 1.5px solid #f0e8e2; }
+  .service-view__grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: 2.5rem; align-items: center; }
+  .service-view__visual { display: flex; align-items: center; justify-content: center; }
+  .service-view__img { max-width: 350px; width: 100%; border-radius: 1.5rem; box-shadow: 0 4px 16px rgba(160, 82, 45, 0.08); border: 1.5px solid #eee; background: #fff; display: block; }
+  .service-view__content { display: flex; flex-direction: column; gap: 1.1rem; align-items: flex-start; }
+  .service-view__badge { color: #a0522d; font-weight: 700; font-size: 1rem; letter-spacing: 1.2px; text-transform: uppercase; margin-bottom: 0.5rem; }
+  .service-view__title { font-size: 2rem; font-weight: 800; color: #232323; margin-bottom: 0.3rem; line-height: 1.15; }
+  .service-view__desc { font-size: 1.1rem; color: #555; margin-bottom: 0.7rem; line-height: 1.5; }
+  .service-view__features { list-style: none; padding: 0; margin: 0 0 0.7rem 0; color: #555; font-size: 1rem; display: flex; flex-direction: column; gap: 0.4rem; }
+  .service-view__features li::before { content: '\f00c'; font-family: 'Font Awesome 5 Free'; font-weight: 900; color: #a0522d; margin-right: 0.7em; font-size: 1em; }
+  .service-view__price { font-size: 1.1rem; font-weight: 700; color: #a0522d; margin-bottom: 1.1rem; }
+  .service-view__actions { display: flex; gap: 1.2rem; flex-wrap: wrap; }
+  .btn { display: inline-flex; align-items: center; gap: 0.5em; font-weight: 600; font-size: 1rem; border-radius: 2rem; padding: 0.7rem 2rem; text-decoration: none; transition: background 0.18s, color 0.18s, border 0.18s; cursor: pointer; }
+  .btn-primary { background: #a0522d; color: #fff; border: none; }
+  .btn-primary:hover { background: #232323; color: #fff; }
+  .btn-outline { background: #fff; color: #a0522d; border: 2px solid #a0522d; }
+  .btn-outline:hover { background: #a0522d; color: #fff; }
+  @media (max-width: 900px) { .service-view__container { padding: 1.2rem 0.7rem; border-radius: 1.2rem; } .service-view__grid { grid-template-columns: 1fr; gap: 2rem; } .service-view__visual { margin-bottom: 1.2rem; } .service-view__img { max-width: 90vw; margin: 0 auto; } .service-view__content { align-items: center; text-align: center; } .service-view__actions { justify-content: center; } }
+  @media (max-width: 600px) { .service-view__container { padding: 0.7rem 0.2rem; border-radius: 0.7rem; } .service-view__img { max-width: 100vw; border-radius: 1rem; max-height: 220px; } .service-view__title { font-size: 1.3rem; } .service-view__desc { font-size: 0.95rem; } }
+  </style>
+  <script src="https://kit.fontawesome.com/2b8e1e2e2a.js" crossorigin="anonymous"></script>
+</body>
+</html> 

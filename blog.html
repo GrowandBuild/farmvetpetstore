@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog | FarmVet Pet Store</title>
+  <meta name="description" content="Blog FarmVet Pet Store - Dicas, novidades e conteúdos para tutores de pets.">
+  <link rel="icon" type="image/svg+xml" href="SVG/LOGOPRETA.svg">
+  <link rel="preload" href="styles.css" as="style">
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" as="style">
+  <style>
+    :root {
+        --color-primary: #2c2c2c;
+        --color-secondary: #8b7355;
+        --color-accent: #a0522d;
+        --color-success: #10b981;
+        --color-danger: #ef4444;
+        --color-text: #1a1a1a;
+        --color-text-light: #6b7280;
+        --color-bg: #ffffff;
+        --color-bg-secondary: #f8f9fa;
+        --color-border: #e5e7eb;
+        --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+        --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+        --shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
+        --radius: 8px;
+        --radius-lg: 16px;
+        --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        --container-max: 1200px;
+        --font-sans: 'Inter', system-ui, sans-serif;
+        --font-display: 'Poppins', system-ui, sans-serif;
+    }
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    html {
+        scroll-behavior: smooth;
+        overflow-x: hidden;
+    }
+    body {
+        font-family: var(--font-sans);
+        line-height: 1.6;
+        color: var(--color-text);
+        background: var(--color-bg);
+        overflow-x: hidden;
+    }
+    .skip-link {
+        position: absolute;
+        top: -40px;
+        left: 6px;
+        background: var(--color-primary);
+        color: white;
+        padding: 8px 16px;
+        text-decoration: none;
+        border-radius: var(--radius);
+        z-index: 10000;
+        transition: var(--transition);
+    }
+    .skip-link:focus {
+        top: 6px;
+    }
+    .container {
+        max-width: var(--container-max);
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+    @media (min-width: 640px) {
+        .container {
+            padding: 0 1.5rem;
+        }
+    }
+    @media (min-width: 1024px) {
+        .container {
+            padding: 0 2rem;
+        }
+    }
+  </style>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap">
+</head>
+<body>
+  <!-- Header Blog -->
+  <header class="header" style="position:relative; box-shadow:0 2px 8px #0001;">
+    <nav class="nav" aria-label="Navegação do blog">
+      <div class="container">
+        <div class="nav__content">
+          <div class="nav__logo">
+            <a href="index.html" aria-label="Voltar para o site principal">
+              <img src="SVG/LOGOPRETA.svg" alt="FarmVet Pet Store" class="nav__logo-img" width="150" height="50">
+            </a>
+          </div>
+          <ul class="nav__menu">
+            <li><a href="index.html">Início</a></li>
+            <li><a href="#posts">Blog</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="blog-hero-new">
+    <div class="container blog-hero-new__grid">
+      <div class="blog-hero-new__content">
+        <span class="blog-hero-new__badge">Blog FarmVet</span>
+        <h1 class="blog-hero-new__title">Conteúdo premium para tutores apaixonados por pets</h1>
+        <p class="blog-hero-new__subtitle">
+          Dicas, novidades, saúde, comportamento e tudo para o bem-estar do seu pet.
+        </p>
+        <a href="#posts" class="blog-hero-new__cta">Explore nossos artigos</a>
+      </div>
+      <div class="blog-hero-new__visual">
+        <img src="img/imagemdedog1.png" alt="Pet feliz" class="blog-hero-new__img">
+      </div>
+    </div>
+  </section>
+
+  <main id="main-content">
+    <section class="section" id="posts">
+      <div class="container">
+        <div class="blog-grid">
+          <!-- Post 1 -->
+          <article class="blog-card">
+            <a href="post1.html" class="blog-card__link">
+              <div class="blog-card__image" style="background-image:url('img/imagemdedog1.png');">
+                <div class="blog-card__overlay">
+                  <span class="blog-card__read-time">
+                    <i class="fas fa-clock"></i>
+                    3 min
+                  </span>
+                </div>
+              </div>
+              <div class="blog-card__content">
+                <div class="blog-card__category">
+                  <i class="fas fa-utensils"></i>
+                  Alimentação
+                </div>
+                <h2 class="blog-card__title">Como escolher a melhor ração para seu pet?</h2>
+                <p class="blog-card__excerpt">Descubra os critérios essenciais para selecionar uma alimentação saudável e balanceada para seu cão ou gato.</p>
+                <div class="blog-card__meta">
+                  <div class="blog-card__author">
+                    <i class="fas fa-user"></i>
+                    <span>FarmVet Team</span>
+                  </div>
+                  <div class="blog-card__date">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>10/06/2024</span>
+                  </div>
+                </div>
+                <div class="blog-card__cta">
+                  <span>Ler artigo</span>
+                  <i class="fas fa-arrow-right"></i>
+                </div>
+              </div>
+            </a>
+          </article>
+
+          <!-- Post 2 -->
+          <article class="blog-card">
+            <a href="post2.html" class="blog-card__link">
+              <div class="blog-card__image" style="background-image:url('img/imagemde dog 2.png');">
+                <div class="blog-card__overlay">
+                  <span class="blog-card__read-time">
+                    <i class="fas fa-clock"></i>
+                    2 min
+                  </span>
+                </div>
+              </div>
+              <div class="blog-card__content">
+                <div class="blog-card__category">
+                  <i class="fas fa-shower"></i>
+                  Higiene
+                </div>
+                <h2 class="blog-card__title">Banho e tosa: frequência ideal para cada raça</h2>
+                <p class="blog-card__excerpt">Saiba como manter seu pet limpo, saudável e feliz com a rotina de banho e tosa adequada.</p>
+                <div class="blog-card__meta">
+                  <div class="blog-card__author">
+                    <i class="fas fa-user"></i>
+                    <span>FarmVet Team</span>
+                  </div>
+                  <div class="blog-card__date">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>05/06/2024</span>
+                  </div>
+                </div>
+                <div class="blog-card__cta">
+                  <span>Ler artigo</span>
+                  <i class="fas fa-arrow-right"></i>
+                </div>
+              </div>
+            </a>
+          </article>
+
+          <!-- Post 3 -->
+          <article class="blog-card">
+            <a href="post3.html" class="blog-card__link">
+              <div class="blog-card__image" style="background-image:url('img/imagemde dog 3 copiar.png');">
+                <div class="blog-card__overlay">
+                  <span class="blog-card__read-time">
+                    <i class="fas fa-clock"></i>
+                    4 min
+                  </span>
+                </div>
+              </div>
+              <div class="blog-card__content">
+                <div class="blog-card__category">
+                  <i class="fas fa-heart"></i>
+                  Comportamento
+                </div>
+                <h2 class="blog-card__title">Dicas para socializar filhotes</h2>
+                <p class="blog-card__excerpt">Veja como apresentar seu filhote a outros animais e pessoas de forma segura e positiva.</p>
+                <div class="blog-card__meta">
+                  <div class="blog-card__author">
+                    <i class="fas fa-user"></i>
+                    <span>FarmVet Team</span>
+                  </div>
+                  <div class="blog-card__date">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>01/06/2024</span>
+                  </div>
+                </div>
+                <div class="blog-card__cta">
+                  <span>Ler artigo</span>
+                  <i class="fas fa-arrow-right"></i>
+                </div>
+              </div>
+            </a>
+          </article>
+        </div>
+
+        <!-- Newsletter Section -->
+        <section class="newsletter-section">
+          <div class="newsletter-content">
+            <div class="newsletter-icon">
+              <i class="fas fa-envelope"></i>
+            </div>
+            <h3 class="newsletter-title">Fique por dentro das novidades!</h3>
+            <p class="newsletter-description">Receba dicas exclusivas sobre cuidados com pets diretamente no seu email.</p>
+            <form class="newsletter-form">
+              <input type="email" placeholder="Seu melhor email" class="newsletter-input" required>
+              <button type="submit" class="newsletter-btn">
+                <span>Inscrever-se</span>
+                <i class="fas fa-paper-plane"></i>
+              </button>
+            </form>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer igual ao site principal -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer__content">
+        <div class="footer__brand">
+          <img src="SVG/LOGOPBRANCA.svg" alt="FarmVet Pet Store" class="footer__logo" width="150" height="50">
+          <p class="footer__description">
+            Cuidando do seu melhor amigo com excelência e amor desde sempre.
+          </p>
+          <div class="footer__social">
+            <a href="#" class="footer__social-link" aria-label="Facebook">
+              <i class="fab fa-facebook" aria-hidden="true"></i>
+            </a>
+            <a href="#" class="footer__social-link" aria-label="Instagram">
+              <i class="fab fa-instagram" aria-hidden="true"></i>
+            </a>
+            <a href="#" class="footer__social-link" aria-label="WhatsApp">
+              <i class="fab fa-whatsapp" aria-hidden="true"></i>
+            </a>
+          </div>
+        </div>
+        <div class="footer__links">
+          <h3 class="footer__title">Links Rápidos</h3>
+          <ul class="footer__list">
+            <li><a href="index.html">Início</a></li>
+            <li><a href="servicos.html">Serviços</a></li>
+            <li><a href="#posts">Blog</a></li>
+          </ul>
+        </div>
+        <div class="footer__services">
+          <h3 class="footer__title">Nossos Serviços</h3>
+          <ul class="footer__list">
+            <li>Veterinário</li>
+            <li>Banho e Tosa</li>
+            <li>Hotelaria</li>
+            <li>Produtos Premium</li>
+            <li>Vacinação</li>
+            <li>Exames</li>
+          </ul>
+        </div>
+        <div class="footer__contact">
+          <h3 class="footer__title">Contato</h3>
+          <div class="footer__contact-info">
+            <p>
+              <i class="fas fa-phone" aria-hidden="true"></i>
+              <a href="tel:+5562991010254">(62) 99101-0254</a>
+            </p>
+            <p>
+              <i class="fas fa-clock" aria-hidden="true"></i>
+              Seg-Sáb: 10h-22h<br>
+              Dom/Feriados: 13h-19h
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; 2024 FarmVet Pet Store. Todos os direitos reservados.</p>
+        <p>Desenvolvido com <i class="fas fa-heart" aria-hidden="true"></i> para pets e seus tutores</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://kit.fontawesome.com/2b8e1e2e2a.js" crossorigin="anonymous"></script>
+</body>
+</html>
+
+<style>
+/* Hero Section */
+.blog-hero-new {
+  padding: 3.5rem 0 2.5rem 0;
+  background: #fff;
+}
+.blog-hero-new__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 3rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.blog-hero-new__content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.2rem;
+}
+.blog-hero-new__badge {
+  color: #a0522d;
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+.blog-hero-new__title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #232323;
+  margin-bottom: 0.5rem;
+  line-height: 1.15;
+}
+.blog-hero-new__subtitle {
+  font-size: 1.1rem;
+  color: #555;
+  margin-bottom: 1.2rem;
+  line-height: 1.5;
+}
+.blog-hero-new__cta {
+  background: #232323;
+  color: #fff;
+  border: none;
+  padding: 0.85rem 2.2rem;
+  border-radius: 2rem;
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 0.5px;
+  text-decoration: none;
+  transition: background 0.2s;
+  cursor: pointer;
+  display: inline-block;
+}
+.blog-hero-new__cta:hover {
+  background: #a0522d;
+}
+.blog-hero-new__visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.blog-hero-new__img {
+  max-width: 340px;
+  width: 100%;
+  height: auto;
+  border-radius: 1.5rem;
+  box-shadow: 0 4px 16px rgba(160, 82, 45, 0.08);
+  border: 1.5px solid #eee;
+  background: #fff;
+  display: block;
+}
+@media (max-width: 900px) {
+  .blog-hero-new__grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .blog-hero-new__content {
+    align-items: center;
+    text-align: center;
+  }
+  .blog-hero-new__visual {
+    margin-top: 1.5rem;
+  }
+  .blog-hero-new__img {
+    max-width: 90vw;
+    margin: 0 auto;
+  }
+}
+@media (max-width: 600px) {
+  .blog-hero-new {
+    padding: 1.5rem 0 1rem 0;
+  }
+  .blog-hero-new__img {
+    max-width: 100vw;
+    border-radius: 1rem;
+    max-height: 220px;
+  }
+  .blog-hero-new__title {
+    font-size: 1.5rem;
+  }
+  .blog-hero-new__subtitle {
+    font-size: 0.95rem;
+  }
+}
+
+/* Blog Grid */
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  gap: 2.5rem;
+  margin: 4rem 0;
+}
+
+.blog-card {
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+  transition: all 0.4s ease;
+  position: relative;
+}
+
+.blog-card:hover {
+  transform: translateY(-12px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+}
+
+.blog-card__link {
+  color: inherit;
+  text-decoration: none;
+  display: block;
+  height: 100%;
+}
+
+.blog-card__image {
+  width: 100%;
+  height: 250px;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.blog-card__image::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(0,0,0,0.2), rgba(0,0,0,0));
+  transition: all 0.3s ease;
+}
+
+.blog-card:hover .blog-card__image::before {
+  background: linear-gradient(135deg, rgba(0,0,0,0.4), rgba(0,0,0,0.1));
+}
+
+.blog-card__overlay {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  z-index: 2;
+}
+
+.blog-card__read-time {
+  background: rgba(255,255,255,0.9);
+  color: #2c2c2c;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  backdrop-filter: blur(10px);
+}
+
+.blog-card__content {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - 250px);
+}
+
+.blog-card__category {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #a0522d, #d2691e);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  align-self: flex-start;
+}
+
+.blog-card__title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #2c2c2c;
+  margin-bottom: 1rem;
+  line-height: 1.4;
+  transition: color 0.3s ease;
+}
+
+.blog-card:hover .blog-card__title {
+  color: #a0522d;
+}
+
+.blog-card__excerpt {
+  color: #6b7280;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+  flex: 1;
+}
+
+.blog-card__meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+  color: #9ca3af;
+}
+
+.blog-card__author,
+.blog-card__date {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.blog-card__cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #a0522d;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.blog-card:hover .blog-card__cta {
+  color: #d2691e;
+}
+
+.blog-card__cta i {
+  transition: transform 0.3s ease;
+}
+
+.blog-card:hover .blog-card__cta i {
+  transform: translateX(4px);
+}
+
+/* Newsletter Section */
+.newsletter-section {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 24px;
+  padding: 3rem;
+  margin: 4rem 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.newsletter-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="%23a0522d" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>');
+  z-index: 1;
+}
+
+.newsletter-content {
+  position: relative;
+  z-index: 2;
+}
+
+.newsletter-icon {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, #a0522d, #d2691e);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  font-size: 2rem;
+  color: white;
+}
+
+.newsletter-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2c2c2c;
+  margin-bottom: 1rem;
+}
+
+.newsletter-description {
+  font-size: 1.1rem;
+  color: #6b7280;
+  margin-bottom: 2rem;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.newsletter-form {
+  display: flex;
+  gap: 1rem;
+  max-width: 500px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+}
+
+.newsletter-input {
+  flex: 1;
+  min-width: 250px;
+  padding: 1rem 1.5rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background: white;
+}
+
+.newsletter-input:focus {
+  outline: none;
+  border-color: #a0522d;
+  box-shadow: 0 0 0 3px rgba(160, 82, 45, 0.1);
+}
+
+.newsletter-btn {
+  background: linear-gradient(135deg, #a0522d, #d2691e);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.newsletter-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(160, 82, 45, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .blog-hero-new {
+    height: 20vh;
+    min-height: 140px;
+    margin-top: 70px;
+    padding: 1.5rem 0;
+  }
+  
+  .blog-hero-new__title {
+    font-size: 1.5rem;
+  }
+  
+  .blog-hero-new__subtitle {
+    font-size: 0.75rem;
+  }
+  
+  .blog-hero-new__cta {
+    padding: 5px 14px;
+    font-size: 0.7rem;
+  }
+  
+  .led {
+    width: 2px;
+    height: 2px;
+  }
+  
+  .blog-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin: 2rem 0;
+  }
+  
+  .newsletter-section {
+    padding: 2rem;
+    margin: 2rem 0;
+  }
+  
+  .newsletter-form {
+    flex-direction: column;
+  }
+  
+  .newsletter-input {
+    min-width: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .blog-hero-new {
+    height: 18vh;
+    min-height: 120px;
+    padding: 1rem 0;
+  }
+  
+  .blog-hero-new__title {
+    font-size: 1.3rem;
+  }
+  
+  .blog-hero-new__subtitle {
+    font-size: 0.7rem;
+  }
+  
+  .blog-hero-new__cta {
+    padding: 4px 12px;
+    font-size: 0.65rem;
+  }
+  
+  .led {
+    width: 1.5px;
+    height: 1.5px;
+  }
+  
+  .blog-card__content {
+    padding: 1.5rem;
+  }
+  
+  .blog-card__title {
+    font-size: 1.2rem;
+  }
+  
+  .newsletter-title {
+    font-size: 1.5rem;
+  }
+}
+</style>
