@@ -470,7 +470,7 @@ ul, ol {
   font-size: var(--text-sm);
   font-weight: 500;
   margin-bottom: var(--space-6);
-  margin-top: var(--space-4);
+  margin-top: var(--space-12);
   backdrop-filter: blur(10px);
 }
 

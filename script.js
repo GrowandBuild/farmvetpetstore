@@ -1347,31 +1347,22 @@ class FarmVetApp {
     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
     const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
-    // Esconder botão inicialmente
-    installButton.style.visibility = 'hidden';
-    installButton.style.height = '0';
-    installButton.style.margin = '0';
-    installButton.style.padding = '0';
-    installButton.style.border = 'none';
-    installButton.style.opacity = '0';
+    // Botão sempre visível agora
+    installButton.style.visibility = 'visible';
+    installButton.style.height = 'auto';
+    installButton.style.margin = '';
+    installButton.style.padding = '';
+    installButton.style.border = '';
+    installButton.style.opacity = '1';
 
     // Capturar evento beforeinstallprompt
     window.addEventListener('beforeinstallprompt', (e) => {
       console.log('✅ PWA install prompt disponível');
       e.preventDefault();
       deferredPrompt = e;
-      
-      // Mostrar botão
-      installButton.style.visibility = 'visible';
-      installButton.style.height = 'auto';
-      installButton.style.margin = '';
-      installButton.style.padding = '';
-      installButton.style.border = '';
-      installButton.style.opacity = '1';
-      installButton.style.transition = 'all 0.3s ease';
     });
 
-    // Instalar PWA
+    // Instalar PWA ou mostrar instruções
     installButton.addEventListener('click', async () => {
       if (deferredPrompt) {
         console.log('🚀 Instalando PWA...');
@@ -1387,12 +1378,6 @@ class FarmVetApp {
         }
         
         deferredPrompt = null;
-        installButton.style.visibility = 'hidden';
-        installButton.style.height = '0';
-        installButton.style.margin = '0';
-        installButton.style.padding = '0';
-        installButton.style.border = 'none';
-        installButton.style.opacity = '0';
       } else if (isIOS) {
         console.log('📱 Mostrando instruções iOS');
         this.showIOSInstallInstructions();
@@ -1405,30 +1390,15 @@ class FarmVetApp {
     // Verificar se já está instalado
     if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) {
       console.log('✅ PWA já está instalado');
-      installButton.style.visibility = 'hidden';
-      installButton.style.height = '0';
-      installButton.style.margin = '0';
-      installButton.style.padding = '0';
-      installButton.style.border = 'none';
-      installButton.style.opacity = '0';
+      installButton.innerHTML = '<i class="fas fa-check" aria-hidden="true"></i> App Instalado';
+      installButton.style.opacity = '0.7';
+      installButton.disabled = true;
     }
 
     // Verificar se é iOS e mostrar banner específico
     if (isIOS) {
       console.log('🍎 Detectado iOS, verificando capacidade de instalação');
       this.checkSafariInstallCapability();
-    }
-
-    // Verificar se não há prompt e não é iOS
-    if (!deferredPrompt && !isIOS && installButton.style.visibility === 'hidden') {
-      console.log('⚠️ PWA não pode ser instalado automaticamente');
-      // Manter botão escondido
-      installButton.style.visibility = 'hidden';
-      installButton.style.height = '0';
-      installButton.style.margin = '0';
-      installButton.style.padding = '0';
-      installButton.style.border = 'none';
-      installButton.style.opacity = '0';
     }
   }
 
