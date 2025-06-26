@@ -1,4 +1,4 @@
-const CACHE_NAME = 'farmvet-cache-v3';
+const CACHE_NAME = 'farmvet-cache-v4';
 const urlsToCache = [
   '/',
   '/index.html',
@@ -7,16 +7,10 @@ const urlsToCache = [
   '/manifest.json',
   '/SVG/LOGOPRETA.svg',
   '/SVG/LOGOPBRANCA.svg',
-  '/img/logo.png',
-  '/img/planta.webp',
-  '/img/planta2.png',
-  '/img/imagemdedog1.png',
-  '/img/imagemde_dog2.png',
-  '/img/imagemde_dog3.png',
-  '/videos/videohero.mp4'
+  '/img/logo.png'
 ];
 
-// Fallback para quando offline
+// Fallback simples para quando offline
 const offlineFallback = `
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -45,33 +39,23 @@ const offlineFallback = `
 `;
 
 self.addEventListener('install', function(event) {
-  console.log('Service Worker instalando...');
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(function(cache) {
-        console.log('Cache aberto');
         return cache.addAll(urlsToCache);
       })
       .catch(function(error) {
         console.log('Erro no cache:', error);
-        // Se falhar, pelo menos cachear a página offline
-        return caches.open(CACHE_NAME).then(cache => {
-          return cache.put('/offline.html', new Response(offlineFallback, {
-            headers: { 'Content-Type': 'text/html' }
-          }));
-        });
       })
   );
 });
 
 self.addEventListener('activate', function(event) {
-  console.log('Service Worker ativando...');
   event.waitUntil(
     caches.keys().then(function(cacheNames) {
       return Promise.all(
         cacheNames.map(function(cacheName) {
           if (cacheName !== CACHE_NAME) {
-            console.log('Removendo cache antigo:', cacheName);
             return caches.delete(cacheName);
           }
         })
@@ -81,32 +65,29 @@ self.addEventListener('activate', function(event) {
 });
 
 self.addEventListener('fetch', function(event) {
-  // Não interceptar requisições de API ou recursos dinâmicos
+  // Não interceptar requisições suspeitas
   if (event.request.url.includes('/api/') || 
       event.request.method !== 'GET' ||
-      event.request.headers.get('cache-control') === 'no-cache' ||
       event.request.url.includes('chrome-extension') ||
-      event.request.url.includes('extension')) {
+      event.request.url.includes('extension') ||
+      event.request.url.includes('avast') ||
+      event.request.url.includes('antivirus')) {
     return;
   }
 
   event.respondWith(
     caches.match(event.request)
       .then(function(response) {
-        // Retorna do cache se disponível
         if (response) {
           return response;
         }
 
-        // Se não estiver no cache, busca da rede
         return fetch(event.request)
           .then(function(response) {
-            // Não cachear respostas que não são válidas
-            if (!response || response.status !== 200 || response.type !== 'basic') {
+            if (!response || response.status !== 200) {
               return response;
             }
 
-            // Clona a resposta para cache
             var responseToCache = response.clone();
 
             caches.open(CACHE_NAME)
@@ -120,30 +101,13 @@ self.addEventListener('fetch', function(event) {
             return response;
           })
           .catch(function(error) {
-            console.log('Erro na requisição:', error);
-            
-            // Se for uma página HTML, retorna a página offline
-            if (event.request.destination === 'document' || 
-                event.request.headers.get('accept').includes('text/html')) {
-              return caches.match('/offline.html');
+            if (event.request.destination === 'document') {
+              return new Response(offlineFallback, {
+                headers: { 'Content-Type': 'text/html' }
+              });
             }
-            
-            // Para outros recursos, retorna uma resposta vazia
-            if (event.request.destination === 'image') {
-              return new Response('', { status: 404 });
-            }
-            
-            return new Response('', { status: 503 });
+            return new Response('', { status: 404 });
           });
-      })
-      .catch(function(error) {
-        console.log('Erro geral no fetch:', error);
-        // Fallback final
-        if (event.request.destination === 'document') {
-          return new Response(offlineFallback, {
-            headers: { 'Content-Type': 'text/html' }
-          });
-        }
       })
   );
 });

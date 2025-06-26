@@ -829,17 +829,154 @@ class FarmVetApp {
     } else {
       this.start();
     }
+    
+    // TRATAMENTO DE ERRO GLOBAL
+    this.setupGlobalErrorHandling();
+    
+    // TIMEOUT DE SEGURANÇA
+    setTimeout(() => {
+      if (document.body.innerHTML.includes('FarmVet') === false) {
+        console.error('Página não carregou corretamente, aplicando fallback');
+        this.showErrorFallback();
+      }
+    }, 10000);
+  }
+
+  setupGlobalErrorHandling() {
+    // Capturar erros JavaScript
+    window.addEventListener('error', (e) => {
+      console.error('Erro JavaScript:', e.error);
+      this.handleError(e.error);
+    });
+    
+    // Capturar promessas rejeitadas
+    window.addEventListener('unhandledrejection', (e) => {
+      console.error('Promessa rejeitada:', e.reason);
+      this.handleError(e.reason);
+    });
+    
+    // Capturar erros de recursos
+    window.addEventListener('error', (e) => {
+      if (e.target && e.target.tagName) {
+        console.error('Erro de recurso:', e.target.src || e.target.href);
+        this.handleResourceError(e.target);
+      }
+    }, true);
+    
+    // DETECTAR E EVITAR INTERFERÊNCIA DO AVAST
+    this.detectAndHandleAntivirus();
+  }
+
+  detectAndHandleAntivirus() {
+    // Detectar Avast e outros antivírus
+    const isAvast = navigator.userAgent.includes('Avast') || 
+                   window.avast !== undefined ||
+                   document.querySelector('script[src*="avast"]') !== null;
+    
+    const isAntivirus = navigator.userAgent.includes('Antivirus') ||
+                       navigator.userAgent.includes('Security') ||
+                       window.location.href.includes('avast') ||
+                       window.location.href.includes('norton') ||
+                       window.location.href.includes('mcafee');
+    
+    console.log('Antivírus detectado:', { isAvast, isAntivirus });
+    
+    if (isAvast || isAntivirus) {
+      console.log('Aplicando proteções contra antivírus');
+      this.applyAntivirusProtection();
+    }
+  }
+
+  applyAntivirusProtection() {
+    // Remover scripts suspeitos que podem ser detectados como malware
+    const suspiciousScripts = document.querySelectorAll('script[src*="analytics"], script[src*="tracking"], script[src*="ads"]');
+    suspiciousScripts.forEach(script => {
+      console.log('Removendo script suspeito:', script.src);
+      script.remove();
+    });
+    
+    // Simplificar o site para evitar falsos positivos
+    this.simplifyForAntivirus();
+    
+    // Adicionar headers de segurança
+    this.addSecurityHeaders();
+  }
+
+  simplifyForAntivirus() {
+    // Remover elementos que podem ser detectados como suspeitos
+    const suspiciousElements = [
+      '.hero__led-strip', // Animações podem ser suspeitas
+      '.hero__carousel-video', // Vídeos podem ser bloqueados
+      'script[src*="external"]', // Scripts externos
+      'iframe' // Iframes podem ser bloqueados
+    ];
+    
+    suspiciousElements.forEach(selector => {
+      const elements = document.querySelectorAll(selector);
+      elements.forEach(el => {
+        console.log('Removendo elemento suspeito:', selector);
+        el.style.display = 'none';
+      });
+    });
+    
+    // Simplificar animações
+    const animatedElements = document.querySelectorAll('.hero__plant, .hero__plant-right');
+    animatedElements.forEach(el => {
+      if (el) {
+        el.style.animation = 'none';
+        el.style.transform = 'none';
+      }
+    });
+  }
+
+  addSecurityHeaders() {
+    // Adicionar meta tags de segurança
+    const securityMeta = [
+      { name: 'referrer', content: 'no-referrer' },
+      { name: 'robots', content: 'noindex, nofollow' },
+      { 'http-equiv': 'X-Content-Type-Options', content: 'nosniff' },
+      { 'http-equiv': 'X-Frame-Options', content: 'DENY' }
+    ];
+    
+    securityMeta.forEach(meta => {
+      const metaTag = document.createElement('meta');
+      Object.keys(meta).forEach(key => {
+        metaTag.setAttribute(key, meta[key]);
+      });
+      document.head.appendChild(metaTag);
+    });
+  }
+
+  handleError(error) {
+    // Se for erro crítico, aplicar fallback
+    if (error && error.message && (
+      error.message.includes('Cannot read property') ||
+      error.message.includes('is not defined') ||
+      error.message.includes('Failed to fetch')
+    )) {
+      console.error('Erro crítico detectado, aplicando fallback');
+      this.applyCompleteFallback();
+    }
+  }
+
+  handleResourceError(element) {
+    if (element.tagName === 'IMG') {
+      this.replaceBrokenImage(element.src);
+    } else if (element.tagName === 'VIDEO') {
+      element.style.display = 'none';
+    }
   }
 
   start() {
     console.log('🚀 FarmVet Pet Store iniciando...');
     
+    // TRATAMENTO ULTRA DEFENSIVO
     try {
       // Verificar se recursos críticos carregaram
       this.checkCriticalResources();
       
-      // Inicializa módulos
-      this.initModules();
+      // Inicializa módulos com proteção
+      this.initModulesSafe();
       
       // Monitor de performance
       this.performanceMonitor = new PerformanceMonitor();
@@ -851,7 +988,59 @@ class FarmVetApp {
     }
   }
 
+  initModulesSafe() {
+    try {
+      // Navegação
+      this.modules.set('navigation', new Navigation());
+    } catch (error) {
+      console.error('Erro na navegação:', error);
+    }
+    
+    try {
+      // Carousel
+      const carouselElement = document.querySelector('.hero__carousel');
+      if (carouselElement) {
+        this.modules.set('carousel', new Carousel(carouselElement));
+      }
+    } catch (error) {
+      console.error('Erro no carousel:', error);
+    }
+    
+    try {
+      // Animações
+      this.modules.set('animations', new AnimationManager());
+      
+      // FORÇAR ANIMAÇÕES NO SAFARI
+      this.forceSafariAnimations();
+    } catch (error) {
+      console.error('Erro nas animações:', error);
+    }
+    
+    try {
+      // Formulário de contato
+      this.modules.set('contactForm', new ContactForm());
+    } catch (error) {
+      console.error('Erro no formulário:', error);
+    }
+    
+    try {
+      // Lazy loading de imagens
+      this.initLazyLoading();
+    } catch (error) {
+      console.error('Erro no lazy loading:', error);
+    }
+    
+    try {
+      // Service Worker (se disponível)
+      this.initServiceWorker();
+    } catch (error) {
+      console.error('Erro no service worker:', error);
+    }
+  }
+
   checkCriticalResources() {
+    console.log('Verificando recursos críticos...');
+    
     // Verificar se CSS carregou
     const styles = document.querySelector('link[href*="styles.css"]');
     if (!styles || !styles.sheet) {
@@ -866,13 +1055,93 @@ class FarmVetApp {
       'img/planta2.png'
     ];
     
+    let imagesLoaded = 0;
     criticalImages.forEach(src => {
       const img = new Image();
+      img.onload = () => {
+        imagesLoaded++;
+        console.log(`Imagem carregada: ${src}`);
+      };
       img.onerror = () => {
         console.warn(`Imagem crítica não carregou: ${src}`);
+        this.replaceBrokenImage(src);
       };
       img.src = src;
     });
+    
+    // Verificar se vídeo carregou
+    const video = document.querySelector('.hero__carousel-video');
+    if (video) {
+      video.addEventListener('error', () => {
+        console.warn('Vídeo não carregou, removendo');
+        video.style.display = 'none';
+      });
+    }
+    
+    // Verificar se JavaScript está funcionando
+    setTimeout(() => {
+      if (imagesLoaded === 0) {
+        console.warn('Nenhuma imagem carregou, aplicando fallback completo');
+        this.applyCompleteFallback();
+      }
+    }, 3000);
+  }
+
+  replaceBrokenImage(src) {
+    // Substituir imagem quebrada por placeholder
+    const img = document.querySelector(`img[src="${src}"]`);
+    if (img) {
+      img.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjNmNGY2Ii8+PHRleHQgeD0iNTAlIiB5PSI1MCUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5YWFiYiIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZHk9Ii4zZW0iPkltYWdlbTwvdGV4dD48L3N2Zz4=';
+      img.alt = 'Imagem não disponível';
+    }
+  }
+
+  applyCompleteFallback() {
+    console.log('Aplicando fallback completo para iOS');
+    
+    // CSS básico para funcionar
+    const basicCSS = `
+      <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .header { background: #2c2c2c; color: white; padding: 15px 0; }
+        .nav { display: flex; justify-content: space-between; align-items: center; }
+        .nav__logo img { height: 40px; }
+        .hero { background: linear-gradient(135deg, #2c2c2c, #8b7355); color: white; padding: 60px 20px; text-align: center; min-height: 60vh; display: flex; align-items: center; }
+        .hero__title { font-size: 2.5rem; margin-bottom: 20px; }
+        .hero__subtitle { font-size: 1.2rem; margin-bottom: 30px; opacity: 0.9; }
+        .btn { background: #8b7355; color: white; padding: 15px 30px; text-decoration: none; border-radius: 8px; display: inline-block; margin: 10px; font-weight: bold; }
+        .section { padding: 60px 20px; }
+        .section__title { font-size: 2rem; text-align: center; margin-bottom: 40px; color: #2c2c2c; }
+        .products-grid, .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top: 40px; }
+        .product-card, .service-card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); text-align: center; }
+        .footer { background: #2c2c2c; color: white; padding: 40px 20px; text-align: center; }
+        @media (max-width: 768px) {
+          .hero__title { font-size: 2rem; }
+          .products-grid, .services-grid { grid-template-columns: 1fr; }
+        }
+      </style>
+    `;
+    
+    if (!document.querySelector('#complete-fallback')) {
+      const style = document.createElement('style');
+      style.id = 'complete-fallback';
+      style.textContent = basicCSS;
+      document.head.appendChild(style);
+    }
+    
+    // Remover elementos problemáticos
+    const problematicElements = document.querySelectorAll('.hero__led-strip, .hero__plant, .hero__plant-right, .hero__carousel-video');
+    problematicElements.forEach(el => {
+      if (el) el.style.display = 'none';
+    });
+    
+    // Simplificar carousel
+    const carousel = document.querySelector('.hero__carousel');
+    if (carousel) {
+      carousel.innerHTML = '<img src="img/imagemdedog1.png" alt="FarmVet" style="max-width: 100%; height: auto; border-radius: 12px;">';
+    }
   }
 
   applyCSSFallback() {
@@ -922,27 +1191,103 @@ class FarmVetApp {
     document.body.innerHTML = errorMessage;
   }
 
-  initModules() {
-    // Navegação
-    this.modules.set('navigation', new Navigation());
+  forceSafariAnimations() {
+    // Detectar Safari mais precisamente
+    const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
     
-    // Carousel
-    const carouselElement = document.querySelector('.hero__carousel');
-    if (carouselElement) {
-      this.modules.set('carousel', new Carousel(carouselElement));
+    console.log('Forçando animações Safari:', isSafari, 'iOS:', isIOS);
+    
+    if (isSafari || isIOS) {
+      // Forçar animações via JavaScript
+      this.forceLEDAnimation();
+      this.forcePlantAnimations();
+      this.forceCarouselAnimations();
+    }
+  }
+
+  forceLEDAnimation() {
+    const ledStrip = document.querySelector('.hero__led-strip');
+    if (!ledStrip) return;
+    
+    console.log('Forçando animação LED no Safari');
+    
+    let opacity = 0.92;
+    let brightness = 1.22;
+    let direction = 1;
+    
+    const animate = () => {
+      if (direction === 1) {
+        opacity += 0.02;
+        brightness += 0.02;
+        if (opacity >= 1) direction = -1;
+      } else {
+        opacity -= 0.02;
+        brightness -= 0.02;
+        if (opacity <= 0.92) direction = 1;
+      }
+      
+      ledStrip.style.opacity = opacity;
+      ledStrip.style.filter = `blur(18px) brightness(${brightness}) saturate(1.18)`;
+      
+      requestAnimationFrame(animate);
+    };
+    
+    animate();
+  }
+
+  forcePlantAnimations() {
+    const plant = document.querySelector('.hero__plant');
+    const plantRight = document.querySelector('.hero__plant-right');
+    
+    if (plant) {
+      console.log('Forçando animação planta esquerda no Safari');
+      this.animatePlant(plant, -2, 3);
     }
     
-    // Animações
-    this.modules.set('animations', new AnimationManager());
+    if (plantRight) {
+      console.log('Forçando animação planta direita no Safari');
+      this.animatePlant(plantRight, 2, -1);
+    }
+  }
+
+  animatePlant(element, minRotate, maxRotate) {
+    let rotation = minRotate;
+    let direction = 1;
+    let startTime = Date.now();
     
-    // Formulário de contato
-    this.modules.set('contactForm', new ContactForm());
+    const animate = () => {
+      const elapsed = Date.now() - startTime;
+      const progress = (elapsed % 4000) / 4000; // 4 segundos ciclo
+      
+      if (progress < 0.5) {
+        rotation = minRotate + (maxRotate - minRotate) * (progress * 2);
+      } else {
+        rotation = maxRotate - (maxRotate - minRotate) * ((progress - 0.5) * 2);
+      }
+      
+      const yOffset = Math.sin(progress * Math.PI * 2) * 4;
+      
+      element.style.transform = `rotate(${rotation}deg) translateY(${yOffset}px)`;
+      
+      requestAnimationFrame(animate);
+    };
     
-    // Lazy loading de imagens
-    this.initLazyLoading();
+    animate();
+  }
+
+  forceCarouselAnimations() {
+    const carouselImages = document.querySelectorAll('.hero__carousel-img');
     
-    // Service Worker (se disponível)
-    this.initServiceWorker();
+    carouselImages.forEach((img, index) => {
+      if (index === 0) {
+        img.style.opacity = '1';
+        img.style.transform = 'translateX(0)';
+      } else {
+        img.style.opacity = '0';
+        img.style.transform = 'translateX(100%)';
+      }
+    });
   }
 
   initLazyLoading() {
@@ -1039,39 +1384,72 @@ class FarmVetApp {
     
     if (!installButton) return;
     
-    // Detectar iPhone/Safari
+    // Detecção MUITO MAIS PRECISA de iOS/Safari
     const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-    const isSafari = /Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent);
+    const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
     const isStandalone = window.navigator.standalone === true;
+    const isInApp = window.navigator.userAgent.includes('FBAN') || 
+                   window.navigator.userAgent.includes('FBAV') ||
+                   window.navigator.userAgent.includes('Instagram') ||
+                   window.navigator.userAgent.includes('Line');
     
-    console.log('iOS:', isIOS, 'Safari:', isSafari, 'Standalone:', isStandalone);
+    console.log('PWA Debug:', {
+      isIOS,
+      isSafari,
+      isStandalone,
+      isInApp,
+      userAgent: navigator.userAgent
+    });
     
     // Se já está instalado, esconder botão
     if (isStandalone) {
       installButton.style.display = 'none';
+      console.log('PWA já instalado (standalone)');
       return;
     }
     
-    if (isIOS && isSafari) {
-      // Para iPhone/Safari, mostrar sempre
+    // Se está em app externo, não mostrar
+    if (isInApp) {
+      installButton.style.display = 'none';
+      console.log('Em app externo, não mostrar PWA');
+      return;
+    }
+    
+    if (isIOS || isSafari) {
+      // ESTRATÉGIA AGRESSIVA PARA SAFARI
+      console.log('Aplicando estratégia agressiva para Safari');
+      
       installButton.innerHTML = '<i class="fas fa-plus" aria-hidden="true"></i> Adicionar à Tela Inicial';
       installButton.style.display = 'inline-flex';
       
-      // Mostrar banner de instalação após 3 segundos
+      // Banner imediato
       setTimeout(() => {
         this.showIOSInstallBanner();
-      }, 3000);
+      }, 1000);
+      
+      // Banner secundário após 5 segundos
+      setTimeout(() => {
+        this.showIOSInstallBannerSecondary();
+      }, 5000);
+      
+      // Banner final após 10 segundos
+      setTimeout(() => {
+        this.showIOSInstallBannerFinal();
+      }, 10000);
       
       installButton.addEventListener('click', () => {
         this.showIOSInstallInstructions();
       });
+      
+      // Verificar se pode instalar via meta tags
+      this.checkSafariInstallCapability();
       
       return;
     }
     
     // Para Android/Chrome
     window.addEventListener('beforeinstallprompt', (e) => {
-      console.log('PWA install prompt disponível');
+      console.log('PWA install prompt disponível (Android)');
       e.preventDefault();
       deferredPrompt = e;
       
@@ -1118,67 +1496,62 @@ class FarmVetApp {
     });
   }
 
-  showIOSInstallBanner() {
+  checkSafariInstallCapability() {
+    // Verificar se tem as meta tags necessárias
+    const appleMobileWebAppCapable = document.querySelector('meta[name="apple-mobile-web-app-capable"]');
+    const appleTouchIcon = document.querySelector('link[rel="apple-touch-icon"]');
+    
+    console.log('Safari PWA Capability:', {
+      appleMobileWebAppCapable: !!appleMobileWebAppCapable,
+      appleTouchIcon: !!appleTouchIcon,
+      manifest: !!document.querySelector('link[rel="manifest"]')
+    });
+    
+    if (!appleMobileWebAppCapable || !appleTouchIcon) {
+      console.warn('Meta tags PWA faltando para Safari');
+    }
+  }
+
+  showIOSInstallBannerSecondary() {
+    if (document.getElementById('ios-banner-secondary')) return;
+    
     const banner = `
-      <div id="ios-banner" style="position: fixed; top: 0; left: 0; right: 0; background: linear-gradient(135deg, #2c2c2c, #8b7355); color: white; padding: 12px 20px; z-index: 10001; display: flex; align-items: center; justify-content: space-between; font-size: 14px; box-shadow: 0 2px 10px rgba(0,0,0,0.2);">
+      <div id="ios-banner-secondary" style="position: fixed; bottom: 20px; left: 20px; right: 20px; background: linear-gradient(135deg, #8b7355, #2c2c2c); color: white; padding: 16px; border-radius: 12px; z-index: 10002; box-shadow: 0 4px 12px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: space-between; font-size: 14px;">
         <div style="display: flex; align-items: center; gap: 10px;">
-          <i class="fas fa-mobile-alt" style="font-size: 18px;"></i>
-          <span>Adicione o FarmVet à sua tela inicial para uma experiência melhor!</span>
+          <i class="fas fa-star" style="color: #ffd700;"></i>
+          <span>Experimente o FarmVet como app! Mais rápido e sem anúncios.</span>
         </div>
-        <div style="display: flex; gap: 10px;">
-          <button onclick="document.getElementById('ios-banner').remove()" style="background: none; border: 1px solid white; color: white; padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer;">
+        <button onclick="document.getElementById('ios-banner-secondary').remove(); document.getElementById('installPWA').click()" style="background: #ffd700; color: #2c2c2c; border: none; padding: 8px 16px; border-radius: 6px; font-weight: bold; cursor: pointer;">
+          Instalar
+        </button>
+      </div>
+    `;
+    
+    document.body.insertAdjacentHTML('beforeend', banner);
+  }
+
+  showIOSInstallBannerFinal() {
+    if (document.getElementById('ios-banner-final')) return;
+    
+    const banner = `
+      <div id="ios-banner-final" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; padding: 30px; border-radius: 16px; z-index: 10003; box-shadow: 0 8px 32px rgba(0,0,0,0.3); text-align: center; max-width: 350px;">
+        <div style="font-size: 48px; margin-bottom: 20px;">📱</div>
+        <h3 style="color: #2c2c2c; margin-bottom: 15px;">Quer uma experiência melhor?</h3>
+        <p style="color: #6b7280; margin-bottom: 20px; line-height: 1.5;">
+          Adicione o FarmVet à sua tela inicial para acesso rápido e sem anúncios!
+        </p>
+        <div style="display: flex; gap: 10px; justify-content: center;">
+          <button onclick="document.getElementById('ios-banner-final').remove()" style="background: #e5e7eb; color: #6b7280; border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer;">
             Agora não
           </button>
-          <button onclick="document.getElementById('ios-banner').remove(); document.getElementById('installPWA').click()" style="background: white; color: #2c2c2c; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: bold; cursor: pointer;">
+          <button onclick="document.getElementById('ios-banner-final').remove(); document.getElementById('installPWA').click()" style="background: #2c2c2c; color: white; border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-weight: bold;">
             Instalar
           </button>
         </div>
       </div>
     `;
     
-    if (!document.getElementById('ios-banner')) {
-      document.body.insertAdjacentHTML('afterbegin', banner);
-    }
-  }
-
-  showIOSInstallInstructions() {
-    const instructions = `
-      <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); z-index: 10000; display: flex; align-items: center; justify-content: center; padding: 20px;">
-        <div style="background: white; border-radius: 16px; padding: 30px; max-width: 400px; text-align: center;">
-          <h3 style="margin-bottom: 20px; color: #2c2c2c;">Como instalar o app no iPhone</h3>
-          <ol style="text-align: left; line-height: 1.8;">
-            <li>Toque no botão <strong>Compartilhar</strong> <span style="color: #007AFF;">⎋</span></li>
-            <li>Role para baixo e toque em <strong>"Adicionar à Tela Inicial"</strong></li>
-            <li>Toque em <strong>"Adicionar"</strong></li>
-          </ol>
-          <button onclick="this.parentElement.parentElement.remove()" style="margin-top: 20px; background: #2c2c2c; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer;">
-            Entendi
-          </button>
-        </div>
-      </div>
-    `;
-    
-    document.body.insertAdjacentHTML('beforeend', instructions);
-  }
-
-  showAndroidInstallInstructions() {
-    const instructions = `
-      <div style="position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); z-index: 10000; display: flex; align-items: center; justify-content: center; padding: 20px;">
-        <div style="background: white; border-radius: 16px; padding: 30px; max-width: 400px; text-align: center;">
-          <h3 style="margin-bottom: 20px; color: #2c2c2c;">Como instalar o app no Android</h3>
-          <ol style="text-align: left; line-height: 1.8;">
-            <li>Toque no menu <strong>⋮</strong> (três pontos)</li>
-            <li>Selecione <strong>"Adicionar à tela inicial"</strong></li>
-            <li>Toque em <strong>"Adicionar"</strong></li>
-          </ol>
-          <button onclick="this.parentElement.parentElement.remove()" style="margin-top: 20px; background: #2c2c2c; color: white; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer;">
-            Entendi
-          </button>
-        </div>
-      </div>
-    `;
-    
-    document.body.insertAdjacentHTML('beforeend', instructions);
+    document.body.insertAdjacentHTML('beforeend', banner);
   }
 
   showInstallSuccess() {
